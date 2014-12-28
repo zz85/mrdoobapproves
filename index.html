@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+
+		<meta charset="utf-8"> 
+		<title>Does MrDoob Approves?</title>
+
+	</head>
+
+<body>
+	<style>
+		body {
+			font-family: "Helvetica Neue", Helvetica, sans-serif;
+			padding: 0.5em;
+		}
+
+		textarea {
+			font-size: 1em;
+			display: block;
+			width: 100%;
+			height: 20em;
+			padding: 0.5em;
+		}
+
+		h1 {
+			font-weight: 300;
+			font-size: 4em;
+			margin: 0.1em;
+		}
+
+		button {
+			padding: 0.5em;
+			margin-top: 0.5em;
+			font-size: 1em;
+		}
+
+		pre {
+
+		}
+
+		span {
+
+		}
+
+		#answer {
+			transition: opacity 2s ease-out;
+			opacity: 0;
+		}
+
+		.yes {
+			color: green;
+		}
+
+		.no {
+			color: red;
+		}
+
+		.maybe {
+			color: orange;
+		}
+
+		a {
+			/*text-decoration: none;*/
+		}
+
+		a:hover {
+			/*text-decoration: underline;*/
+			text-decoration: none;
+			font-weight: bolder;
+		}
+
+	</style>
+
+
+	<h1>Is your code style approved by <a href="https://twitter.com/mrdoob">mrdoob</a>? <span id="answer" /></h1>
+
+	<textarea id="code" placeholder="paste code here"></textarea>
+
+	<button onclick="check()">Check</button>
+
+	<pre>Protip 1: check the console</pre>
+
+	<pre>Protip 2: To learn more about Mr.doob's Code Style™, check out the <a href="https://github.com/mrdoob/three.js/wiki/Mr.doob's-Code-Style%E2%84%A2">wiki</a>, <a href="https://github.com/mrdoob/three.js/issues/4802">discussion</a> and <a href="https://twitter.com/mrdoob/status/463709502853103617">history</a>.</pre>
+
+	<pre>About: another quick random idea by <a href="https://twitter.com/blurspline">@blurspline</a>.
+(unfortunately this was code in a couple of minutes, so the code for this page is not mdcs approved either :)</pre>
+
+	<script src="jscs-browser.js"></script>
+
+	<script>
+		var checker = new JscsStringChecker();
+
+		checker.registerDefaultRules();
+		checker.configure({preset: 'mdcs'});
+
+
+		var textarea = document.getElementById('code');
+		var answer = document.getElementById('answer');
+
+		var hide;
+
+		function hideAnswer() {
+			answer.style.opacity = 0;
+		}
+
+		function setAnswer(comment, style) {
+			answer.style.opacity = 1;
+			answer.textContent = comment;
+			answer.className = style;
+
+			setTimeout(hideAnswer, 3000);
+		}
+
+		function check() {
+
+			var code = textarea.value;
+			console.log('checking ' + code + '...');
+
+			answer.style.opacity = 1;
+
+			if (code.trim().length === 0) {
+				setAnswer('Maybe... :)', 'maybe');
+				return;
+			}
+
+			var errors;
+			try {
+				errors = checker.checkString(code);
+			} catch (e) {
+				setAnswer('Surely not!!! :(', 'no');
+				throw(e);
+			}
+			var errorList = errors.getErrorList();
+
+			if (errorList.length === 0) {
+				setAnswer('Possibly \\o/*\\o', 'yes');
+			} else {
+				setAnswer('No!!! :(', 'no');
+			}
+			errorList.forEach(function(error) {
+				console.log(errors.explainError(error));
+			});
+
+		}
+	</script>
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-7549263-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+</body>
+</html>
