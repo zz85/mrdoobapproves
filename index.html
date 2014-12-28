@@ -79,6 +79,8 @@
 
 	<textarea id="code" placeholder="paste code here"></textarea>
 
+	<script src="jscs-browser.js"></script>
+
 	<button onclick="check()">Check</button>
 
 	<pre>Protip 1: check the console</pre>
@@ -87,8 +89,6 @@
 
 	<pre>About: another quick random idea by <a href="https://twitter.com/blurspline">@blurspline</a>.
 (unfortunately this was code in a couple of minutes, so the code for this page is not mdcs approved either :)</pre>
-
-	<script src="jscs-browser.js"></script>
 
 	<script>
 		var checker = new JscsStringChecker();
@@ -128,7 +128,7 @@
 
 			var errors;
 			try {
-				errors = checker.checkString(code);
+				errors = checker.checkString(code + '\n');
 			} catch (e) {
 				setAnswer('Surely not!!! :(', 'no');
 				throw(e);
