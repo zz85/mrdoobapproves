@@ -79,6 +79,8 @@
 
 	<textarea id="code" placeholder="paste code here"></textarea>
 
+	<div id="loading">Loading</div>
+
 	<script src="jscs-browser.js"></script>
 
 	<button onclick="check()">Check</button>
@@ -91,11 +93,14 @@
 (unfortunately this was code in a couple of minutes, so the code for this page is not mdcs approved either :)</pre>
 
 	<script>
+
 		var checker = new JscsStringChecker();
 
 		checker.registerDefaultRules();
 		checker.configure({preset: 'mdcs'});
 
+		var loading = document.getElementById('loading');
+		loading.style.display = 'none';
 
 		var textarea = document.getElementById('code');
 		var answer = document.getElementById('answer');
