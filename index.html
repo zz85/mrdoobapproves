@@ -122,9 +122,7 @@
 		function check() {
 
 			var code = textarea.value;
-			console.log('checking ' + code + '...');
-
-			answer.style.opacity = 1;
+			// console.info('checking ' + code + '...');
 
 			if (code.trim().length === 0) {
 				setAnswer('Maybe... :)', 'maybe');
@@ -140,13 +138,15 @@
 			}
 			var errorList = errors.getErrorList();
 
+			console.log( 'checking done. ' + errorList.length + ' errors' );
+
 			if (errorList.length === 0) {
 				setAnswer('Possibly \\o/*\\o', 'yes');
 			} else {
 				setAnswer('No!!! :(', 'no');
 			}
 			errorList.forEach(function(error) {
-				console.log(errors.explainError(error));
+				console.warn(errors.explainError(error));
 			});
 
 		}
