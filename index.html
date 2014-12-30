@@ -61,6 +61,14 @@
 		.maybe {
 			color: orange;
 		}
+		
+		.show {
+			display: block;
+		}
+		
+		.hide {
+			display: none;
+		}
 
 		a {
 			/*text-decoration: none;*/
@@ -78,12 +86,14 @@
 	<h1>Is your code style approved by <a href="https://twitter.com/mrdoob">mrdoob</a>? <span id="answer" /></h1>
 
 	<textarea id="code" placeholder="paste code here"></textarea>
+	<textarea id="result" class="hide"></textarea>
 
 	<div id="loading">Loading</div>
 
 	<script src="jscs-browser.js"></script>
 
 	<button onclick="check()">Check</button>
+	<button onclick="format()">Format</button>
 
 	<pre>Protip 1: check the console</pre>
 
@@ -103,9 +113,9 @@
 		loading.style.display = 'none';
 
 		var textarea = document.getElementById('code');
+		var result = document.getElementById('result');
 		var answer = document.getElementById('answer');
 
-		var hide;
 
 		function hideAnswer() {
 			answer.style.opacity = 0;
@@ -132,6 +142,7 @@
 			var errors;
 			try {
 				errors = checker.checkString(code + '\n');
+				textarea.value = checker.formatString(code + '\n');
 			} catch (e) {
 				setAnswer('Surely not!!! :(', 'no');
 				throw(e);
@@ -148,6 +159,23 @@
 			errorList.forEach(function(error) {
 				console.warn(errors.explainError(error));
 			});
+
+		}
+		
+		function format() {
+
+			var code = textarea.value;
+			// console.info('checking ' + code + '...');
+
+
+			var errors;
+			try {
+				result.value = checker.formatString(code + '\n');
+			} catch (e) {
+				setAnswer('Surely not!!! :(', 'no');
+				throw(e);
+			}
+			result.className =""
 
 		}
 	</script>
