@@ -142,7 +142,6 @@
 			var errors;
 			try {
 				errors = checker.checkString(code + '\n');
-				textarea.value = checker.formatString(code + '\n');
 			} catch (e) {
 				setAnswer('Surely not!!! :(', 'no');
 				throw(e);
