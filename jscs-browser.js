@@ -942,8 +942,6 @@ var JsFile = function(filename, source, tree) {
     this._lines = source.split(/\r\n|\r|\n/);
     this._tokenRangeStartIndex = null;
     this._tokenRangeEndIndex = null;
-    this._tokenIndex = null;
-    this._nodeIndex = null;
     var index = this._index = {};
     var _this = this;
 
@@ -1187,29 +1185,6 @@ JsFile.prototype = {
      */
     findNextOperatorToken: function(token, value) {
         return this.findNextToken(token, value in KEYWORD_OPERATORS ? 'Keyword' : 'Punctuator', value);
-    },
-    /**
-     * Builds token index by starting pos for futher navigation.
-     */
-    _buildNodeIndex: function() {
-        var nodeIndex = {};
-        this.iterate(function(node, parentNode, parentCollection) {
-            if (node && node.loc) {
-                nodeIndex[node.loc.start.line + ',' + node.loc.start.column] = node;
-            }
-        });
-        this._nodeIndex = nodeIndex;
-    },
-    /**
-     * Returns token position using range start from the index.
-     *
-     * @returns {Object}
-     */
-    getNodeByStartlineAndColumn: function(startLine, startColumn) {
-        if (!this._nodeIndex) {
-            this._buildNodeIndex();
-        }
-        return this._nodeIndex[startLine + ',' + startColumn];
     },
     /**
      * Iterates through the token tree using tree iterator.
@@ -4331,7 +4306,7 @@ module.exports.prototype = {
 
     format: function(file, error) {
         // This needs to be rewritten by the option feature.
-        var node = file.getNodeByStartlineAndColumn(error.line, error.column);
+        var node = file.getNodeByRange(file.getPosByLineAndColumn(error.line, error.column) + 1);
         var body;
         if (node.type === 'WhileStatement') {
             body = node.body;
@@ -5763,10 +5738,8 @@ module.exports.prototype = {
     },
 
     format: function(file, error) {
-        var tokens = file.getTokens();
-        var node = file.getNodeByStartlineAndColumn(error.line, error.column);
+        var node = file.getNodeByRange(file.getPosByLineAndColumn(error.line, error.column) + 1);
         while (node.type !== 'UpdateExpression') {node = node.parentNode;}
-        //console.log(node);
         file.splice(node.range[1] - node.operator.length, 0, ' ');
     }
 };
@@ -6680,6 +6653,15 @@ module.exports.prototype = {
                     token.loc.end.column - 2);
             }
         });
+    },
+
+    format: function(file, error) {
+        var pos = file.getPosByLineAndColumn(error.line, error.column);
+        if (error.message.indexOf('before') !== -1) {
+            file.splice(pos, 0, ' ');
+        } else {
+            file.splice(pos + 1, 0, ' ');
+        }
     }
 };
 
@@ -7021,10 +7003,10 @@ module.exports.prototype = {
                 indentStack.pop();
             }
 
-            if (expected < 0){
+            if (expected < 0) {
                 expected = 0;
             }
-            
+
             return expected;
         }
 
