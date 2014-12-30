@@ -7021,6 +7021,10 @@ module.exports.prototype = {
                 indentStack.pop();
             }
 
+            if (expected < 0){
+                expected = 0;
+            }
+            
             return expected;
         }
 
@@ -21886,6 +21890,7 @@ module.exports={
         "beforeOpeningCurlyBrace": true
     },
     "requirePaddingNewlinesInBlocks": true,
+    "requireSpacesInsideParentheses": "all",
     "requireSpacesInsideObjectBrackets": "all",
     "requireSpacesInsideArrayBrackets": "allButNested",
     "requireSpaceBeforeBlockStatements": true,
