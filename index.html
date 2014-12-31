@@ -139,7 +139,7 @@ function mrdoob() {
 	<button onclick="check()">Check</button>
 	Auto-check <input type="checkbox" id="autocheck" checked />
  
-	<span id="hints" class="no"></span>
+	<a id="hints" class="no"></a>
 
 	<br />
 	<button onclick="format()">Auto-Format (Experimental)</button>
@@ -261,7 +261,8 @@ function mrdoob() {
 			if (error) {
 
 				hints.textContent = error.line + ':' + error.column + '\t' + error.message + ' (Rule: ' + error.rule + ')';
-
+				hints.href = "javascript:gotoLine(" + error.line + ")"
+				
 			} else {
 
 				hints.textContent = '';
@@ -271,6 +272,16 @@ function mrdoob() {
 			return errors;
 
 		}
+		
+		function gotoLine(line) {
+			line = line -1;
+        		codeEditor.setCursor({line:line,ch:0});
+        		var myHeight = codeEditor.getScrollInfo().clientHeight; 
+        		var coords = codeEditor.charCoords({line: line, ch: 0}, "local"); 
+        		codeEditor.scrollTo(null, (coords.top + coords.bottom - myHeight) / 2); 
+		}
+		
+		
 		
 		function format() {
 
