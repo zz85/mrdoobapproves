@@ -30,6 +30,12 @@
 			font-size: 20px;
 		}
 
+		.cm-trailingspace {
+			background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAACCAYAAAB/qH1jAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3QUXCToH00Y1UgAAACFJREFUCNdjPMDBUc/AwNDAAAFMTAwMDA0OP34wQgX/AQBYgwYEx4f9lQAAAABJRU5ErkJggg==);
+		    background-position: bottom left;
+			background-repeat: repeat-x;
+      }
+
 		h1 {
 			font-weight: 300;
 			font-size: 4em;
@@ -90,7 +96,24 @@
 
 	<h1>Is your code style approved by <a href="https://twitter.com/mrdoob">mrdoob</a>? <span id="answer" /></h1>
 
-	<textarea id="code" placeholder="paste code here"></textarea>
+	<textarea id="code" placeholder="paste code here">
+/* Mr Doob Dislikes */
+for (var j=0;j<100;j++) {
+	fail();
+}
+
+/* Mr Doob Approves */
+
+function mrdoob() {
+
+	for ( var i = 0; i < 100; i ++ ) {
+
+		hearts();
+
+	}
+
+}
+</textarea>
 	<textarea id="result" class="hide"></textarea>
 
 	<div id="loading">Loading</div>
@@ -102,10 +125,13 @@
 	<script src="jscs-browser.js"></script>
 	<link rel="stylesheet" href="bower_components/codemirror/lib/codemirror.css">
 	<script src="bower_components/codemirror/lib/codemirror.js"></script>
-	<script src="bower_components/codemirror/mode/javascript/javascript.js"></script
+	<script src="bower_components/codemirror/mode/javascript/javascript.js"></script>
 
 	<script src="bower_components/codemirror/addon/lint/lint.js"></script>
 
+	<script src="bower_components/codemirror/addon/edit/trailingspace.js"></script>
+	<script src="bower_components/codemirror/addon/edit/matchbrackets.js"></script>
+	<script src="bower_components/codemirror/addon/edit/closebrackets.js"></script>
 
 	<button onclick="check()">Check</button>
 	Auto-check <input type="checkbox" id="autocheck" checked />
@@ -128,18 +154,17 @@
 		var autocheck = document.getElementById('autocheck');
 
 		var cmOptions = {
-			value: "function myScript(){return 100;}\n",
-			mode:  "javascript",
+			value: textarea.value,
+			mode:  'javascript',
 			indentUnit: 4,
 			indentWithTabs: true,
 			lineNumbers: true,
+			matchBrackets: true,
+			autoCloseBrackets: true,
+			showTrailingSpace: true
 		};
 
-		var codeEditor = CodeMirror( function(elt) {
-
-			textarea.parentNode.replaceChild(elt, textarea);
-
-		}, cmOptions );
+		var codeEditor = CodeMirror.fromTextArea( textarea, cmOptions );
 
 		var checker = new JscsStringChecker();
 
@@ -156,6 +181,8 @@
 			codeEditor.on('change', function() {
 				scheduleCheck();
 			});
+
+			scheduleCheck();
 
 		}
 
@@ -260,6 +287,8 @@
 		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 		})();
 	</script>
+
+	<style>#forkongithub a{background:#000;color:#fff;text-decoration:none;font-family:arial,sans-serif;text-align:center;font-weight:bold;padding:5px 40px;font-size:1rem;line-height:2rem;position:relative;transition:0.5s;}#forkongithub a:hover{background:#c11;color:#fff;}#forkongithub a::before,#forkongithub a::after{content:"";width:100%;display:block;position:absolute;top:1px;left:0;height:1px;background:#fff;}#forkongithub a::after{bottom:1px;top:auto;}@media screen and (min-width:800px){#forkongithub{position:fixed;display:block;top:0;right:0;width:200px;overflow:hidden;height:200px;z-index:9999;}#forkongithub a{width:200px;position:absolute;top:60px;right:-60px;transform:rotate(45deg);-webkit-transform:rotate(45deg);-ms-transform:rotate(45deg);-moz-transform:rotate(45deg);-o-transform:rotate(45deg);box-shadow:4px 4px 10px rgba(0,0,0,0.8);}}</style><span id="forkongithub"><a href="https://github.com/zz85/mrdoobapproves">Fork me on GitHub</a></span>
 
 </body>
 </html>
