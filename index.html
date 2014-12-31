@@ -90,7 +90,24 @@
 
 	<h1>Is your code style approved by <a href="https://twitter.com/mrdoob">mrdoob</a>? <span id="answer" /></h1>
 
-	<textarea id="code" placeholder="paste code here"></textarea>
+	<textarea id="code" placeholder="paste code here">
+/* Mr Doob Dislikes */
+for (var j=0;j<100;j++) {
+	fail();
+}
+
+/* Mr Doob Approves */
+
+function mrdoob() {
+
+	for ( var i = 0; i < 100; i ++ ) {
+
+		hearts();
+
+	}
+
+}
+	</textarea>
 	<textarea id="result" class="hide"></textarea>
 
 	<div id="loading">Loading</div>
@@ -128,7 +145,7 @@
 		var autocheck = document.getElementById('autocheck');
 
 		var cmOptions = {
-			value: "function myScript(){return 100;}\n",
+			value: textarea.value,
 			mode:  "javascript",
 			indentUnit: 4,
 			indentWithTabs: true,
@@ -156,6 +173,8 @@
 			codeEditor.on('change', function() {
 				scheduleCheck();
 			});
+
+			scheduleCheck();
 
 		}
 
