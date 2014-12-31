@@ -19,4 +19,4 @@ Release early, release often - main branch is gh-pages
 
 ## Copyright
 
-p.s. This project, its name or code was neither approved or endorsed by mrddob.
+p.s. This project, its name or code was neither approved or endorsed by mrdoob.
