@@ -139,7 +139,7 @@ function mrdoob() {
 	<button onclick="check()">Check</button>
 	Auto-check <input type="checkbox" id="autocheck" checked />
  
-	<a id="hints" class="no"></a>
+	<a id="hints" class="no" onclick="gotoError()"></a>
 
 	<br />
 	<button onclick="format()">Auto-Format (Experimental)</button>
@@ -180,7 +180,7 @@ function mrdoob() {
 		    }
 		};
 
-		var checker, codeEditor;
+		var checker, codeEditor, visibleError;
 
 		var loading = document.getElementById('loading');
 		loading.style.display = 'none';
@@ -256,12 +256,11 @@ function mrdoob() {
 				setAnswer('No!!! :(', 'no');
 			}
 
-			var error = errorList[ 0 ];
+			visibleError = errorList[ 0 ];
 
-			if (error) {
+			if (visibleError) {
 
-				hints.textContent = error.line + ':' + error.column + '\t' + error.message + ' (Rule: ' + error.rule + ')';
-				hints.href = "javascript:gotoLine(" + error.line + ")"
+				hints.textContent = visibleError.line + ':' + visibleError.column + '\t' + visibleError.message + ' (Rule: ' + visibleError.rule + ')';
 				
 			} else {
 
@@ -273,12 +272,11 @@ function mrdoob() {
 
 		}
 		
-		function gotoLine(line) {
-			line = line -1;
-        		codeEditor.setCursor({line:line,ch:0});
-        		var myHeight = codeEditor.getScrollInfo().clientHeight; 
-        		var coords = codeEditor.charCoords({line: line, ch: 0}, "local"); 
-        		codeEditor.scrollTo(null, (coords.top + coords.bottom - myHeight) / 2); 
+		function gotoError() {
+			if (visibleError) {
+				var line = visibleError.line - 1;
+	        		codeEditor.setCursor(line,visibleError.column,{scroll:true});
+			}
 		}
 		
 		
