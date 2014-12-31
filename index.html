@@ -124,14 +124,18 @@ function mrdoob() {
 	-->
 	<script src="jscs-browser.js"></script>
 	<link rel="stylesheet" href="bower_components/codemirror/lib/codemirror.css">
+	<link rel="stylesheet" href="bower_components/codemirror/addon/lint/lint.css">
+
 	<script src="bower_components/codemirror/lib/codemirror.js"></script>
 	<script src="bower_components/codemirror/mode/javascript/javascript.js"></script>
-
-	<script src="bower_components/codemirror/addon/lint/lint.js"></script>
 
 	<script src="bower_components/codemirror/addon/edit/trailingspace.js"></script>
 	<script src="bower_components/codemirror/addon/edit/matchbrackets.js"></script>
 	<script src="bower_components/codemirror/addon/edit/closebrackets.js"></script>
+
+	<script src="bower_components/codemirror/addon/lint/lint.js"></script>
+	<script src="mdcs-lint.js"></script>
+
 
 	<button onclick="check()">Check</button>
 	Auto-check <input type="checkbox" id="autocheck" checked />
@@ -161,28 +165,41 @@ function mrdoob() {
 			lineNumbers: true,
 			matchBrackets: true,
 			autoCloseBrackets: true,
-			showTrailingSpace: true
+			showTrailingSpace: true,
+			gutters: [ 'CodeMirror-lint-markers' ],
+			lint: true
 		};
 
-		var codeEditor = CodeMirror.fromTextArea( textarea, cmOptions );
-
-		var checker = new JscsStringChecker();
-
-		checker.registerDefaultRules();
-		checker.configure({
-			preset: 'mdcs'
-		});
+		var checker, codeEditor;
 
 		var loading = document.getElementById('loading');
 		loading.style.display = 'none';
 
 		function init() {
 
-			codeEditor.on('change', function() {
-				scheduleCheck();
+
+			/*
+			 * Init JSCS Checker
+			 */
+
+			checker = new JscsStringChecker();
+
+			checker.registerDefaultRules();
+			checker.configure({
+				preset: 'mdcs'
 			});
 
-			scheduleCheck();
+			/*
+			 * Init Code CodeMirror
+			 */
+
+			codeEditor = CodeMirror.fromTextArea( textarea, cmOptions );
+
+			codeEditor.on('change', function() {
+				// scheduleCheck();
+			});
+
+			// scheduleCheck();
 
 		}
 
@@ -208,9 +225,9 @@ function mrdoob() {
 			setTimeout(hideAnswer, 3000);
 		}
 
-		function check() {
+		function check( code ) {
 
-			var code = codeEditor.getValue();
+			var code = code ? code : codeEditor.getValue();
 			// console.info('checking ' + code + '...');
 
 			if (code.trim().length === 0) {
@@ -220,9 +237,9 @@ function mrdoob() {
 
 			var errors;
 			try {
-				console.time('check');
+				console.time('jscs check');
 				errors = checker.checkString(code + '\n');
-				console.timeEnd('check');
+				console.timeEnd('jscs check');
 			} catch (e) {
 				
 				// jscs now catches parse error into errorlist, so this shouldn't happen
@@ -254,9 +271,11 @@ function mrdoob() {
 
 			errorList.forEach(function(error) {
 
-				console.warn(errors.explainError(error));
+				// console.warn(errors.explainError(error));
 
 			});
+
+			return errors;
 
 		}
 		
