@@ -30,6 +30,12 @@
 			font-size: 20px;
 		}
 
+		.cm-trailingspace {
+			background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAACCAYAAAB/qH1jAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3QUXCToH00Y1UgAAACFJREFUCNdjPMDBUc/AwNDAAAFMTAwMDA0OP34wQgX/AQBYgwYEx4f9lQAAAABJRU5ErkJggg==);
+		    background-position: bottom left;
+			background-repeat: repeat-x;
+      }
+
 		h1 {
 			font-weight: 300;
 			font-size: 4em;
@@ -107,7 +113,7 @@ function mrdoob() {
 	}
 
 }
-	</textarea>
+</textarea>
 	<textarea id="result" class="hide"></textarea>
 
 	<div id="loading">Loading</div>
@@ -119,10 +125,13 @@ function mrdoob() {
 	<script src="jscs-browser.js"></script>
 	<link rel="stylesheet" href="bower_components/codemirror/lib/codemirror.css">
 	<script src="bower_components/codemirror/lib/codemirror.js"></script>
-	<script src="bower_components/codemirror/mode/javascript/javascript.js"></script
+	<script src="bower_components/codemirror/mode/javascript/javascript.js"></script>
 
 	<script src="bower_components/codemirror/addon/lint/lint.js"></script>
 
+	<script src="bower_components/codemirror/addon/edit/trailingspace.js"></script>
+	<script src="bower_components/codemirror/addon/edit/matchbrackets.js"></script>
+	<script src="bower_components/codemirror/addon/edit/closebrackets.js"></script>
 
 	<button onclick="check()">Check</button>
 	Auto-check <input type="checkbox" id="autocheck" checked />
@@ -146,17 +155,16 @@ function mrdoob() {
 
 		var cmOptions = {
 			value: textarea.value,
-			mode:  "javascript",
+			mode:  'javascript',
 			indentUnit: 4,
 			indentWithTabs: true,
 			lineNumbers: true,
+			matchBrackets: true,
+			autoCloseBrackets: true,
+			showTrailingSpace: true
 		};
 
-		var codeEditor = CodeMirror( function(elt) {
-
-			textarea.parentNode.replaceChild(elt, textarea);
-
-		}, cmOptions );
+		var codeEditor = CodeMirror.fromTextArea( textarea, cmOptions );
 
 		var checker = new JscsStringChecker();
 
