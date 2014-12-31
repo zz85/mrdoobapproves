@@ -4933,11 +4933,12 @@ module.exports.prototype = {
         var pos = file.getPosByLineAndColumn(error.line, error.column);
         if (error.message.indexOf('after') !== -1) {
             var openingBracketPos = file.getTokenPosByRangeStart(pos - 1);
-            while (!openingBracketPos) {
+            var openingBracket = tokens[openingBracketPos];
+            while (!openingBracketPos || !openingBracket || openingBracket.value !== '{') {
                 pos--;
                 openingBracketPos = file.getTokenPosByRangeStart(pos - 1);
+                openingBracket = tokens[openingBracketPos];
             }
-            var openingBracket = tokens[openingBracketPos];
             var nextToken = tokens[openingBracketPos + 1];
             if (nextToken.loc.start.line - openingBracket.loc.start.line === 1) {
                 file.splice(pos, 0, '\n');
@@ -5266,7 +5267,12 @@ module.exports.prototype = {
 
     format: function(file, error) {
         var pos = file.getPosByLineAndColumn(error.line, error.column);
-        file.splice(pos, 0, ' ');
+        var source = file.getSource();
+        var count = 0;
+        while (source[pos - count - 1 ] === ' ') {
+            count++;
+        }
+        file.splice(pos - count, count, ' ');
     }
 
 };
@@ -6042,6 +6048,15 @@ module.exports.prototype = {
                 }
             }
         }.bind(this));
+    },
+
+    format: function(file, error) {
+        var pos = file.getPosByLineAndColumn(error.line, error.column);
+        var source = file.getSource();
+        while (source[pos] === ')') {
+            pos++;
+        }
+        file.splice(pos, 0, ' ');
     }
 
 };
@@ -7241,18 +7256,22 @@ module.exports.prototype = {
     },
 
     format: function(file, error) {
-        var pos = file.getPosByLineAndColumn(error.line, 0);
-        var amount = error.column;
-        var str = '';
-        for (var i = 0;i < amount;i++) {
-            for (var j = 0;j < this._indentSize;j++) {
-                str += this._indentChar;
+        if (error.message.indexOf('Multiline comments') === -1) {
+            var pos = file.getPosByLineAndColumn(error.line, 0);
+            var amount = error.column;
+            var str = '';
+            for (var i = 0;i < amount;i++) {
+                for (var j = 0;j < this._indentSize;j++) {
+                    str += this._indentChar;
+                }
             }
+            var toRemove = 0;
+            var source = file.getSource();
+            while (source[pos + toRemove] === this._indentChar) { toRemove++; }
+            file.splice(pos, toRemove, str);
+        } else {
+            file.splice(file.getPosByLineAndColumn(error.line, error.column), 0, '\n');
         }
-        var toRemove = 0;
-        var source = file.getSource();
-        while (source[pos + toRemove] === this._indentChar) { toRemove++; }
-        file.splice(pos, toRemove, str);
     }
 
 };
