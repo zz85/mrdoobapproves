@@ -157,6 +157,8 @@ function mrdoob() {
 		var hints = document.getElementById('hints');
 		var autocheck = document.getElementById('autocheck');
 
+		var deferredValidator;
+
 		var cmOptions = {
 			value: textarea.value,
 			mode:  'javascript',
@@ -167,7 +169,15 @@ function mrdoob() {
 			autoCloseBrackets: true,
 			showTrailingSpace: true,
 			gutters: [ 'CodeMirror-lint-markers' ],
-			lint: true
+			lint: {
+				async: true,
+				getAnnotations: CodeMirror.jscsAsyncValidator,
+		        requestValidation: function(text, validator) {
+					deferredValidator = validator;
+
+					if (autocheck.checked) validator(text);
+		        }
+		    }
 		};
 
 		var checker, codeEditor;
@@ -192,26 +202,11 @@ function mrdoob() {
 			/*
 			 * Init Code CodeMirror
 			 */
-
 			codeEditor = CodeMirror.fromTextArea( textarea, cmOptions );
-
-			codeEditor.on('change', function() {
-				// scheduleCheck();
-			});
-
-			// scheduleCheck();
 
 		}
 
 		init();
-
-		var scheduledCheck;
-		function scheduleCheck() {
-			if (!autocheck.checked) return;
-
-			if (scheduledCheck) clearTimeout(scheduledCheck);
-			scheduledCheck = setTimeout(check, 200);
-		}
 
 		function hideAnswer() {
 			answer.style.opacity = 0;
@@ -225,9 +220,13 @@ function mrdoob() {
 			setTimeout(hideAnswer, 3000);
 		}
 
-		function check( code ) {
+		function check(code) {
+			code = code ? code : codeEditor.getValue();
+			if (deferredValidator) deferredValidator(code);
+		}
 
-			var code = code ? code : codeEditor.getValue();
+		function jscsCheck( code ) {
+
 			// console.info('checking ' + code + '...');
 
 			if (code.trim().length === 0) {
@@ -268,12 +267,6 @@ function mrdoob() {
 				hints.textContent = '';
 
 			}
-
-			errorList.forEach(function(error) {
-
-				// console.warn(errors.explainError(error));
-
-			});
 
 			return errors;
 
