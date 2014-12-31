@@ -4929,10 +4929,13 @@ module.exports.prototype = {
 
     format: function(file, error) {
         var tokens = file.getTokens();
-        var source = file.getSource();
         var pos = file.getPosByLineAndColumn(error.line, error.column);
-        if (source[pos - 1] === '{') {
+        if (error.message.indexOf('after') !== -1) {
             var openingBracketPos = file.getTokenPosByRangeStart(pos - 1);
+            while (!openingBracketPos) {
+                pos--;
+                openingBracketPos = file.getTokenPosByRangeStart(pos - 1);
+            }
             var openingBracket = tokens[openingBracketPos];
             var nextToken = tokens[openingBracketPos + 1];
             if (nextToken.loc.start.line - openingBracket.loc.start.line === 1) {
@@ -6658,9 +6661,9 @@ module.exports.prototype = {
     format: function(file, error) {
         var pos = file.getPosByLineAndColumn(error.line, error.column);
         if (error.message.indexOf('before') !== -1) {
-            file.splice(pos, 0, ' ');
-        } else {
             file.splice(pos + 1, 0, ' ');
+        } else {
+            file.splice(pos, 0, ' ');
         }
     }
 };
@@ -7669,6 +7672,7 @@ StringChecker.prototype = {
             try {
                 tree = this._esprima.parse(str, {loc: true, range: true, comment: true, tokens: true});
             } catch (e) {
+                console.log(str);
                 throw new Error('Syntax error at ' + filename + ': ' + e.message);
             }
             file = new JsFile(filename, str, tree);
