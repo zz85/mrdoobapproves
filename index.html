@@ -114,7 +114,6 @@ function mrdoob() {
 
 }
 </textarea>
-	<textarea id="result" class="hide"></textarea>
 
 	<div id="loading">Loading</div>
 
@@ -140,8 +139,10 @@ function mrdoob() {
 	<button onclick="check()">Check</button>
 	Auto-check <input type="checkbox" id="autocheck" checked />
  
-	<button onclick="format()">Format</button>
 	<span id="hints" class="no"></span>
+
+	<br />
+	<button onclick="format()">Auto-Format (Experimental)</button>
 
 	<pre>Protip 1: check the console</pre>
 
@@ -152,7 +153,6 @@ function mrdoob() {
 	<script>
 
 		var textarea = document.getElementById('code');
-		var result = document.getElementById('result');
 		var answer = document.getElementById('answer');
 		var hints = document.getElementById('hints');
 		var autocheck = document.getElementById('autocheck');
@@ -276,15 +276,12 @@ function mrdoob() {
 
 			var code = codeEditor.getValue();
 
-			var errors;
 			try {
-				result.value = checker.formatString(code + '\n');
+				codeEditor.setValue( checker.formatString(code + '\n') );
 			} catch (e) {
+				alert('oops, i cant format that right now...')
 				throw(e);
 			}
-
-			result.className = '';
-
 		}
 	</script>
 
