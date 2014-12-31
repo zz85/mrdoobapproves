@@ -5266,7 +5266,12 @@ module.exports.prototype = {
 
     format: function(file, error) {
         var pos = file.getPosByLineAndColumn(error.line, error.column);
-        file.splice(pos, 0, ' ');
+        var source = file.getSource();
+        var count = 0;
+        while (source[pos - count - 1 ] === ' ') {
+            count++;
+        }
+        file.splice(pos - count, count, ' ');
     }
 
 };
@@ -6042,6 +6047,15 @@ module.exports.prototype = {
                 }
             }
         }.bind(this));
+    },
+
+    format: function(file, error) {
+        var pos = file.getPosByLineAndColumn(error.line, error.column);
+        var source = file.getSource();
+        while (source[pos] === ')') {
+            pos++;
+        }
+        file.splice(pos, 0, ' ');
     }
 
 };
