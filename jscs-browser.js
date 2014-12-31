@@ -4933,11 +4933,12 @@ module.exports.prototype = {
         var pos = file.getPosByLineAndColumn(error.line, error.column);
         if (error.message.indexOf('after') !== -1) {
             var openingBracketPos = file.getTokenPosByRangeStart(pos - 1);
-            while (!openingBracketPos) {
+            var openingBracket = tokens[openingBracketPos];
+            while (!openingBracketPos || !openingBracket || openingBracket.value !== '{') {
                 pos--;
                 openingBracketPos = file.getTokenPosByRangeStart(pos - 1);
+                openingBracket = tokens[openingBracketPos];
             }
-            var openingBracket = tokens[openingBracketPos];
             var nextToken = tokens[openingBracketPos + 1];
             if (nextToken.loc.start.line - openingBracket.loc.start.line === 1) {
                 file.splice(pos, 0, '\n');
