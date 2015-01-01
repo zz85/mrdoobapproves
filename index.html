@@ -82,13 +82,16 @@
 		}
 
 		a {
-			/*text-decoration: none;*/
+			text-decoration: none;
+			font-style: normal;
 		}
 
 		a:hover {
-			/*text-decoration: underline;*/
-			text-decoration: none;
-			font-weight: bolder;
+			text-decoration: underline;
+			/*text-decoration: none;*/
+			/*font-weight: bolder;*/
+			/*font-style: italic;*/
+
 		}
 
 	</style>
@@ -139,7 +142,7 @@ function mrdoob() {
 	<button onclick="check()">Check</button>
 	Auto-check <input type="checkbox" id="autocheck" checked />
  
-	<a id="hints" class="no" onclick="gotoError()"></a>
+	<a id="hints" href="#" class="no" onclick="gotoError(); return false;"></a>
 
 	<br />
 	<button onclick="format()">Auto-Format (Experimental)</button>
@@ -274,8 +277,22 @@ function mrdoob() {
 		
 		function gotoError() {
 			if (visibleError) {
+
 				var line = visibleError.line - 1;
-	        		codeEditor.setCursor(line,visibleError.column,{scroll:true});
+
+				var scrollInfo = codeEditor.getScrollInfo();
+				var coords = codeEditor.charCoords({line: line, ch: visibleError.column}, "local");
+
+				codeEditor.setCursor(line, visibleError.column, { scroll:false } );
+
+				if (scrollInfo.top > coords.bottom || scrollInfo.top + scrollInfo.clientHeight < coords.top) {
+					// out of view
+					codeEditor.scrollTo(null, coords.bottom - scrollInfo.clientHeight / 2);
+
+				}
+
+				codeEditor.focus();
+
 			}
 		}
 		
