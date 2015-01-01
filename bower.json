@@ -26,6 +26,7 @@
     "tests"
   ],
   "dependencies": {
-    "codemirror": "~4.10.0"
+    "codemirror": "~4.10.0",
+    "google-diff-match-patch-js": "~1.0.0"
   }
 }
