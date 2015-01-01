@@ -4,7 +4,9 @@
 	"use strict";
 
 	function validator(text, options) {
-		var jscsErrors = jscsCheck( text );
+
+		var jscsErrors = options.jscsChecker( text );
+
 		if (!jscsErrors) return [];
 
 		var errorList = jscsErrors.getErrorList();

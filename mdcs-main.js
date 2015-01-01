@@ -23,7 +23,8 @@ var cmOptions = {
 			deferredValidator = validator;
 
 			if (autocheck.checked) validator(text);
-        }
+        },
+        jscsChecker: jscsCheck
     },
     // merge plugin - for our case "orginal" means our  "formatted" version.
     origRight: '',
