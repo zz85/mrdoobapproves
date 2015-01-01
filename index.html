@@ -246,8 +246,8 @@ function mrdoob() {
 			setTimeout(hideAnswer, 3000);
 		}
 
-		function check(code) {
-			code = code ? code : codeEditor.getValue();
+		function check() {
+			var code = codeEditor.getValue();
 			if (deferredValidator) deferredValidator(code);
 		}
 
@@ -263,7 +263,7 @@ function mrdoob() {
 			var errors;
 			try {
 				console.time('jscs check');
-				errors = checker.checkString(code + '\n');
+				errors = checker.checkString(code);
 				console.timeEnd('jscs check');
 			} catch (e) {
 				
@@ -319,7 +319,9 @@ function mrdoob() {
 			}
 		}
 		
-		
+		/*
+		 * Support Auto-correcting
+		 */
 		
 		function format() {
 			mergeMode();
@@ -327,11 +329,11 @@ function mrdoob() {
 
 			try {
 				console.time('jscs format');
-				formatEditor.setValue( checker.formatString(code + '\n') );
+				formatEditor.setValue( checker.formatString(code) );
 
 				/*
 				// Reverse approach
-				codeEditor.setValue( checker.formatString(code + '\n') );
+				codeEditor.setValue( checker.formatString(code) );
 				formatEditor.setValue( code );
 				*/
 				
@@ -358,7 +360,7 @@ function mrdoob() {
 		}
 
 		function mergeMode() {
-			mergeView.wrapEdit.style.width = '47%'; // 47%
+			mergeView.wrapEdit.style.width = ''; // 47%
 			mergeView.wrapRight.style.display = '';
 			mergeView.right.gap.style.display = '';
 			mergeButtons.style.display = '';
