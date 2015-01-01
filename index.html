@@ -114,6 +114,7 @@ function mrdoob() {
 
 }
 </textarea>
+	<div id="merge"></div>
 
 	<div id="loading">Loading</div>
 
@@ -124,6 +125,7 @@ function mrdoob() {
 	<script src="jscs-browser.js"></script>
 	<link rel="stylesheet" href="bower_components/codemirror/lib/codemirror.css">
 	<link rel="stylesheet" href="bower_components/codemirror/addon/lint/lint.css">
+	<link rel="stylesheet" href="bower_components/codemirror/addon/merge/merge.css">
 
 	<script src="bower_components/codemirror/lib/codemirror.js"></script>
 	<script src="bower_components/codemirror/mode/javascript/javascript.js"></script>
@@ -135,6 +137,8 @@ function mrdoob() {
 	<script src="bower_components/codemirror/addon/lint/lint.js"></script>
 	<script src="mdcs-lint.js"></script>
 
+	<script src="bower_components/google-diff-match-patch-js/diff_match_patch.js"></script>
+	<script src="bower_components/codemirror/addon/merge/merge.js"></script>
 
 	<button onclick="check()">Check</button>
 	Auto-check <input type="checkbox" id="autocheck" checked />
@@ -156,9 +160,9 @@ function mrdoob() {
 		var answer = document.getElementById('answer');
 		var hints = document.getElementById('hints');
 		var autocheck = document.getElementById('autocheck');
+		var merge = document.getElementById('merge');
 
 		var deferredValidator;
-
 		var cmOptions = {
 			value: textarea.value,
 			mode:  'javascript',
@@ -177,7 +181,14 @@ function mrdoob() {
 
 					if (autocheck.checked) validator(text);
 		        }
-		    }
+		    },
+		    // merge plugin - for our case "orginal" means our  "formatted" version.
+		    origRight: '',
+			// connect: 'align',
+			collapseIdentical: true,
+			allowEditingOriginals: false,
+			showDifferences: true,
+			revertButtons: true
 		};
 
 		var checker, codeEditor;
@@ -202,7 +213,10 @@ function mrdoob() {
 			/*
 			 * Init Code CodeMirror
 			 */
-			codeEditor = CodeMirror.fromTextArea( textarea, cmOptions );
+			// codeEditor = CodeMirror.fromTextArea( textarea, cmOptions );
+			mergeView = CodeMirror.MergeView(merge, cmOptions);
+			codeEditor = mergeView.editor();
+			formatEditor = mergeView.rightOriginal();
 
 		}
 
@@ -277,10 +291,19 @@ function mrdoob() {
 			var code = codeEditor.getValue();
 
 			try {
+				console.time('jscs format');
+				formatEditor.setValue( checker.formatString(code + '\n') );
+
+				/*
+				// Reverse approach
 				codeEditor.setValue( checker.formatString(code + '\n') );
+				formatEditor.setValue( code );
+				*/
 			} catch (e) {
 				alert('oops, i cant format that right now...')
 				throw(e);
+			} finally {
+				console.timeEnd('jscs format');
 			}
 		}
 	</script>
