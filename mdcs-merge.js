@@ -1,3 +1,5 @@
+/// Modified addon/merge.js for use with mdcs
+
 // CodeMirror, copyright (c) by Marijn Haverbeke and others
 // Distributed under an MIT license: http://codemirror.net/LICENSE
 
@@ -387,6 +389,7 @@
     }
 
     var editPane = elt("div", null, "CodeMirror-merge-pane");
+    this.wrapEdit = editPane;
     wrap.push(editPane);
 
     if (hasRight) {
@@ -394,6 +397,7 @@
       wrap.push(buildGap(right));
       var rightPane = elt("div", null, "CodeMirror-merge-pane");
       wrap.push(rightPane);
+      this.wrapRight = rightPane;
     }
 
     (hasRight ? rightPane : editPane).className += " CodeMirror-merge-pane-rightmost";
@@ -404,7 +408,11 @@
     this.edit = CodeMirror(editPane, copyObj(options));
 
     if (left) left.init(leftPane, origLeft, options);
-    if (right) right.init(rightPane, origRight, options);
+    if (right) {
+      var rightOptions = copyObj(options);
+      rightOptions.lint = null;
+      right.init(rightPane, origRight, rightOptions);
+    }
 
     if (options.collapseIdentical)
       collapseIdenticalStretches(left || right, options.collapseIdentical);

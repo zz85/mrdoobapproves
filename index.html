@@ -18,9 +18,7 @@
 		.code {
 			display: block;
 			width: 100%;
-			height: 20em;
-			padding: 0.5em;
-			margin-bottom: 1em;
+			height: 350px;
 		}
 
 		#code {
@@ -154,7 +152,7 @@ function mrdoob() {
 	<span id="hints" class="no"></span>
 
 	<br />
-	<button onclick="format()">Auto-Format (Experimental)</button>
+	<button onclick="format()">Auto-Format</button> <span id="mergeButtons"><button onclick="mergeAll()">Merge All</button> <button onclick="editMode()">Close Merge</button></span>
 
 	<pre>Protip 1: check the console</pre>
 
@@ -169,6 +167,7 @@ function mrdoob() {
 		var hints = document.getElementById('hints');
 		var autocheck = document.getElementById('autocheck');
 		var merge = document.getElementById('merge');
+		var mergeButtons = document.getElementById('mergeButtons');
 
 		var deferredValidator;
 		var cmOptions = {
@@ -206,7 +205,6 @@ function mrdoob() {
 
 		function init() {
 
-
 			/*
 			 * Init JSCS Checker
 			 */
@@ -227,6 +225,7 @@ function mrdoob() {
 			mergeView = CodeMirror.MergeView(merge, cmOptions);
 			codeEditor = mergeView.editor();
 			formatEditor = mergeView.rightOriginal();
+			editMode(true);
 
 		}
 
@@ -297,7 +296,7 @@ function mrdoob() {
 		}
 		
 		function format() {
-
+			mergeMode();
 			var code = codeEditor.getValue();
 
 			try {
@@ -309,6 +308,7 @@ function mrdoob() {
 				codeEditor.setValue( checker.formatString(code + '\n') );
 				formatEditor.setValue( code );
 				*/
+				
 			} catch (e) {
 				alert('oops, i cant format that right now...')
 				throw(e);
@@ -316,6 +316,36 @@ function mrdoob() {
 				console.timeEnd('jscs format');
 			}
 		}
+
+		function editMode(init) {
+			mergeView.wrapRight.style.display = 'none';
+			mergeView.right.gap.style.display = 'none';
+			mergeView.wrapEdit.style.width = '100%';
+			if (init) {
+				setTimeout(function() {
+					mergeView.wrapEdit.style.transition = 'width 0.35s ease-out';
+				});
+			}
+
+			mergeView.setShowDifferences(false);
+			mergeButtons.style.display = 'none';
+		}
+
+		function mergeMode() {
+			mergeView.wrapEdit.style.width = '47%'; // 47%
+			mergeView.wrapRight.style.display = '';
+			mergeView.right.gap.style.display = '';
+			mergeButtons.style.display = '';
+
+			// mergeView.wrapEdit.style.transition = 'width 0.2s ease-out';
+			mergeView.setShowDifferences(true);
+		}
+
+		function mergeAll() {
+			codeEditor.setValue( formatEditor.getValue() );
+			editMode();
+		}
+
 	</script>
 
 	<script type="text/javascript">
