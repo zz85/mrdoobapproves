@@ -5,6 +5,8 @@
 
 	function validator(text, options) {
 		var jscsErrors = jscsCheck( text );
+		if (!jscsErrors) return [];
+
 		var errorList = jscsErrors.getErrorList();
 
   		var hintErrors;

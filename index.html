@@ -15,13 +15,17 @@
 			padding: 0.5em;
 		}
 
-		textarea {
+		.code {
 			display: block;
 			width: 100%;
-			height: 20em;
-			padding: 0.5em;
+			height: 350px;
+		}
+
+		#code {
+			width: 100%;
+			height: 100%;
 			font-family: monospace;
-			font-size: 18px;
+			font-size: 20px;
 		}
 
 
@@ -32,9 +36,9 @@
 
 		.cm-trailingspace {
 			background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAACCAYAAAB/qH1jAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3QUXCToH00Y1UgAAACFJREFUCNdjPMDBUc/AwNDAAAFMTAwMDA0OP34wQgX/AQBYgwYEx4f9lQAAAABJRU5ErkJggg==);
-		    background-position: bottom left;
+			background-position: bottom left;
 			background-repeat: repeat-x;
-      }
+		}
 
 		h1 {
 			font-weight: 300;
@@ -99,7 +103,9 @@
 
 	<h1>Is your code style approved by <a href="https://twitter.com/mrdoob">mrdoob</a>? <span id="answer" /></h1>
 
-	<textarea id="code" placeholder="paste code here">
+
+	<div id="merge" class="code">
+		<textarea id="code" placeholder="paste code here">
 /* Mr Doob Dislikes */
 for (var j=0;j<100;j++) {
 	fail();
@@ -117,6 +123,7 @@ function mrdoob() {
 
 }
 </textarea>
+	</div>
 
 	<div id="loading">Loading</div>
 
@@ -127,6 +134,7 @@ function mrdoob() {
 	<script src="jscs-browser.js"></script>
 	<link rel="stylesheet" href="bower_components/codemirror/lib/codemirror.css">
 	<link rel="stylesheet" href="bower_components/codemirror/addon/lint/lint.css">
+	<link rel="stylesheet" href="bower_components/codemirror/addon/merge/merge.css">
 
 	<script src="bower_components/codemirror/lib/codemirror.js"></script>
 	<script src="bower_components/codemirror/mode/javascript/javascript.js"></script>
@@ -138,6 +146,8 @@ function mrdoob() {
 	<script src="bower_components/codemirror/addon/lint/lint.js"></script>
 	<script src="mdcs-lint.js"></script>
 
+	<script src="bower_components/google-diff-match-patch-js/diff_match_patch.js"></script>
+	<script src="mdcs-merge.js"></script>
 
 	<button onclick="check()">Check</button>
 	Auto-check <input type="checkbox" id="autocheck" checked />
@@ -145,7 +155,7 @@ function mrdoob() {
 	<a id="hints" href="#" class="no" onclick="gotoError(); return false;"></a>
 
 	<br />
-	<button onclick="format()">Auto-Format (Experimental)</button>
+	<button onclick="format()">Auto-Format</button> <span id="mergeButtons"><button onclick="mergeAll()">Merge All</button> <button onclick="editMode()">Close Merge</button></span>
 
 	<pre>Protip 1: check the console</pre>
 
@@ -159,9 +169,10 @@ function mrdoob() {
 		var answer = document.getElementById('answer');
 		var hints = document.getElementById('hints');
 		var autocheck = document.getElementById('autocheck');
+		var merge = document.getElementById('merge');
+		var mergeButtons = document.getElementById('mergeButtons');
 
 		var deferredValidator;
-
 		var cmOptions = {
 			value: textarea.value,
 			mode:  'javascript',
@@ -180,7 +191,14 @@ function mrdoob() {
 
 					if (autocheck.checked) validator(text);
 		        }
-		    }
+		    },
+		    // merge plugin - for our case "orginal" means our  "formatted" version.
+		    origRight: '',
+			// connect: 'align',
+			collapseIdentical: true,
+			allowEditingOriginals: false,
+			showDifferences: true,
+			revertButtons: true
 		};
 
 		var checker, codeEditor, visibleError;
@@ -189,7 +207,6 @@ function mrdoob() {
 		loading.style.display = 'none';
 
 		function init() {
-
 
 			/*
 			 * Init JSCS Checker
@@ -205,7 +222,13 @@ function mrdoob() {
 			/*
 			 * Init Code CodeMirror
 			 */
-			codeEditor = CodeMirror.fromTextArea( textarea, cmOptions );
+			// codeEditor = CodeMirror.fromTextArea( textarea, cmOptions );
+			
+			textarea.className = 'hide';
+			mergeView = CodeMirror.MergeView(merge, cmOptions);
+			codeEditor = mergeView.editor();
+			formatEditor = mergeView.rightOriginal();
+			editMode(true);
 
 		}
 
@@ -299,16 +322,56 @@ function mrdoob() {
 		
 		
 		function format() {
-
+			mergeMode();
 			var code = codeEditor.getValue();
 
 			try {
+				console.time('jscs format');
+				formatEditor.setValue( checker.formatString(code + '\n') );
+
+				/*
+				// Reverse approach
 				codeEditor.setValue( checker.formatString(code + '\n') );
+				formatEditor.setValue( code );
+				*/
+				
 			} catch (e) {
 				alert('oops, i cant format that right now...')
 				throw(e);
+			} finally {
+				console.timeEnd('jscs format');
 			}
 		}
+
+		function editMode(init) {
+			mergeView.wrapRight.style.display = 'none';
+			mergeView.right.gap.style.display = 'none';
+			mergeView.wrapEdit.style.width = '100%';
+			if (init) {
+				setTimeout(function() {
+					mergeView.wrapEdit.style.transition = 'width 0.35s ease-out';
+				});
+			}
+
+			mergeView.setShowDifferences(false);
+			mergeButtons.style.display = 'none';
+		}
+
+		function mergeMode() {
+			mergeView.wrapEdit.style.width = '47%'; // 47%
+			mergeView.wrapRight.style.display = '';
+			mergeView.right.gap.style.display = '';
+			mergeButtons.style.display = '';
+
+			// mergeView.wrapEdit.style.transition = 'width 0.2s ease-out';
+			mergeView.setShowDifferences(true);
+		}
+
+		function mergeAll() {
+			codeEditor.setValue( formatEditor.getValue() );
+			editMode();
+		}
+
 	</script>
 
 	<script type="text/javascript">
