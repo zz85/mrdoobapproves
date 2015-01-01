@@ -5695,6 +5695,10 @@ module.exports.prototype = {
                 }
             });
         });
+    },
+    format: function(file, error) {
+        var pos = file.getPosByLineAndColumn(error.line, error.column);
+        file.splice(pos, 0, ' ');
     }
 
 };
@@ -21995,6 +21999,7 @@ module.exports={
     "requireSpaceBeforeBlockStatements": true,
     "requireSpacesInForStatement": true,
     "requireSpacesInComputedMemberExpression":true,
+    "requireSpaceBeforeObjectValues":true,
     "disallowKeywords": [ "with" ],
     "requireLineFeedAtFileEnd": true,
     "validateLineBreaks": "LF",
