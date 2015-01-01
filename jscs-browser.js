@@ -22007,8 +22007,8 @@ module.exports={
 
     "requireSpaceAfterPrefixUnaryOperators": ["++", "--"],
     "requireSpaceBeforePostfixUnaryOperators": ["++", "--"],
-    "requireSpaceBeforeBinaryOperators": [ "+", "-", "/", "*", "=", "==", "===", "!=", "!==", ">", ">=", "<", "<=" ],
-    "requireSpaceAfterBinaryOperators": [ "+", "-", "/", "*", "=", "==", "===", "!=", "!==", ">", ">=", "<", "<=" ],
+    "requireSpaceBeforeBinaryOperators": [ "+", "-", "/", "*", "=", "==", "===", "!=", "!==", ">", ">=", "<", "<=", "<<", "<<<" ,">>" , ">>>" ],
+    "requireSpaceAfterBinaryOperators": [ "+", "-", "/", "*", "=", "==", "===", "!=", "!==", ">", ">=", "<", "<=", "<<", "<<<" ,">>" , ">>>"  ],
     "disallowSpaceBeforeBinaryOperators": [","],
     "requireSpacesInConditionalExpression": {
         "afterTest": true,
