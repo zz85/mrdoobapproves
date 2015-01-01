@@ -157,11 +157,16 @@ function mrdoob() {
 	<br />
 	<button onclick="format()">Auto-Format</button> <span id="mergeButtons"><button onclick="mergeAll()">Merge All</button> <button onclick="editMode()">Close Merge</button></span>
 
-	<pre>Protip 1: check the console</pre>
+	<br />
+	<button onclick="openFile()">Open File</button>
+
+	<pre>Protip 1: Open a file by dragging into the editor or <a href="#" onclick="openFile(); return false;">selecting</a> one</pre>
 
 	<pre>Protip 2: To learn more about Mr.doob's Code Style™, check out the <a href="https://github.com/mrdoob/three.js/wiki/Mr.doob's-Code-Style%E2%84%A2">wiki</a>, <a href="https://github.com/mrdoob/three.js/issues/4802">discussion</a> and <a href="https://twitter.com/mrdoob/status/463709502853103617">history</a>.</pre>
 
-	<pre>About: another random idea started by <a href="https://twitter.com/blurspline">@blurspline</a> with great contributions by <a href="https://github.com/gero3">gero3</a>.</pre>
+
+
+	<pre>About: another random idea started by <a href="https://twitter.com/blurspline">@blurspline</a> with great contributions by <a href="https://github.com/gero3">gero3</a>. check out the code and development on <a href="https://github.com/zz85/mrdoobapproves">github</a></pre>
 
 	<script>
 
@@ -373,6 +378,59 @@ function mrdoob() {
 			codeEditor.setValue( formatEditor.getValue() );
 			editMode();
 		}
+
+		/*
+		 * Open file
+		 */
+
+		var input, openCallback;
+
+		function openFile() {
+			openAs(function(text) {
+				codeEditor.setValue( text );
+			}, document.body);
+		}
+
+		function handleFileSelect(evt) {
+			var files = evt.target.files; // FileList object
+
+			var f = files[0];
+			if (!f) return;
+
+			var reader = new FileReader();
+
+			// Closure to capture the file information.
+			reader.onload = function(e) {
+				var data = e.target.result;
+				openCallback(data);
+			};
+
+			reader.readAsText(f);
+
+			input.value = '';
+		}
+
+		function openAs(callback, target) {
+			console.log('openfile...');
+			openCallback = callback;
+
+			if (!input) {
+				input = document.createElement('input');
+				input.style.display = 'none';
+				input.type = 'file';
+				input.addEventListener('change', handleFileSelect);
+				target = target || document.body;
+				target.appendChild(input);
+			}
+
+			var e = document.createEvent("MouseEvents");
+			e.initMouseEvent(
+				'click', true, false, window, 0, 0, 0, 0, 0,
+				false, false, false, false, 0, null
+			);
+			input.dispatchEvent(e);
+		}
+
 
 	</script>
 
