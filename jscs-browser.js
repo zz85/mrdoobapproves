@@ -629,8 +629,6 @@ Configuration.prototype.registerDefaultRules = function() {
     this.registerRule(require('../rules/require-capitalized-constructors'));
 
     this.registerRule(require('../rules/safe-context-keyword'));
-    this.registerRule(require('../rules/require-spaces-in-for-statement'));
-    this.registerRule(require('../rules/require-spaces-in-computed-memberExpression'));
 
     this.registerRule(require('../rules/require-dot-notation'));
 
@@ -649,6 +647,10 @@ Configuration.prototype.registerDefaultRules = function() {
     this.registerRule(require('../rules/require-line-break-after-variable-assignment'));
 
     this.registerRule(require('../rules/disallow-semicolons'));
+
+    this.registerRule(require('../rules/require-spaces-in-for-statement'));
+    this.registerRule(require('../rules/require-spaces-in-computed-memberExpression'));
+    this.registerRule(require('../rules/validate-object-indentation'));
 };
 
 /**
@@ -691,7 +693,7 @@ function copyConfiguration(source, dest) {
     }
 }
 
-},{"../../presets/airbnb.json":140,"../../presets/crockford.json":141,"../../presets/google.json":142,"../../presets/grunt.json":143,"../../presets/jquery.json":144,"../../presets/mdcs.json":145,"../../presets/wikimedia.json":146,"../../presets/yandex.json":147,"../rules/disallow-anonymous-functions":5,"../rules/disallow-capitalized-comments":6,"../rules/disallow-comma-before-line-break":7,"../rules/disallow-dangling-underscores":8,"../rules/disallow-empty-blocks":9,"../rules/disallow-function-declarations":10,"../rules/disallow-implicit-type-conversion":11,"../rules/disallow-keywords":13,"../rules/disallow-keywords-on-new-line":12,"../rules/disallow-left-sticked-operators":14,"../rules/disallow-mixed-spaces-and-tabs":15,"../rules/disallow-multiple-line-breaks":16,"../rules/disallow-multiple-line-strings":17,"../rules/disallow-multiple-var-decl":18,"../rules/disallow-newline-before-block-statements":19,"../rules/disallow-operator-before-line-break":20,"../rules/disallow-padding-newlines-before-keywords":21,"../rules/disallow-padding-newlines-in-blocks":22,"../rules/disallow-padding-newlines-in-objects":23,"../rules/disallow-quoted-keys-in-objects":24,"../rules/disallow-right-sticked-operators":25,"../rules/disallow-semicolons":26,"../rules/disallow-space-after-binary-operators":27,"../rules/disallow-space-after-keywords":28,"../rules/disallow-space-after-line-comment":29,"../rules/disallow-space-after-object-keys":30,"../rules/disallow-space-after-prefix-unary-operators.js":31,"../rules/disallow-space-before-binary-operators":32,"../rules/disallow-space-before-block-statements.js":33,"../rules/disallow-space-before-keywords":34,"../rules/disallow-space-before-object-values":35,"../rules/disallow-space-before-postfix-unary-operators.js":36,"../rules/disallow-space-between-arguments":37,"../rules/disallow-spaces-in-anonymous-function-expression":38,"../rules/disallow-spaces-in-call-expression":39,"../rules/disallow-spaces-in-conditional-expression":40,"../rules/disallow-spaces-in-function":43,"../rules/disallow-spaces-in-function-declaration":41,"../rules/disallow-spaces-in-function-expression":42,"../rules/disallow-spaces-in-named-function-expression":44,"../rules/disallow-spaces-inside-array-brackets":45,"../rules/disallow-spaces-inside-object-brackets":46,"../rules/disallow-spaces-inside-parentheses":47,"../rules/disallow-trailing-comma":48,"../rules/disallow-trailing-whitespace":49,"../rules/disallow-yoda-conditions":50,"../rules/maximum-line-length":51,"../rules/require-aligned-object-values":52,"../rules/require-anonymous-functions":53,"../rules/require-blocks-on-newline":54,"../rules/require-camelcase-or-uppercase-identifiers":55,"../rules/require-capitalized-comments":56,"../rules/require-capitalized-constructors":57,"../rules/require-comma-before-line-break":58,"../rules/require-curly-braces":59,"../rules/require-dot-notation":60,"../rules/require-function-declarations":61,"../rules/require-keywords-on-new-line":62,"../rules/require-left-sticked-operators":63,"../rules/require-line-break-after-variable-assignment":64,"../rules/require-line-feed-at-file-end":65,"../rules/require-multiple-var-decl":66,"../rules/require-newline-before-block-statements":67,"../rules/require-operator-before-line-break":68,"../rules/require-padding-newlines-before-keywords":69,"../rules/require-padding-newlines-in-blocks":70,"../rules/require-padding-newlines-in-objects":71,"../rules/require-parentheses-around-iife":72,"../rules/require-right-sticked-operators":73,"../rules/require-space-after-binary-operators":74,"../rules/require-space-after-keywords":75,"../rules/require-space-after-line-comment":76,"../rules/require-space-after-object-keys":77,"../rules/require-space-after-prefix-unary-operators.js":78,"../rules/require-space-before-binary-operators":79,"../rules/require-space-before-block-statements.js":80,"../rules/require-space-before-keywords":81,"../rules/require-space-before-object-values":82,"../rules/require-space-before-postfix-unary-operators.js":83,"../rules/require-space-between-arguments":84,"../rules/require-spaces-in-anonymous-function-expression":85,"../rules/require-spaces-in-call-expression":86,"../rules/require-spaces-in-computed-memberExpression":87,"../rules/require-spaces-in-conditional-expression":88,"../rules/require-spaces-in-for-statement":89,"../rules/require-spaces-in-function":92,"../rules/require-spaces-in-function-declaration":90,"../rules/require-spaces-in-function-expression":91,"../rules/require-spaces-in-named-function-expression":93,"../rules/require-spaces-inside-array-brackets":94,"../rules/require-spaces-inside-object-brackets":95,"../rules/require-spaces-inside-parentheses":96,"../rules/require-trailing-comma":97,"../rules/require-yoda-conditions":98,"../rules/safe-context-keyword":99,"../rules/validate-indentation":100,"../rules/validate-jsdoc":101,"../rules/validate-line-breaks":102,"../rules/validate-parameter-separator":103,"../rules/validate-quote-marks":104,"assert":110,"minimatch":131,"path":113}],3:[function(require,module,exports){
+},{"../../presets/airbnb.json":141,"../../presets/crockford.json":142,"../../presets/google.json":143,"../../presets/grunt.json":144,"../../presets/jquery.json":145,"../../presets/mdcs.json":146,"../../presets/wikimedia.json":147,"../../presets/yandex.json":148,"../rules/disallow-anonymous-functions":5,"../rules/disallow-capitalized-comments":6,"../rules/disallow-comma-before-line-break":7,"../rules/disallow-dangling-underscores":8,"../rules/disallow-empty-blocks":9,"../rules/disallow-function-declarations":10,"../rules/disallow-implicit-type-conversion":11,"../rules/disallow-keywords":13,"../rules/disallow-keywords-on-new-line":12,"../rules/disallow-left-sticked-operators":14,"../rules/disallow-mixed-spaces-and-tabs":15,"../rules/disallow-multiple-line-breaks":16,"../rules/disallow-multiple-line-strings":17,"../rules/disallow-multiple-var-decl":18,"../rules/disallow-newline-before-block-statements":19,"../rules/disallow-operator-before-line-break":20,"../rules/disallow-padding-newlines-before-keywords":21,"../rules/disallow-padding-newlines-in-blocks":22,"../rules/disallow-padding-newlines-in-objects":23,"../rules/disallow-quoted-keys-in-objects":24,"../rules/disallow-right-sticked-operators":25,"../rules/disallow-semicolons":26,"../rules/disallow-space-after-binary-operators":27,"../rules/disallow-space-after-keywords":28,"../rules/disallow-space-after-line-comment":29,"../rules/disallow-space-after-object-keys":30,"../rules/disallow-space-after-prefix-unary-operators.js":31,"../rules/disallow-space-before-binary-operators":32,"../rules/disallow-space-before-block-statements.js":33,"../rules/disallow-space-before-keywords":34,"../rules/disallow-space-before-object-values":35,"../rules/disallow-space-before-postfix-unary-operators.js":36,"../rules/disallow-space-between-arguments":37,"../rules/disallow-spaces-in-anonymous-function-expression":38,"../rules/disallow-spaces-in-call-expression":39,"../rules/disallow-spaces-in-conditional-expression":40,"../rules/disallow-spaces-in-function":43,"../rules/disallow-spaces-in-function-declaration":41,"../rules/disallow-spaces-in-function-expression":42,"../rules/disallow-spaces-in-named-function-expression":44,"../rules/disallow-spaces-inside-array-brackets":45,"../rules/disallow-spaces-inside-object-brackets":46,"../rules/disallow-spaces-inside-parentheses":47,"../rules/disallow-trailing-comma":48,"../rules/disallow-trailing-whitespace":49,"../rules/disallow-yoda-conditions":50,"../rules/maximum-line-length":51,"../rules/require-aligned-object-values":52,"../rules/require-anonymous-functions":53,"../rules/require-blocks-on-newline":54,"../rules/require-camelcase-or-uppercase-identifiers":55,"../rules/require-capitalized-comments":56,"../rules/require-capitalized-constructors":57,"../rules/require-comma-before-line-break":58,"../rules/require-curly-braces":59,"../rules/require-dot-notation":60,"../rules/require-function-declarations":61,"../rules/require-keywords-on-new-line":62,"../rules/require-left-sticked-operators":63,"../rules/require-line-break-after-variable-assignment":64,"../rules/require-line-feed-at-file-end":65,"../rules/require-multiple-var-decl":66,"../rules/require-newline-before-block-statements":67,"../rules/require-operator-before-line-break":68,"../rules/require-padding-newlines-before-keywords":69,"../rules/require-padding-newlines-in-blocks":70,"../rules/require-padding-newlines-in-objects":71,"../rules/require-parentheses-around-iife":72,"../rules/require-right-sticked-operators":73,"../rules/require-space-after-binary-operators":74,"../rules/require-space-after-keywords":75,"../rules/require-space-after-line-comment":76,"../rules/require-space-after-object-keys":77,"../rules/require-space-after-prefix-unary-operators.js":78,"../rules/require-space-before-binary-operators":79,"../rules/require-space-before-block-statements.js":80,"../rules/require-space-before-keywords":81,"../rules/require-space-before-object-values":82,"../rules/require-space-before-postfix-unary-operators.js":83,"../rules/require-space-between-arguments":84,"../rules/require-spaces-in-anonymous-function-expression":85,"../rules/require-spaces-in-call-expression":86,"../rules/require-spaces-in-computed-memberExpression":87,"../rules/require-spaces-in-conditional-expression":88,"../rules/require-spaces-in-for-statement":89,"../rules/require-spaces-in-function":92,"../rules/require-spaces-in-function-declaration":90,"../rules/require-spaces-in-function-expression":91,"../rules/require-spaces-in-named-function-expression":93,"../rules/require-spaces-inside-array-brackets":94,"../rules/require-spaces-inside-object-brackets":95,"../rules/require-spaces-inside-parentheses":96,"../rules/require-trailing-comma":97,"../rules/require-yoda-conditions":98,"../rules/safe-context-keyword":99,"../rules/validate-indentation":100,"../rules/validate-jsdoc":101,"../rules/validate-line-breaks":102,"../rules/validate-object-indentation":103,"../rules/validate-parameter-separator":104,"../rules/validate-quote-marks":105,"assert":111,"minimatch":132,"path":114}],3:[function(require,module,exports){
 var assert = require('assert');
 var colors = require('colors');
 var TokenAssert = require('./token-assert');
@@ -920,7 +922,7 @@ function renderPointer(column, colorize) {
 
 module.exports = Errors;
 
-},{"./token-assert":106,"assert":110,"colors":121}],4:[function(require,module,exports){
+},{"./token-assert":107,"assert":111,"colors":122}],4:[function(require,module,exports){
 var treeIterator = require('./tree-iterator');
 
 /**
@@ -1369,7 +1371,7 @@ JsFile.prototype = {
 
 module.exports = JsFile;
 
-},{"./tree-iterator":108}],5:[function(require,module,exports){
+},{"./tree-iterator":109}],5:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -1395,7 +1397,7 @@ module.exports.prototype = {
     }
 };
 
-},{"assert":110}],6:[function(require,module,exports){
+},{"assert":111}],6:[function(require,module,exports){
 var assert = require('assert');
 var Lu = require('unicode-6.3.0/categories/Lu/regex');
 var Ll = require('unicode-6.3.0/categories/Ll/regex');
@@ -1439,7 +1441,7 @@ module.exports.prototype = {
     }
 };
 
-},{"assert":110,"unicode-6.3.0/categories/Ll/regex":135,"unicode-6.3.0/categories/Lm/regex":136,"unicode-6.3.0/categories/Lo/regex":137,"unicode-6.3.0/categories/Lt/regex":138,"unicode-6.3.0/categories/Lu/regex":139}],7:[function(require,module,exports){
+},{"assert":111,"unicode-6.3.0/categories/Ll/regex":136,"unicode-6.3.0/categories/Lm/regex":137,"unicode-6.3.0/categories/Lo/regex":138,"unicode-6.3.0/categories/Lt/regex":139,"unicode-6.3.0/categories/Lu/regex":140}],7:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -1475,7 +1477,7 @@ module.exports.prototype = {
 
 };
 
-},{"assert":110}],8:[function(require,module,exports){
+},{"assert":111}],8:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -1542,7 +1544,7 @@ module.exports.prototype = {
 
 };
 
-},{"assert":110}],9:[function(require,module,exports){
+},{"assert":111}],9:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -1577,7 +1579,7 @@ module.exports.prototype = {
 
 };
 
-},{"assert":110}],10:[function(require,module,exports){
+},{"assert":111}],10:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -1601,7 +1603,7 @@ module.exports.prototype = {
     }
 };
 
-},{"assert":110}],11:[function(require,module,exports){
+},{"assert":111}],11:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -1654,7 +1656,7 @@ module.exports.prototype = {
 
 };
 
-},{"assert":110}],12:[function(require,module,exports){
+},{"assert":111}],12:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -1692,7 +1694,7 @@ module.exports.prototype = {
 
 };
 
-},{"assert":110}],13:[function(require,module,exports){
+},{"assert":111}],13:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -1726,7 +1728,7 @@ module.exports.prototype = {
 
 };
 
-},{"assert":110}],14:[function(require,module,exports){
+},{"assert":111}],14:[function(require,module,exports){
 module.exports = function() {};
 
 module.exports.prototype = {
@@ -1813,7 +1815,7 @@ module.exports.prototype = {
 
 };
 
-},{"assert":110}],16:[function(require,module,exports){
+},{"assert":111}],16:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -1848,7 +1850,7 @@ module.exports.prototype = {
 
 };
 
-},{"assert":110}],17:[function(require,module,exports){
+},{"assert":111}],17:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -1884,7 +1886,7 @@ module.exports.prototype = {
 
 };
 
-},{"assert":110}],18:[function(require,module,exports){
+},{"assert":111}],18:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -1935,7 +1937,7 @@ module.exports.prototype = {
 
 };
 
-},{"assert":110}],19:[function(require,module,exports){
+},{"assert":111}],19:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -1974,7 +1976,7 @@ module.exports.prototype = {
     }
 };
 
-},{"assert":110}],20:[function(require,module,exports){
+},{"assert":111}],20:[function(require,module,exports){
 var assert = require('assert');
 var defaultOperators = require('../utils').binaryOperators.slice().concat(['.']);
 
@@ -2016,7 +2018,7 @@ module.exports.prototype = {
     }
 };
 
-},{"../utils":109,"assert":110}],21:[function(require,module,exports){
+},{"../utils":110,"assert":111}],21:[function(require,module,exports){
 var assert = require('assert');
 var defaultKeywords = require('../utils').spacedKeywords;
 
@@ -2061,7 +2063,7 @@ module.exports.prototype = {
     }
 };
 
-},{"../utils":109,"assert":110}],22:[function(require,module,exports){
+},{"../utils":110,"assert":111}],22:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -2108,7 +2110,7 @@ module.exports.prototype = {
 
 };
 
-},{"assert":110}],23:[function(require,module,exports){
+},{"assert":111}],23:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -2158,7 +2160,7 @@ module.exports.prototype = {
 
 };
 
-},{"assert":110}],24:[function(require,module,exports){
+},{"assert":111}],24:[function(require,module,exports){
 var assert = require('assert');
 var utils = require('../utils');
 
@@ -2203,7 +2205,7 @@ module.exports.prototype = {
 
 };
 
-},{"../utils":109,"assert":110}],25:[function(require,module,exports){
+},{"../utils":110,"assert":111}],25:[function(require,module,exports){
 module.exports = function() {};
 
 module.exports.prototype = {
@@ -2261,7 +2263,7 @@ module.exports.prototype = {
     }
 };
 
-},{"../token-helper":107,"assert":110}],27:[function(require,module,exports){
+},{"../token-helper":108,"assert":111}],27:[function(require,module,exports){
 var assert = require('assert');
 var allOperators = require('../utils').binaryOperators;
 
@@ -2345,7 +2347,7 @@ module.exports.prototype = {
 
 };
 
-},{"../utils":109,"assert":110}],28:[function(require,module,exports){
+},{"../utils":110,"assert":111}],28:[function(require,module,exports){
 var assert = require('assert');
 var defaultKeywords = require('../utils').spacedKeywords;
 
@@ -2392,7 +2394,7 @@ module.exports.prototype = {
 
 };
 
-},{"../utils":109,"assert":110}],29:[function(require,module,exports){
+},{"../utils":110,"assert":111}],29:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -2424,7 +2426,7 @@ module.exports.prototype = {
     }
 };
 
-},{"assert":110}],30:[function(require,module,exports){
+},{"assert":111}],30:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -2462,7 +2464,7 @@ module.exports.prototype = {
 
 };
 
-},{"assert":110}],31:[function(require,module,exports){
+},{"assert":111}],31:[function(require,module,exports){
 var assert = require('assert');
 var defaultOperators = require('../utils').unaryOperators;
 
@@ -2510,7 +2512,7 @@ module.exports.prototype = {
     }
 };
 
-},{"../utils":109,"assert":110}],32:[function(require,module,exports){
+},{"../utils":110,"assert":111}],32:[function(require,module,exports){
 var assert = require('assert');
 var allOperators = require('../utils').binaryOperators;
 
@@ -2600,7 +2602,7 @@ module.exports.prototype = {
 
 };
 
-},{"../utils":109,"assert":110}],33:[function(require,module,exports){
+},{"../utils":110,"assert":111}],33:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -2638,7 +2640,7 @@ module.exports.prototype = {
 
 };
 
-},{"assert":110}],34:[function(require,module,exports){
+},{"assert":111}],34:[function(require,module,exports){
 var assert = require('assert');
 var util = require('util');
 var texts = [
@@ -2711,7 +2713,7 @@ module.exports.prototype = {
 
 };
 
-},{"../utils":109,"assert":110,"util":116}],35:[function(require,module,exports){
+},{"../utils":110,"assert":111,"util":117}],35:[function(require,module,exports){
 var assert = require('assert');
 var tokenHelper = require('../token-helper');
 
@@ -2759,7 +2761,7 @@ module.exports.prototype = {
 
 };
 
-},{"../token-helper":107,"assert":110}],36:[function(require,module,exports){
+},{"../token-helper":108,"assert":111}],36:[function(require,module,exports){
 var assert = require('assert');
 var defaultOperators = require('../utils').incrementAndDecrementOperators;
 
@@ -2809,7 +2811,7 @@ module.exports.prototype = {
     }
 };
 
-},{"../utils":109,"assert":110}],37:[function(require,module,exports){
+},{"../utils":110,"assert":111}],37:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -2862,7 +2864,7 @@ module.exports.prototype = {
 
 };
 
-},{"assert":110}],38:[function(require,module,exports){
+},{"assert":111}],38:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -2954,7 +2956,7 @@ module.exports.prototype = {
 
 };
 
-},{"assert":110}],39:[function(require,module,exports){
+},{"assert":111}],39:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -2997,7 +2999,7 @@ module.exports.prototype = {
     }
 };
 
-},{"assert":110}],40:[function(require,module,exports){
+},{"assert":111}],40:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -3111,7 +3113,7 @@ module.exports.prototype = {
 
 };
 
-},{"assert":110}],41:[function(require,module,exports){
+},{"assert":111}],41:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -3196,7 +3198,7 @@ module.exports.prototype = {
 
 };
 
-},{"assert":110}],42:[function(require,module,exports){
+},{"assert":111}],42:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -3287,7 +3289,7 @@ module.exports.prototype = {
 
 };
 
-},{"assert":110}],43:[function(require,module,exports){
+},{"assert":111}],43:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -3378,7 +3380,7 @@ module.exports.prototype = {
 
 };
 
-},{"assert":110}],44:[function(require,module,exports){
+},{"assert":111}],44:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -3464,7 +3466,7 @@ module.exports.prototype = {
 
 };
 
-},{"assert":110}],45:[function(require,module,exports){
+},{"assert":111}],45:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -3527,7 +3529,7 @@ function check(brackets, errors, insideTokens) {
     }
 }
 
-},{"assert":110}],46:[function(require,module,exports){
+},{"assert":111}],46:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -3591,7 +3593,7 @@ function check(brackets, errors, insideTokens) {
     }
 }
 
-},{"assert":110}],47:[function(require,module,exports){
+},{"assert":111}],47:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -3682,7 +3684,7 @@ module.exports.prototype = {
 
 };
 
-},{"assert":110}],48:[function(require,module,exports){
+},{"assert":111}],48:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -3717,7 +3719,7 @@ module.exports.prototype = {
 
 };
 
-},{"assert":110}],49:[function(require,module,exports){
+},{"assert":111}],49:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -3750,7 +3752,7 @@ module.exports.prototype = {
 
 };
 
-},{"assert":110}],50:[function(require,module,exports){
+},{"assert":111}],50:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -3797,7 +3799,7 @@ module.exports.prototype = {
 
 };
 
-},{"assert":110}],51:[function(require,module,exports){
+},{"assert":111}],51:[function(require,module,exports){
 var assert = require('assert');
 var commentHelper = require('../comment-helper');
 
@@ -3882,7 +3884,7 @@ module.exports.prototype = {
 
 };
 
-},{"../comment-helper":1,"assert":110}],52:[function(require,module,exports){
+},{"../comment-helper":1,"assert":111}],52:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -3946,7 +3948,7 @@ module.exports.prototype = {
 
 };
 
-},{"assert":110}],53:[function(require,module,exports){
+},{"assert":111}],53:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -3972,7 +3974,7 @@ module.exports.prototype = {
     }
 };
 
-},{"assert":110}],54:[function(require,module,exports){
+},{"assert":111}],54:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -4021,7 +4023,7 @@ module.exports.prototype = {
 
 };
 
-},{"assert":110}],55:[function(require,module,exports){
+},{"assert":111}],55:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -4065,7 +4067,7 @@ module.exports.prototype = {
 
 };
 
-},{"assert":110}],56:[function(require,module,exports){
+},{"assert":111}],56:[function(require,module,exports){
 var assert = require('assert');
 var Lu = require('unicode-6.3.0/categories/Lu/regex');
 var Ll = require('unicode-6.3.0/categories/Ll/regex');
@@ -4122,7 +4124,7 @@ module.exports.prototype = {
     }
 };
 
-},{"assert":110,"unicode-6.3.0/categories/Ll/regex":135,"unicode-6.3.0/categories/Lm/regex":136,"unicode-6.3.0/categories/Lo/regex":137,"unicode-6.3.0/categories/Lt/regex":138,"unicode-6.3.0/categories/Lu/regex":139}],57:[function(require,module,exports){
+},{"assert":111,"unicode-6.3.0/categories/Ll/regex":136,"unicode-6.3.0/categories/Lm/regex":137,"unicode-6.3.0/categories/Lo/regex":138,"unicode-6.3.0/categories/Lt/regex":139,"unicode-6.3.0/categories/Lu/regex":140}],57:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -4160,7 +4162,7 @@ module.exports.prototype = {
 
 };
 
-},{"assert":110}],58:[function(require,module,exports){
+},{"assert":111}],58:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -4196,7 +4198,7 @@ module.exports.prototype = {
 
 };
 
-},{"assert":110}],59:[function(require,module,exports){
+},{"assert":111}],59:[function(require,module,exports){
 var assert = require('assert');
 var defaultKeywords = require('../utils').curlyBracedKeywords;
 
@@ -4353,7 +4355,7 @@ module.exports.prototype = {
 
 };
 
-},{"../utils":109,"assert":110}],60:[function(require,module,exports){
+},{"../utils":110,"assert":111}],60:[function(require,module,exports){
 var assert = require('assert');
 var utils = require('../utils');
 
@@ -4407,7 +4409,7 @@ module.exports.prototype = {
 
 };
 
-},{"../utils":109,"assert":110}],61:[function(require,module,exports){
+},{"../utils":110,"assert":111}],61:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -4446,7 +4448,7 @@ module.exports.prototype = {
     }
 };
 
-},{"assert":110}],62:[function(require,module,exports){
+},{"assert":111}],62:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -4484,7 +4486,7 @@ module.exports.prototype = {
 
 };
 
-},{"assert":110}],63:[function(require,module,exports){
+},{"assert":111}],63:[function(require,module,exports){
 module.exports = function() {};
 
 module.exports.prototype = {
@@ -4552,7 +4554,7 @@ module.exports.prototype = {
 
 };
 
-},{"assert":110}],65:[function(require,module,exports){
+},{"assert":111}],65:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -4587,7 +4589,7 @@ module.exports.prototype = {
 
 };
 
-},{"assert":110}],66:[function(require,module,exports){
+},{"assert":111}],66:[function(require,module,exports){
 var assert = require('assert');
 
 function consecutive(file, errors) {
@@ -4677,7 +4679,7 @@ module.exports.prototype = {
     }
 };
 
-},{"assert":110}],67:[function(require,module,exports){
+},{"assert":111}],67:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -4716,7 +4718,7 @@ module.exports.prototype = {
     }
 };
 
-},{"assert":110}],68:[function(require,module,exports){
+},{"assert":111}],68:[function(require,module,exports){
 var assert = require('assert');
 var tokenHelper = require('../token-helper');
 var defaultOperators = require('../utils').binaryOperators.slice();
@@ -4807,7 +4809,7 @@ module.exports.prototype = {
     }
 };
 
-},{"../token-helper":107,"../utils":109,"assert":110}],69:[function(require,module,exports){
+},{"../token-helper":108,"../utils":110,"assert":111}],69:[function(require,module,exports){
 var assert = require('assert');
 var defaultKeywords = require('../utils').spacedKeywords;
 
@@ -4867,7 +4869,7 @@ module.exports.prototype = {
     }
 };
 
-},{"../utils":109,"assert":110}],70:[function(require,module,exports){
+},{"../utils":110,"assert":111}],70:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -4912,45 +4914,23 @@ module.exports.prototype = {
             if (closingBracket.loc.start.line - prevToken.loc.start.line < 2) {
                 errors.add('Expected a padding newline before closing curly brace', prevToken.loc.end);
             }
-
-            file.getComments().some(function(comment) {
-                if (comment.range[1] < openingBracket.range[0] || closingBracket.range[1] < comment.range[0]) {
-                    return false;
-                }
-
-                if (comment.loc.start.line - openingBracket.loc.start.line < 2) {
-                    errors.add('Expected a padding newline after opening curly brace', comment.loc.start);
-                } else if (closingBracket.loc.start.line - comment.loc.end.line < 2) {
-                    errors.add('Expected a padding newline before closing curly brace', comment.loc.end);
-                }
-
-                return false;
-            });
         });
     },
 
     format: function(file, error) {
-        var tokens = file.getTokens();
         var pos = file.getPosByLineAndColumn(error.line, error.column);
         if (error.message.indexOf('after') !== -1) {
-            var openingBracketPos = file.getTokenPosByRangeStart(pos - 1);
-            var openingBracket = tokens[openingBracketPos];
-            while (!openingBracketPos || !openingBracket || openingBracket.value !== '{') {
-                pos--;
-                openingBracketPos = file.getTokenPosByRangeStart(pos - 1);
-                openingBracket = tokens[openingBracketPos];
-            }
-            var nextToken = tokens[openingBracketPos + 1];
+            var openingBracket = file.getTokenByRangeEnd(pos);
+            var nextToken = file.getNextToken(openingBracket);
             if (nextToken.loc.start.line - openingBracket.loc.start.line === 1) {
-                file.splice(pos, 0, '\n');
+                file.splice(nextToken.range[0], 0, '\n');
             } else {
-                file.splice(pos, 0, '\n\n');
+                file.splice(nextToken.range[0], 0, '\n\n');
             }
         } else {
             while (!file.getTokenPosByRangeStart(pos)) { pos++; }
-            var closingBracketPos = file.getTokenPosByRangeStart(pos);
-            var closingBracket = tokens[closingBracketPos];
-            var prevToken = tokens[closingBracketPos - 1];
+            var closingBracket = file.getTokenByRangeStart(pos);
+            var prevToken = file.getPrevToken(closingBracket);
             if (closingBracket.loc.start.line - prevToken.loc.start.line === 1) {
                 file.splice(pos, 0, '\n');
             } else {
@@ -4961,7 +4941,7 @@ module.exports.prototype = {
     }
 };
 
-},{"assert":110}],71:[function(require,module,exports){
+},{"assert":111}],71:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -5011,7 +4991,7 @@ module.exports.prototype = {
 
 };
 
-},{"assert":110}],72:[function(require,module,exports){
+},{"assert":111}],72:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -5073,7 +5053,7 @@ module.exports.prototype = {
 
 };
 
-},{"assert":110}],73:[function(require,module,exports){
+},{"assert":111}],73:[function(require,module,exports){
 module.exports = function() {};
 
 module.exports.prototype = {
@@ -5196,7 +5176,7 @@ module.exports.prototype = {
 
 };
 
-},{"../utils":109,"assert":110}],75:[function(require,module,exports){
+},{"../utils":110,"assert":111}],75:[function(require,module,exports){
 var assert = require('assert');
 var util = require('util');
 var texts = [
@@ -5278,7 +5258,7 @@ module.exports.prototype = {
 
 };
 
-},{"../utils":109,"assert":110,"util":116}],76:[function(require,module,exports){
+},{"../utils":110,"assert":111,"util":117}],76:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -5340,7 +5320,7 @@ module.exports.prototype = {
     }
 };
 
-},{"assert":110}],77:[function(require,module,exports){
+},{"assert":111}],77:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -5378,7 +5358,7 @@ module.exports.prototype = {
 
 };
 
-},{"assert":110}],78:[function(require,module,exports){
+},{"assert":111}],78:[function(require,module,exports){
 var assert = require('assert');
 var defaultOperators = require('../utils').unaryOperators;
 
@@ -5445,7 +5425,7 @@ module.exports.prototype = {
 
 };
 
-},{"../utils":109,"assert":110}],79:[function(require,module,exports){
+},{"../utils":110,"assert":111}],79:[function(require,module,exports){
 var assert = require('assert');
 var allOperators = require('../../lib/utils').binaryOperators.filter(function(operator) {
     return operator !== ',';
@@ -5541,7 +5521,7 @@ module.exports.prototype = {
 
 };
 
-},{"../../lib/utils":109,"assert":110}],80:[function(require,module,exports){
+},{"../../lib/utils":110,"assert":111}],80:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -5584,7 +5564,7 @@ module.exports.prototype = {
 
 };
 
-},{"assert":110}],81:[function(require,module,exports){
+},{"assert":111}],81:[function(require,module,exports){
 var assert = require('assert');
 var util = require('util');
 var texts = [
@@ -5657,7 +5637,7 @@ module.exports.prototype = {
 
 };
 
-},{"../utils":109,"assert":110,"util":116}],82:[function(require,module,exports){
+},{"../utils":110,"assert":111,"util":117}],82:[function(require,module,exports){
 var assert = require('assert');
 var tokenHelper = require('../token-helper');
 
@@ -5703,7 +5683,7 @@ module.exports.prototype = {
 
 };
 
-},{"../token-helper":107,"assert":110}],83:[function(require,module,exports){
+},{"../token-helper":108,"assert":111}],83:[function(require,module,exports){
 var assert = require('assert');
 var defaultOperators = require('../utils').incrementAndDecrementOperators;
 
@@ -5759,7 +5739,7 @@ module.exports.prototype = {
     }
 };
 
-},{"../utils":109,"assert":110}],84:[function(require,module,exports){
+},{"../utils":110,"assert":111}],84:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -5810,7 +5790,7 @@ module.exports.prototype = {
 
 };
 
-},{"assert":110}],85:[function(require,module,exports){
+},{"assert":111}],85:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -5901,7 +5881,7 @@ module.exports.prototype = {
 
 };
 
-},{"assert":110}],86:[function(require,module,exports){
+},{"assert":111}],86:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -5944,7 +5924,7 @@ module.exports.prototype = {
     }
 };
 
-},{"assert":110}],87:[function(require,module,exports){
+},{"assert":111}],87:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -5989,7 +5969,7 @@ module.exports.prototype = {
     }
 };
 
-},{"assert":110}],88:[function(require,module,exports){
+},{"assert":111}],88:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -6111,7 +6091,7 @@ module.exports.prototype = {
 
 };
 
-},{"assert":110}],89:[function(require,module,exports){
+},{"assert":111}],89:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -6158,7 +6138,7 @@ module.exports.prototype = {
     }
 };
 
-},{"assert":110}],90:[function(require,module,exports){
+},{"assert":111}],90:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -6243,7 +6223,7 @@ module.exports.prototype = {
 
 };
 
-},{"assert":110}],91:[function(require,module,exports){
+},{"assert":111}],91:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -6340,7 +6320,7 @@ module.exports.prototype = {
 
 };
 
-},{"assert":110}],92:[function(require,module,exports){
+},{"assert":111}],92:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -6431,7 +6411,7 @@ module.exports.prototype = {
 
 };
 
-},{"assert":110}],93:[function(require,module,exports){
+},{"assert":111}],93:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -6516,7 +6496,7 @@ module.exports.prototype = {
 
 };
 
-},{"assert":110}],94:[function(require,module,exports){
+},{"assert":111}],94:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -6588,7 +6568,7 @@ module.exports.prototype = {
 
 };
 
-},{"assert":110}],95:[function(require,module,exports){
+},{"assert":111}],95:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -6654,7 +6634,7 @@ module.exports.prototype = {
 
 };
 
-},{"assert":110}],96:[function(require,module,exports){
+},{"assert":111}],96:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -6781,7 +6761,7 @@ module.exports.prototype = {
     }
 };
 
-},{"assert":110}],97:[function(require,module,exports){
+},{"assert":111}],97:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -6847,7 +6827,7 @@ module.exports.prototype = {
 
 };
 
-},{"assert":110}],98:[function(require,module,exports){
+},{"assert":111}],98:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -6894,7 +6874,7 @@ module.exports.prototype = {
 
 };
 
-},{"assert":110}],99:[function(require,module,exports){
+},{"assert":111}],99:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -6968,7 +6948,7 @@ function checkKeywords(name, keywords) {
     return true;
 }
 
-},{"assert":110}],100:[function(require,module,exports){
+},{"assert":111}],100:[function(require,module,exports){
 var assert = require('assert');
 var commentHelper = require('../comment-helper');
 
@@ -7326,7 +7306,7 @@ module.exports.prototype = {
 
 };
 
-},{"../comment-helper":1,"assert":110}],101:[function(require,module,exports){
+},{"../comment-helper":1,"assert":111}],101:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -7419,7 +7399,7 @@ module.exports.prototype = {
 
 };
 
-},{"assert":110}],102:[function(require,module,exports){
+},{"assert":111}],102:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -7481,7 +7461,109 @@ module.exports.prototype = {
     }
 };
 
-},{"assert":110}],103:[function(require,module,exports){
+},{"assert":111}],103:[function(require,module,exports){
+var assert = require('assert');
+var commentHelper = require('../comment-helper');
+
+module.exports = function() {};
+
+module.exports.prototype = {
+
+    configure: function(validateObjectIndentation) {
+        assert(
+            validateObjectIndentation === '\t' ||
+                (typeof validateObjectIndentation === 'number' && validateObjectIndentation > 0),
+            'validateObjectIndentation option requires a positive number of spaces or "\\t"'
+        );
+
+        if (typeof validateObjectIndentation === 'number') {
+            this._indentChar = ' ';
+            this._indentSize = validateObjectIndentation;
+        } else {
+            this._indentChar = '\t';
+            this._indentSize = 1;
+        }
+
+    },
+
+    getOptionName: function() {
+        return 'validateObjectIndentation';
+    },
+
+    check: function(file, errors) {
+
+        var lines = commentHelper.getLinesWithCommentsRemoved(file, errors);
+        var indentChar = this._indentChar;
+        var indentSize = this._indentSize;
+        function isMultiline(node) {
+            return node.loc.start.line !== node.loc.end.line;
+        }
+
+        function getIndentationFromLine(i) {
+            var rNotIndentChar = new RegExp('[^' + indentChar + ']');
+            var firstContent = 0;
+            if (lines[i - 1]) {
+                firstContent = Math.max(lines[i - 1].search(rNotIndentChar), 0);
+            }
+            return firstContent;
+        }
+
+        file.iterateNodesByType('ObjectExpression', function(node) {
+            var linesInspected = [node.loc.start.line];
+            //console.log(node.loc.start.line);
+            var expectedIndentation = getIndentationFromLine(node.loc.start.line) + indentSize;
+            if (isMultiline(node) && node.properties.length > 0) {
+                node.properties.forEach(function(property) {
+                    var startLine = property.loc.start.line;
+                    if (linesInspected.indexOf(startLine) === -1 &&
+                    getIndentationFromLine(startLine) !== expectedIndentation) {
+                        errors.add(
+                            'Expected indentation of ' + expectedIndentation + ' characters',
+                            startLine,
+                            expectedIndentation
+                        );
+                    }
+                    linesInspected.push(startLine);
+                });
+            }
+        });
+    },
+
+    format: function(file, error) {
+        var pos = file.getPosByLineAndColumn(error.line, 0);
+        var amount = error.column;
+        var str = '';
+        for (var i = 0;i < amount;i++) {
+            for (var j = 0;j < this._indentSize;j++) {
+                str += this._indentChar;
+            }
+        }
+        var toRemove = 0;
+        var source = file.getSource();
+        while (source[pos + toRemove] === this._indentChar) { toRemove++; }
+        //console.log('toRemove ' + error.line + ' :' + toRemove);
+        var propertyPos = pos;
+        var property = file.getNodeByRange(propertyPos);
+        while ((!property || property.type !== 'Property') && propertyPos < source.length) {
+            propertyPos++;
+            property = file.getNodeByRange(propertyPos);
+        }
+        property = property;
+
+        var startLine = property.loc.start.line;
+        var endLine = property.loc.end.line;
+        for (var line = startLine; line <= endLine; line++) {
+            //console.log('line: ' + line + '\ntoRemove: ' + toRemove +
+            //    '\nstrLength: ' + str.length + '\namount: ' + amount);
+            pos = file.getPosByLineAndColumn(line, 0);
+            file.splice(pos, toRemove, str);
+        }
+
+    }
+
+};
+
+},{"../comment-helper":1,"assert":111}],104:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -7554,7 +7636,7 @@ module.exports.prototype = {
 
 };
 
-},{"assert":110}],104:[function(require,module,exports){
+},{"assert":111}],105:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -7618,7 +7700,7 @@ module.exports.prototype = {
 
 };
 
-},{"assert":110}],105:[function(require,module,exports){
+},{"assert":111}],106:[function(require,module,exports){
 var defaultEsprima = require('esprima');
 var harmonyEsprima = require('esprima-harmony-jscs');
 var Errors = require('./errors');
@@ -7835,7 +7917,7 @@ StringChecker.prototype = {
 
 module.exports = StringChecker;
 
-},{"./config/configuration":2,"./errors":3,"./js-file":4,"esprima":129,"esprima-harmony-jscs":128}],106:[function(require,module,exports){
+},{"./config/configuration":2,"./errors":3,"./js-file":4,"esprima":130,"esprima-harmony-jscs":129}],107:[function(require,module,exports){
 var utils = require('util');
 var EventEmitter = require('events').EventEmitter;
 
@@ -8001,7 +8083,7 @@ TokenAssert.prototype.noTokenBefore = function(options) {
 
 module.exports = TokenAssert;
 
-},{"events":111,"util":116}],107:[function(require,module,exports){
+},{"events":112,"util":117}],108:[function(require,module,exports){
 /**
  * Returns token by range start. Ignores ()
  *
@@ -8120,7 +8202,7 @@ exports.getPointerEntities = function(column, length) {
     return column - 1 + Math.ceil(length / 2);
 };
 
-},{}],108:[function(require,module,exports){
+},{}],109:[function(require,module,exports){
 var estraverse = require('estraverse');
 
 module.exports = {
@@ -8171,7 +8253,7 @@ function iterate(node, cb) {
     }
 }
 
-},{"estraverse":130}],109:[function(require,module,exports){
+},{"estraverse":131}],110:[function(require,module,exports){
 // 7.5.2 Keywords
 var ES3_KEYWORDS = {
     'break': true,
@@ -8341,7 +8423,7 @@ exports.unaryOperators = ['-', '+', '!', '~'].concat(exports.incrementAndDecreme
  */
 exports.operators = exports.binaryOperators.concat(exports.unaryOperators);
 
-},{}],110:[function(require,module,exports){
+},{}],111:[function(require,module,exports){
 // http://wiki.commonjs.org/wiki/Unit_Testing/1.0
 //
 // THIS IS NOT TESTED NOR LIKELY TO WORK OUTSIDE V8!
@@ -8703,7 +8785,7 @@ var objectKeys = Object.keys || function (obj) {
   return keys;
 };
 
-},{"util/":116}],111:[function(require,module,exports){
+},{"util/":117}],112:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -9006,7 +9088,7 @@ function isUndefined(arg) {
   return arg === void 0;
 }
 
-},{}],112:[function(require,module,exports){
+},{}],113:[function(require,module,exports){
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
@@ -9031,7 +9113,7 @@ if (typeof Object.create === 'function') {
   }
 }
 
-},{}],113:[function(require,module,exports){
+},{}],114:[function(require,module,exports){
 (function (process){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -9259,7 +9341,7 @@ var substr = 'ab'.substr(-1) === 'b'
 ;
 
 }).call(this,require('_process'))
-},{"_process":114}],114:[function(require,module,exports){
+},{"_process":115}],115:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -9347,14 +9429,14 @@ process.chdir = function (dir) {
     throw new Error('process.chdir is not supported');
 };
 
-},{}],115:[function(require,module,exports){
+},{}],116:[function(require,module,exports){
 module.exports = function isBuffer(arg) {
   return arg && typeof arg === 'object'
     && typeof arg.copy === 'function'
     && typeof arg.fill === 'function'
     && typeof arg.readUInt8 === 'function';
 }
-},{}],116:[function(require,module,exports){
+},{}],117:[function(require,module,exports){
 (function (process,global){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -9944,7 +10026,7 @@ function hasOwnProperty(obj, prop) {
 }
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./support/isBuffer":115,"_process":114,"inherits":112}],117:[function(require,module,exports){
+},{"./support/isBuffer":116,"_process":115,"inherits":113}],118:[function(require,module,exports){
 /*
 
 The MIT License (MIT)
@@ -10121,7 +10203,7 @@ for (var map in colors.maps) {
 }
 
 defineProps(colors, init());
-},{"./custom/trap":118,"./custom/zalgo":119,"./maps/america":122,"./maps/rainbow":123,"./maps/random":124,"./maps/zebra":125,"./styles":126,"./system/supports-colors":127}],118:[function(require,module,exports){
+},{"./custom/trap":119,"./custom/zalgo":120,"./maps/america":123,"./maps/rainbow":124,"./maps/random":125,"./maps/zebra":126,"./styles":127,"./system/supports-colors":128}],119:[function(require,module,exports){
 module['exports'] = function runTheTrap (text, options) {
   var result = "";
   text = text || "Run the trap, drop the bass";
@@ -10168,7 +10250,7 @@ module['exports'] = function runTheTrap (text, options) {
 
 }
 
-},{}],119:[function(require,module,exports){
+},{}],120:[function(require,module,exports){
 // please no
 module['exports'] = function zalgo(text, options) {
   text = text || "   he is here   ";
@@ -10274,7 +10356,7 @@ module['exports'] = function zalgo(text, options) {
   return heComes(text);
 }
 
-},{}],120:[function(require,module,exports){
+},{}],121:[function(require,module,exports){
 var colors = require('./colors'),
     styles = require('./styles');
 
@@ -10393,7 +10475,7 @@ module['exports'] = function () {
   };
 
 };
-},{"./colors":117,"./styles":126}],121:[function(require,module,exports){
+},{"./colors":118,"./styles":127}],122:[function(require,module,exports){
 var colors = require('./colors');
 module['exports'] = colors;
 
@@ -10406,7 +10488,7 @@ module['exports'] = colors;
 //
 //
 var extendStringPrototype = require('./extendStringPrototype')();
-},{"./colors":117,"./extendStringPrototype":120}],122:[function(require,module,exports){
+},{"./colors":118,"./extendStringPrototype":121}],123:[function(require,module,exports){
 var colors = require('../colors');
 
 module['exports'] = (function() {
@@ -10419,7 +10501,7 @@ module['exports'] = (function() {
     }
   }
 })();
-},{"../colors":117}],123:[function(require,module,exports){
+},{"../colors":118}],124:[function(require,module,exports){
 var colors = require('../colors');
 
 module['exports'] = (function () {
@@ -10434,7 +10516,7 @@ module['exports'] = (function () {
 })();
 
 
-},{"../colors":117}],124:[function(require,module,exports){
+},{"../colors":118}],125:[function(require,module,exports){
 var colors = require('../colors');
 
 module['exports'] = (function () {
@@ -10443,13 +10525,13 @@ module['exports'] = (function () {
     return letter === " " ? letter : colors[available[Math.round(Math.random() * (available.length - 1))]](letter);
   };
 })();
-},{"../colors":117}],125:[function(require,module,exports){
+},{"../colors":118}],126:[function(require,module,exports){
 var colors = require('../colors');
 
 module['exports'] = function (letter, i, exploded) {
   return i % 2 === 0 ? letter : colors.inverse(letter);
 };
-},{"../colors":117}],126:[function(require,module,exports){
+},{"../colors":118}],127:[function(require,module,exports){
 /*
 The MIT License (MIT)
 
@@ -10527,7 +10609,7 @@ Object.keys(codes).forEach(function (key) {
   style.open = '\u001b[' + val[0] + 'm';
   style.close = '\u001b[' + val[1] + 'm';
 });
-},{}],127:[function(require,module,exports){
+},{}],128:[function(require,module,exports){
 (function (process){
 /*
 The MIT License (MIT)
@@ -10591,7 +10673,7 @@ module.exports = (function () {
   return false;
 })();
 }).call(this,require('_process'))
-},{"_process":114}],128:[function(require,module,exports){
+},{"_process":115}],129:[function(require,module,exports){
 /*
   Copyright (C) 2013 Ariya Hidayat <ariya.hidayat@gmail.com>
   Copyright (C) 2013 Thaddee Tyl <thaddee.tyl@gmail.com>
@@ -15982,7 +16064,7 @@ parseYieldExpression: true
 }));
 /* vim: set sw=4 ts=4 et tw=80 : */
 
-},{}],129:[function(require,module,exports){
+},{}],130:[function(require,module,exports){
 /*
   Copyright (C) 2013 Ariya Hidayat <ariya.hidayat@gmail.com>
   Copyright (C) 2013 Thaddee Tyl <thaddee.tyl@gmail.com>
@@ -19740,7 +19822,7 @@ parseStatement: true, parseSourceElement: true */
 }));
 /* vim: set sw=4 ts=4 et tw=80 : */
 
-},{}],130:[function(require,module,exports){
+},{}],131:[function(require,module,exports){
 /*
   Copyright (C) 2012-2013 Yusuke Suzuki <utatane.tea@gmail.com>
   Copyright (C) 2012 Ariya Hidayat <ariya.hidayat@gmail.com>
@@ -20585,7 +20667,7 @@ parseStatement: true, parseSourceElement: true */
 }));
 /* vim: set sw=4 ts=4 et tw=80 : */
 
-},{}],131:[function(require,module,exports){
+},{}],132:[function(require,module,exports){
 (function (process){
 module.exports = minimatch
 minimatch.Minimatch = Minimatch
@@ -21434,7 +21516,7 @@ function regExpEscape (s) {
 }
 
 }).call(this,require('_process'))
-},{"_process":114,"brace-expansion":132}],132:[function(require,module,exports){
+},{"_process":115,"brace-expansion":133}],133:[function(require,module,exports){
 var concatMap = require('concat-map');
 var balanced = require('balanced-match');
 
@@ -21627,7 +21709,7 @@ function expand(str, isTop) {
 }
 
 
-},{"balanced-match":133,"concat-map":134}],133:[function(require,module,exports){
+},{"balanced-match":134,"concat-map":135}],134:[function(require,module,exports){
 module.exports = balanced;
 function balanced(a, b, str) {
   var bal = 0;
@@ -21667,7 +21749,7 @@ function balanced(a, b, str) {
   }
 }
 
-},{}],134:[function(require,module,exports){
+},{}],135:[function(require,module,exports){
 module.exports = function (xs, fn) {
     var res = [];
     for (var i = 0; i < xs.length; i++) {
@@ -21682,17 +21764,17 @@ var isArray = Array.isArray || function (xs) {
     return Object.prototype.toString.call(xs) === '[object Array]';
 };
 
-},{}],135:[function(require,module,exports){
-module.exports=/[a-z\xB5\xDF-\xF6\xF8-\xFF\u0101\u0103\u0105\u0107\u0109\u010B\u010D\u010F\u0111\u0113\u0115\u0117\u0119\u011B\u011D\u011F\u0121\u0123\u0125\u0127\u0129\u012B\u012D\u012F\u0131\u0133\u0135\u0137\u0138\u013A\u013C\u013E\u0140\u0142\u0144\u0146\u0148\u0149\u014B\u014D\u014F\u0151\u0153\u0155\u0157\u0159\u015B\u015D\u015F\u0161\u0163\u0165\u0167\u0169\u016B\u016D\u016F\u0171\u0173\u0175\u0177\u017A\u017C\u017E-\u0180\u0183\u0185\u0188\u018C\u018D\u0192\u0195\u0199-\u019B\u019E\u01A1\u01A3\u01A5\u01A8\u01AA\u01AB\u01AD\u01B0\u01B4\u01B6\u01B9\u01BA\u01BD-\u01BF\u01C6\u01C9\u01CC\u01CE\u01D0\u01D2\u01D4\u01D6\u01D8\u01DA\u01DC\u01DD\u01DF\u01E1\u01E3\u01E5\u01E7\u01E9\u01EB\u01ED\u01EF\u01F0\u01F3\u01F5\u01F9\u01FB\u01FD\u01FF\u0201\u0203\u0205\u0207\u0209\u020B\u020D\u020F\u0211\u0213\u0215\u0217\u0219\u021B\u021D\u021F\u0221\u0223\u0225\u0227\u0229\u022B\u022D\u022F\u0231\u0233-\u0239\u023C\u023F\u0240\u0242\u0247\u0249\u024B\u024D\u024F-\u0293\u0295-\u02AF\u0371\u0373\u0377\u037B-\u037D\u0390\u03AC-\u03CE\u03D0\u03D1\u03D5-\u03D7\u03D9\u03DB\u03DD\u03DF\u03E1\u03E3\u03E5\u03E7\u03E9\u03EB\u03ED\u03EF-\u03F3\u03F5\u03F8\u03FB\u03FC\u0430-\u045F\u0461\u0463\u0465\u0467\u0469\u046B\u046D\u046F\u0471\u0473\u0475\u0477\u0479\u047B\u047D\u047F\u0481\u048B\u048D\u048F\u0491\u0493\u0495\u0497\u0499\u049B\u049D\u049F\u04A1\u04A3\u04A5\u04A7\u04A9\u04AB\u04AD\u04AF\u04B1\u04B3\u04B5\u04B7\u04B9\u04BB\u04BD\u04BF\u04C2\u04C4\u04C6\u04C8\u04CA\u04CC\u04CE\u04CF\u04D1\u04D3\u04D5\u04D7\u04D9\u04DB\u04DD\u04DF\u04E1\u04E3\u04E5\u04E7\u04E9\u04EB\u04ED\u04EF\u04F1\u04F3\u04F5\u04F7\u04F9\u04FB\u04FD\u04FF\u0501\u0503\u0505\u0507\u0509\u050B\u050D\u050F\u0511\u0513\u0515\u0517\u0519\u051B\u051D\u051F\u0521\u0523\u0525\u0527\u0561-\u0587\u1D00-\u1D2B\u1D6B-\u1D77\u1D79-\u1D9A\u1E01\u1E03\u1E05\u1E07\u1E09\u1E0B\u1E0D\u1E0F\u1E11\u1E13\u1E15\u1E17\u1E19\u1E1B\u1E1D\u1E1F\u1E21\u1E23\u1E25\u1E27\u1E29\u1E2B\u1E2D\u1E2F\u1E31\u1E33\u1E35\u1E37\u1E39\u1E3B\u1E3D\u1E3F\u1E41\u1E43\u1E45\u1E47\u1E49\u1E4B\u1E4D\u1E4F\u1E51\u1E53\u1E55\u1E57\u1E59\u1E5B\u1E5D\u1E5F\u1E61\u1E63\u1E65\u1E67\u1E69\u1E6B\u1E6D\u1E6F\u1E71\u1E73\u1E75\u1E77\u1E79\u1E7B\u1E7D\u1E7F\u1E81\u1E83\u1E85\u1E87\u1E89\u1E8B\u1E8D\u1E8F\u1E91\u1E93\u1E95-\u1E9D\u1E9F\u1EA1\u1EA3\u1EA5\u1EA7\u1EA9\u1EAB\u1EAD\u1EAF\u1EB1\u1EB3\u1EB5\u1EB7\u1EB9\u1EBB\u1EBD\u1EBF\u1EC1\u1EC3\u1EC5\u1EC7\u1EC9\u1ECB\u1ECD\u1ECF\u1ED1\u1ED3\u1ED5\u1ED7\u1ED9\u1EDB\u1EDD\u1EDF\u1EE1\u1EE3\u1EE5\u1EE7\u1EE9\u1EEB\u1EED\u1EEF\u1EF1\u1EF3\u1EF5\u1EF7\u1EF9\u1EFB\u1EFD\u1EFF-\u1F07\u1F10-\u1F15\u1F20-\u1F27\u1F30-\u1F37\u1F40-\u1F45\u1F50-\u1F57\u1F60-\u1F67\u1F70-\u1F7D\u1F80-\u1F87\u1F90-\u1F97\u1FA0-\u1FA7\u1FB0-\u1FB4\u1FB6\u1FB7\u1FBE\u1FC2-\u1FC4\u1FC6\u1FC7\u1FD0-\u1FD3\u1FD6\u1FD7\u1FE0-\u1FE7\u1FF2-\u1FF4\u1FF6\u1FF7\u210A\u210E\u210F\u2113\u212F\u2134\u2139\u213C\u213D\u2146-\u2149\u214E\u2184\u2C30-\u2C5E\u2C61\u2C65\u2C66\u2C68\u2C6A\u2C6C\u2C71\u2C73\u2C74\u2C76-\u2C7B\u2C81\u2C83\u2C85\u2C87\u2C89\u2C8B\u2C8D\u2C8F\u2C91\u2C93\u2C95\u2C97\u2C99\u2C9B\u2C9D\u2C9F\u2CA1\u2CA3\u2CA5\u2CA7\u2CA9\u2CAB\u2CAD\u2CAF\u2CB1\u2CB3\u2CB5\u2CB7\u2CB9\u2CBB\u2CBD\u2CBF\u2CC1\u2CC3\u2CC5\u2CC7\u2CC9\u2CCB\u2CCD\u2CCF\u2CD1\u2CD3\u2CD5\u2CD7\u2CD9\u2CDB\u2CDD\u2CDF\u2CE1\u2CE3\u2CE4\u2CEC\u2CEE\u2CF3\u2D00-\u2D25\u2D27\u2D2D\uA641\uA643\uA645\uA647\uA649\uA64B\uA64D\uA64F\uA651\uA653\uA655\uA657\uA659\uA65B\uA65D\uA65F\uA661\uA663\uA665\uA667\uA669\uA66B\uA66D\uA681\uA683\uA685\uA687\uA689\uA68B\uA68D\uA68F\uA691\uA693\uA695\uA697\uA723\uA725\uA727\uA729\uA72B\uA72D\uA72F-\uA731\uA733\uA735\uA737\uA739\uA73B\uA73D\uA73F\uA741\uA743\uA745\uA747\uA749\uA74B\uA74D\uA74F\uA751\uA753\uA755\uA757\uA759\uA75B\uA75D\uA75F\uA761\uA763\uA765\uA767\uA769\uA76B\uA76D\uA76F\uA771-\uA778\uA77A\uA77C\uA77F\uA781\uA783\uA785\uA787\uA78C\uA78E\uA791\uA793\uA7A1\uA7A3\uA7A5\uA7A7\uA7A9\uA7FA\uFB00-\uFB06\uFB13-\uFB17\uFF41-\uFF5A]|\uD801[\uDC28-\uDC4F]|\uD835[\uDC1A-\uDC33\uDC4E-\uDC54\uDC56-\uDC67\uDC82-\uDC9B\uDCB6-\uDCB9\uDCBB\uDCBD-\uDCC3\uDCC5-\uDCCF\uDCEA-\uDD03\uDD1E-\uDD37\uDD52-\uDD6B\uDD86-\uDD9F\uDDBA-\uDDD3\uDDEE-\uDE07\uDE22-\uDE3B\uDE56-\uDE6F\uDE8A-\uDEA5\uDEC2-\uDEDA\uDEDC-\uDEE1\uDEFC-\uDF14\uDF16-\uDF1B\uDF36-\uDF4E\uDF50-\uDF55\uDF70-\uDF88\uDF8A-\uDF8F\uDFAA-\uDFC2\uDFC4-\uDFC9\uDFCB]/
 },{}],136:[function(require,module,exports){
-module.exports=/[\u02B0-\u02C1\u02C6-\u02D1\u02E0-\u02E4\u02EC\u02EE\u0374\u037A\u0559\u0640\u06E5\u06E6\u07F4\u07F5\u07FA\u081A\u0824\u0828\u0971\u0E46\u0EC6\u10FC\u17D7\u1843\u1AA7\u1C78-\u1C7D\u1D2C-\u1D6A\u1D78\u1D9B-\u1DBF\u2071\u207F\u2090-\u209C\u2C7C\u2C7D\u2D6F\u2E2F\u3005\u3031-\u3035\u303B\u309D\u309E\u30FC-\u30FE\uA015\uA4F8-\uA4FD\uA60C\uA67F\uA717-\uA71F\uA770\uA788\uA7F8\uA7F9\uA9CF\uAA70\uAADD\uAAF3\uAAF4\uFF70\uFF9E\uFF9F]|\uD81B[\uDF93-\uDF9F]/
+module.exports=/[a-z\xB5\xDF-\xF6\xF8-\xFF\u0101\u0103\u0105\u0107\u0109\u010B\u010D\u010F\u0111\u0113\u0115\u0117\u0119\u011B\u011D\u011F\u0121\u0123\u0125\u0127\u0129\u012B\u012D\u012F\u0131\u0133\u0135\u0137\u0138\u013A\u013C\u013E\u0140\u0142\u0144\u0146\u0148\u0149\u014B\u014D\u014F\u0151\u0153\u0155\u0157\u0159\u015B\u015D\u015F\u0161\u0163\u0165\u0167\u0169\u016B\u016D\u016F\u0171\u0173\u0175\u0177\u017A\u017C\u017E-\u0180\u0183\u0185\u0188\u018C\u018D\u0192\u0195\u0199-\u019B\u019E\u01A1\u01A3\u01A5\u01A8\u01AA\u01AB\u01AD\u01B0\u01B4\u01B6\u01B9\u01BA\u01BD-\u01BF\u01C6\u01C9\u01CC\u01CE\u01D0\u01D2\u01D4\u01D6\u01D8\u01DA\u01DC\u01DD\u01DF\u01E1\u01E3\u01E5\u01E7\u01E9\u01EB\u01ED\u01EF\u01F0\u01F3\u01F5\u01F9\u01FB\u01FD\u01FF\u0201\u0203\u0205\u0207\u0209\u020B\u020D\u020F\u0211\u0213\u0215\u0217\u0219\u021B\u021D\u021F\u0221\u0223\u0225\u0227\u0229\u022B\u022D\u022F\u0231\u0233-\u0239\u023C\u023F\u0240\u0242\u0247\u0249\u024B\u024D\u024F-\u0293\u0295-\u02AF\u0371\u0373\u0377\u037B-\u037D\u0390\u03AC-\u03CE\u03D0\u03D1\u03D5-\u03D7\u03D9\u03DB\u03DD\u03DF\u03E1\u03E3\u03E5\u03E7\u03E9\u03EB\u03ED\u03EF-\u03F3\u03F5\u03F8\u03FB\u03FC\u0430-\u045F\u0461\u0463\u0465\u0467\u0469\u046B\u046D\u046F\u0471\u0473\u0475\u0477\u0479\u047B\u047D\u047F\u0481\u048B\u048D\u048F\u0491\u0493\u0495\u0497\u0499\u049B\u049D\u049F\u04A1\u04A3\u04A5\u04A7\u04A9\u04AB\u04AD\u04AF\u04B1\u04B3\u04B5\u04B7\u04B9\u04BB\u04BD\u04BF\u04C2\u04C4\u04C6\u04C8\u04CA\u04CC\u04CE\u04CF\u04D1\u04D3\u04D5\u04D7\u04D9\u04DB\u04DD\u04DF\u04E1\u04E3\u04E5\u04E7\u04E9\u04EB\u04ED\u04EF\u04F1\u04F3\u04F5\u04F7\u04F9\u04FB\u04FD\u04FF\u0501\u0503\u0505\u0507\u0509\u050B\u050D\u050F\u0511\u0513\u0515\u0517\u0519\u051B\u051D\u051F\u0521\u0523\u0525\u0527\u0561-\u0587\u1D00-\u1D2B\u1D6B-\u1D77\u1D79-\u1D9A\u1E01\u1E03\u1E05\u1E07\u1E09\u1E0B\u1E0D\u1E0F\u1E11\u1E13\u1E15\u1E17\u1E19\u1E1B\u1E1D\u1E1F\u1E21\u1E23\u1E25\u1E27\u1E29\u1E2B\u1E2D\u1E2F\u1E31\u1E33\u1E35\u1E37\u1E39\u1E3B\u1E3D\u1E3F\u1E41\u1E43\u1E45\u1E47\u1E49\u1E4B\u1E4D\u1E4F\u1E51\u1E53\u1E55\u1E57\u1E59\u1E5B\u1E5D\u1E5F\u1E61\u1E63\u1E65\u1E67\u1E69\u1E6B\u1E6D\u1E6F\u1E71\u1E73\u1E75\u1E77\u1E79\u1E7B\u1E7D\u1E7F\u1E81\u1E83\u1E85\u1E87\u1E89\u1E8B\u1E8D\u1E8F\u1E91\u1E93\u1E95-\u1E9D\u1E9F\u1EA1\u1EA3\u1EA5\u1EA7\u1EA9\u1EAB\u1EAD\u1EAF\u1EB1\u1EB3\u1EB5\u1EB7\u1EB9\u1EBB\u1EBD\u1EBF\u1EC1\u1EC3\u1EC5\u1EC7\u1EC9\u1ECB\u1ECD\u1ECF\u1ED1\u1ED3\u1ED5\u1ED7\u1ED9\u1EDB\u1EDD\u1EDF\u1EE1\u1EE3\u1EE5\u1EE7\u1EE9\u1EEB\u1EED\u1EEF\u1EF1\u1EF3\u1EF5\u1EF7\u1EF9\u1EFB\u1EFD\u1EFF-\u1F07\u1F10-\u1F15\u1F20-\u1F27\u1F30-\u1F37\u1F40-\u1F45\u1F50-\u1F57\u1F60-\u1F67\u1F70-\u1F7D\u1F80-\u1F87\u1F90-\u1F97\u1FA0-\u1FA7\u1FB0-\u1FB4\u1FB6\u1FB7\u1FBE\u1FC2-\u1FC4\u1FC6\u1FC7\u1FD0-\u1FD3\u1FD6\u1FD7\u1FE0-\u1FE7\u1FF2-\u1FF4\u1FF6\u1FF7\u210A\u210E\u210F\u2113\u212F\u2134\u2139\u213C\u213D\u2146-\u2149\u214E\u2184\u2C30-\u2C5E\u2C61\u2C65\u2C66\u2C68\u2C6A\u2C6C\u2C71\u2C73\u2C74\u2C76-\u2C7B\u2C81\u2C83\u2C85\u2C87\u2C89\u2C8B\u2C8D\u2C8F\u2C91\u2C93\u2C95\u2C97\u2C99\u2C9B\u2C9D\u2C9F\u2CA1\u2CA3\u2CA5\u2CA7\u2CA9\u2CAB\u2CAD\u2CAF\u2CB1\u2CB3\u2CB5\u2CB7\u2CB9\u2CBB\u2CBD\u2CBF\u2CC1\u2CC3\u2CC5\u2CC7\u2CC9\u2CCB\u2CCD\u2CCF\u2CD1\u2CD3\u2CD5\u2CD7\u2CD9\u2CDB\u2CDD\u2CDF\u2CE1\u2CE3\u2CE4\u2CEC\u2CEE\u2CF3\u2D00-\u2D25\u2D27\u2D2D\uA641\uA643\uA645\uA647\uA649\uA64B\uA64D\uA64F\uA651\uA653\uA655\uA657\uA659\uA65B\uA65D\uA65F\uA661\uA663\uA665\uA667\uA669\uA66B\uA66D\uA681\uA683\uA685\uA687\uA689\uA68B\uA68D\uA68F\uA691\uA693\uA695\uA697\uA723\uA725\uA727\uA729\uA72B\uA72D\uA72F-\uA731\uA733\uA735\uA737\uA739\uA73B\uA73D\uA73F\uA741\uA743\uA745\uA747\uA749\uA74B\uA74D\uA74F\uA751\uA753\uA755\uA757\uA759\uA75B\uA75D\uA75F\uA761\uA763\uA765\uA767\uA769\uA76B\uA76D\uA76F\uA771-\uA778\uA77A\uA77C\uA77F\uA781\uA783\uA785\uA787\uA78C\uA78E\uA791\uA793\uA7A1\uA7A3\uA7A5\uA7A7\uA7A9\uA7FA\uFB00-\uFB06\uFB13-\uFB17\uFF41-\uFF5A]|\uD801[\uDC28-\uDC4F]|\uD835[\uDC1A-\uDC33\uDC4E-\uDC54\uDC56-\uDC67\uDC82-\uDC9B\uDCB6-\uDCB9\uDCBB\uDCBD-\uDCC3\uDCC5-\uDCCF\uDCEA-\uDD03\uDD1E-\uDD37\uDD52-\uDD6B\uDD86-\uDD9F\uDDBA-\uDDD3\uDDEE-\uDE07\uDE22-\uDE3B\uDE56-\uDE6F\uDE8A-\uDEA5\uDEC2-\uDEDA\uDEDC-\uDEE1\uDEFC-\uDF14\uDF16-\uDF1B\uDF36-\uDF4E\uDF50-\uDF55\uDF70-\uDF88\uDF8A-\uDF8F\uDFAA-\uDFC2\uDFC4-\uDFC9\uDFCB]/
 },{}],137:[function(require,module,exports){
-module.exports=/[\xAA\xBA\u01BB\u01C0-\u01C3\u0294\u05D0-\u05EA\u05F0-\u05F2\u0620-\u063F\u0641-\u064A\u066E\u066F\u0671-\u06D3\u06D5\u06EE\u06EF\u06FA-\u06FC\u06FF\u0710\u0712-\u072F\u074D-\u07A5\u07B1\u07CA-\u07EA\u0800-\u0815\u0840-\u0858\u08A0\u08A2-\u08AC\u0904-\u0939\u093D\u0950\u0958-\u0961\u0972-\u0977\u0979-\u097F\u0985-\u098C\u098F\u0990\u0993-\u09A8\u09AA-\u09B0\u09B2\u09B6-\u09B9\u09BD\u09CE\u09DC\u09DD\u09DF-\u09E1\u09F0\u09F1\u0A05-\u0A0A\u0A0F\u0A10\u0A13-\u0A28\u0A2A-\u0A30\u0A32\u0A33\u0A35\u0A36\u0A38\u0A39\u0A59-\u0A5C\u0A5E\u0A72-\u0A74\u0A85-\u0A8D\u0A8F-\u0A91\u0A93-\u0AA8\u0AAA-\u0AB0\u0AB2\u0AB3\u0AB5-\u0AB9\u0ABD\u0AD0\u0AE0\u0AE1\u0B05-\u0B0C\u0B0F\u0B10\u0B13-\u0B28\u0B2A-\u0B30\u0B32\u0B33\u0B35-\u0B39\u0B3D\u0B5C\u0B5D\u0B5F-\u0B61\u0B71\u0B83\u0B85-\u0B8A\u0B8E-\u0B90\u0B92-\u0B95\u0B99\u0B9A\u0B9C\u0B9E\u0B9F\u0BA3\u0BA4\u0BA8-\u0BAA\u0BAE-\u0BB9\u0BD0\u0C05-\u0C0C\u0C0E-\u0C10\u0C12-\u0C28\u0C2A-\u0C33\u0C35-\u0C39\u0C3D\u0C58\u0C59\u0C60\u0C61\u0C85-\u0C8C\u0C8E-\u0C90\u0C92-\u0CA8\u0CAA-\u0CB3\u0CB5-\u0CB9\u0CBD\u0CDE\u0CE0\u0CE1\u0CF1\u0CF2\u0D05-\u0D0C\u0D0E-\u0D10\u0D12-\u0D3A\u0D3D\u0D4E\u0D60\u0D61\u0D7A-\u0D7F\u0D85-\u0D96\u0D9A-\u0DB1\u0DB3-\u0DBB\u0DBD\u0DC0-\u0DC6\u0E01-\u0E30\u0E32\u0E33\u0E40-\u0E45\u0E81\u0E82\u0E84\u0E87\u0E88\u0E8A\u0E8D\u0E94-\u0E97\u0E99-\u0E9F\u0EA1-\u0EA3\u0EA5\u0EA7\u0EAA\u0EAB\u0EAD-\u0EB0\u0EB2\u0EB3\u0EBD\u0EC0-\u0EC4\u0EDC-\u0EDF\u0F00\u0F40-\u0F47\u0F49-\u0F6C\u0F88-\u0F8C\u1000-\u102A\u103F\u1050-\u1055\u105A-\u105D\u1061\u1065\u1066\u106E-\u1070\u1075-\u1081\u108E\u10D0-\u10FA\u10FD-\u1248\u124A-\u124D\u1250-\u1256\u1258\u125A-\u125D\u1260-\u1288\u128A-\u128D\u1290-\u12B0\u12B2-\u12B5\u12B8-\u12BE\u12C0\u12C2-\u12C5\u12C8-\u12D6\u12D8-\u1310\u1312-\u1315\u1318-\u135A\u1380-\u138F\u13A0-\u13F4\u1401-\u166C\u166F-\u167F\u1681-\u169A\u16A0-\u16EA\u1700-\u170C\u170E-\u1711\u1720-\u1731\u1740-\u1751\u1760-\u176C\u176E-\u1770\u1780-\u17B3\u17DC\u1820-\u1842\u1844-\u1877\u1880-\u18A8\u18AA\u18B0-\u18F5\u1900-\u191C\u1950-\u196D\u1970-\u1974\u1980-\u19AB\u19C1-\u19C7\u1A00-\u1A16\u1A20-\u1A54\u1B05-\u1B33\u1B45-\u1B4B\u1B83-\u1BA0\u1BAE\u1BAF\u1BBA-\u1BE5\u1C00-\u1C23\u1C4D-\u1C4F\u1C5A-\u1C77\u1CE9-\u1CEC\u1CEE-\u1CF1\u1CF5\u1CF6\u2135-\u2138\u2D30-\u2D67\u2D80-\u2D96\u2DA0-\u2DA6\u2DA8-\u2DAE\u2DB0-\u2DB6\u2DB8-\u2DBE\u2DC0-\u2DC6\u2DC8-\u2DCE\u2DD0-\u2DD6\u2DD8-\u2DDE\u3006\u303C\u3041-\u3096\u309F\u30A1-\u30FA\u30FF\u3105-\u312D\u3131-\u318E\u31A0-\u31BA\u31F0-\u31FF\u3400-\u4DB5\u4E00-\u9FCC\uA000-\uA014\uA016-\uA48C\uA4D0-\uA4F7\uA500-\uA60B\uA610-\uA61F\uA62A\uA62B\uA66E\uA6A0-\uA6E5\uA7FB-\uA801\uA803-\uA805\uA807-\uA80A\uA80C-\uA822\uA840-\uA873\uA882-\uA8B3\uA8F2-\uA8F7\uA8FB\uA90A-\uA925\uA930-\uA946\uA960-\uA97C\uA984-\uA9B2\uAA00-\uAA28\uAA40-\uAA42\uAA44-\uAA4B\uAA60-\uAA6F\uAA71-\uAA76\uAA7A\uAA80-\uAAAF\uAAB1\uAAB5\uAAB6\uAAB9-\uAABD\uAAC0\uAAC2\uAADB\uAADC\uAAE0-\uAAEA\uAAF2\uAB01-\uAB06\uAB09-\uAB0E\uAB11-\uAB16\uAB20-\uAB26\uAB28-\uAB2E\uABC0-\uABE2\uAC00-\uD7A3\uD7B0-\uD7C6\uD7CB-\uD7FB\uF900-\uFA6D\uFA70-\uFAD9\uFB1D\uFB1F-\uFB28\uFB2A-\uFB36\uFB38-\uFB3C\uFB3E\uFB40\uFB41\uFB43\uFB44\uFB46-\uFBB1\uFBD3-\uFD3D\uFD50-\uFD8F\uFD92-\uFDC7\uFDF0-\uFDFB\uFE70-\uFE74\uFE76-\uFEFC\uFF66-\uFF6F\uFF71-\uFF9D\uFFA0-\uFFBE\uFFC2-\uFFC7\uFFCA-\uFFCF\uFFD2-\uFFD7\uFFDA-\uFFDC]|\uD800[\uDC00-\uDC0B\uDC0D-\uDC26\uDC28-\uDC3A\uDC3C\uDC3D\uDC3F-\uDC4D\uDC50-\uDC5D\uDC80-\uDCFA\uDE80-\uDE9C\uDEA0-\uDED0\uDF00-\uDF1E\uDF30-\uDF40\uDF42-\uDF49\uDF80-\uDF9D\uDFA0-\uDFC3\uDFC8-\uDFCF]|\uD801[\uDC50-\uDC9D]|\uD802[\uDC00-\uDC05\uDC08\uDC0A-\uDC35\uDC37\uDC38\uDC3C\uDC3F-\uDC55\uDD00-\uDD15\uDD20-\uDD39\uDD80-\uDDB7\uDDBE\uDDBF\uDE00\uDE10-\uDE13\uDE15-\uDE17\uDE19-\uDE33\uDE60-\uDE7C\uDF00-\uDF35\uDF40-\uDF55\uDF60-\uDF72]|\uD803[\uDC00-\uDC48]|\uD804[\uDC03-\uDC37\uDC83-\uDCAF\uDCD0-\uDCE8\uDD03-\uDD26\uDD83-\uDDB2\uDDC1-\uDDC4]|\uD805[\uDE80-\uDEAA]|\uD808[\uDC00-\uDF6E]|[\uD80C\uD840-\uD868\uD86A-\uD86C][\uDC00-\uDFFF]|\uD80D[\uDC00-\uDC2E]|\uD81A[\uDC00-\uDE38]|\uD81B[\uDF00-\uDF44\uDF50]|\uD82C[\uDC00\uDC01]|\uD83B[\uDE00-\uDE03\uDE05-\uDE1F\uDE21\uDE22\uDE24\uDE27\uDE29-\uDE32\uDE34-\uDE37\uDE39\uDE3B\uDE42\uDE47\uDE49\uDE4B\uDE4D-\uDE4F\uDE51\uDE52\uDE54\uDE57\uDE59\uDE5B\uDE5D\uDE5F\uDE61\uDE62\uDE64\uDE67-\uDE6A\uDE6C-\uDE72\uDE74-\uDE77\uDE79-\uDE7C\uDE7E\uDE80-\uDE89\uDE8B-\uDE9B\uDEA1-\uDEA3\uDEA5-\uDEA9\uDEAB-\uDEBB]|\uD869[\uDC00-\uDED6\uDF00-\uDFFF]|\uD86D[\uDC00-\uDF34\uDF40-\uDFFF]|\uD86E[\uDC00-\uDC1D]|\uD87E[\uDC00-\uDE1D]/
+module.exports=/[\u02B0-\u02C1\u02C6-\u02D1\u02E0-\u02E4\u02EC\u02EE\u0374\u037A\u0559\u0640\u06E5\u06E6\u07F4\u07F5\u07FA\u081A\u0824\u0828\u0971\u0E46\u0EC6\u10FC\u17D7\u1843\u1AA7\u1C78-\u1C7D\u1D2C-\u1D6A\u1D78\u1D9B-\u1DBF\u2071\u207F\u2090-\u209C\u2C7C\u2C7D\u2D6F\u2E2F\u3005\u3031-\u3035\u303B\u309D\u309E\u30FC-\u30FE\uA015\uA4F8-\uA4FD\uA60C\uA67F\uA717-\uA71F\uA770\uA788\uA7F8\uA7F9\uA9CF\uAA70\uAADD\uAAF3\uAAF4\uFF70\uFF9E\uFF9F]|\uD81B[\uDF93-\uDF9F]/
 },{}],138:[function(require,module,exports){
-module.exports=/[\u01C5\u01C8\u01CB\u01F2\u1F88-\u1F8F\u1F98-\u1F9F\u1FA8-\u1FAF\u1FBC\u1FCC\u1FFC]/
+module.exports=/[\xAA\xBA\u01BB\u01C0-\u01C3\u0294\u05D0-\u05EA\u05F0-\u05F2\u0620-\u063F\u0641-\u064A\u066E\u066F\u0671-\u06D3\u06D5\u06EE\u06EF\u06FA-\u06FC\u06FF\u0710\u0712-\u072F\u074D-\u07A5\u07B1\u07CA-\u07EA\u0800-\u0815\u0840-\u0858\u08A0\u08A2-\u08AC\u0904-\u0939\u093D\u0950\u0958-\u0961\u0972-\u0977\u0979-\u097F\u0985-\u098C\u098F\u0990\u0993-\u09A8\u09AA-\u09B0\u09B2\u09B6-\u09B9\u09BD\u09CE\u09DC\u09DD\u09DF-\u09E1\u09F0\u09F1\u0A05-\u0A0A\u0A0F\u0A10\u0A13-\u0A28\u0A2A-\u0A30\u0A32\u0A33\u0A35\u0A36\u0A38\u0A39\u0A59-\u0A5C\u0A5E\u0A72-\u0A74\u0A85-\u0A8D\u0A8F-\u0A91\u0A93-\u0AA8\u0AAA-\u0AB0\u0AB2\u0AB3\u0AB5-\u0AB9\u0ABD\u0AD0\u0AE0\u0AE1\u0B05-\u0B0C\u0B0F\u0B10\u0B13-\u0B28\u0B2A-\u0B30\u0B32\u0B33\u0B35-\u0B39\u0B3D\u0B5C\u0B5D\u0B5F-\u0B61\u0B71\u0B83\u0B85-\u0B8A\u0B8E-\u0B90\u0B92-\u0B95\u0B99\u0B9A\u0B9C\u0B9E\u0B9F\u0BA3\u0BA4\u0BA8-\u0BAA\u0BAE-\u0BB9\u0BD0\u0C05-\u0C0C\u0C0E-\u0C10\u0C12-\u0C28\u0C2A-\u0C33\u0C35-\u0C39\u0C3D\u0C58\u0C59\u0C60\u0C61\u0C85-\u0C8C\u0C8E-\u0C90\u0C92-\u0CA8\u0CAA-\u0CB3\u0CB5-\u0CB9\u0CBD\u0CDE\u0CE0\u0CE1\u0CF1\u0CF2\u0D05-\u0D0C\u0D0E-\u0D10\u0D12-\u0D3A\u0D3D\u0D4E\u0D60\u0D61\u0D7A-\u0D7F\u0D85-\u0D96\u0D9A-\u0DB1\u0DB3-\u0DBB\u0DBD\u0DC0-\u0DC6\u0E01-\u0E30\u0E32\u0E33\u0E40-\u0E45\u0E81\u0E82\u0E84\u0E87\u0E88\u0E8A\u0E8D\u0E94-\u0E97\u0E99-\u0E9F\u0EA1-\u0EA3\u0EA5\u0EA7\u0EAA\u0EAB\u0EAD-\u0EB0\u0EB2\u0EB3\u0EBD\u0EC0-\u0EC4\u0EDC-\u0EDF\u0F00\u0F40-\u0F47\u0F49-\u0F6C\u0F88-\u0F8C\u1000-\u102A\u103F\u1050-\u1055\u105A-\u105D\u1061\u1065\u1066\u106E-\u1070\u1075-\u1081\u108E\u10D0-\u10FA\u10FD-\u1248\u124A-\u124D\u1250-\u1256\u1258\u125A-\u125D\u1260-\u1288\u128A-\u128D\u1290-\u12B0\u12B2-\u12B5\u12B8-\u12BE\u12C0\u12C2-\u12C5\u12C8-\u12D6\u12D8-\u1310\u1312-\u1315\u1318-\u135A\u1380-\u138F\u13A0-\u13F4\u1401-\u166C\u166F-\u167F\u1681-\u169A\u16A0-\u16EA\u1700-\u170C\u170E-\u1711\u1720-\u1731\u1740-\u1751\u1760-\u176C\u176E-\u1770\u1780-\u17B3\u17DC\u1820-\u1842\u1844-\u1877\u1880-\u18A8\u18AA\u18B0-\u18F5\u1900-\u191C\u1950-\u196D\u1970-\u1974\u1980-\u19AB\u19C1-\u19C7\u1A00-\u1A16\u1A20-\u1A54\u1B05-\u1B33\u1B45-\u1B4B\u1B83-\u1BA0\u1BAE\u1BAF\u1BBA-\u1BE5\u1C00-\u1C23\u1C4D-\u1C4F\u1C5A-\u1C77\u1CE9-\u1CEC\u1CEE-\u1CF1\u1CF5\u1CF6\u2135-\u2138\u2D30-\u2D67\u2D80-\u2D96\u2DA0-\u2DA6\u2DA8-\u2DAE\u2DB0-\u2DB6\u2DB8-\u2DBE\u2DC0-\u2DC6\u2DC8-\u2DCE\u2DD0-\u2DD6\u2DD8-\u2DDE\u3006\u303C\u3041-\u3096\u309F\u30A1-\u30FA\u30FF\u3105-\u312D\u3131-\u318E\u31A0-\u31BA\u31F0-\u31FF\u3400-\u4DB5\u4E00-\u9FCC\uA000-\uA014\uA016-\uA48C\uA4D0-\uA4F7\uA500-\uA60B\uA610-\uA61F\uA62A\uA62B\uA66E\uA6A0-\uA6E5\uA7FB-\uA801\uA803-\uA805\uA807-\uA80A\uA80C-\uA822\uA840-\uA873\uA882-\uA8B3\uA8F2-\uA8F7\uA8FB\uA90A-\uA925\uA930-\uA946\uA960-\uA97C\uA984-\uA9B2\uAA00-\uAA28\uAA40-\uAA42\uAA44-\uAA4B\uAA60-\uAA6F\uAA71-\uAA76\uAA7A\uAA80-\uAAAF\uAAB1\uAAB5\uAAB6\uAAB9-\uAABD\uAAC0\uAAC2\uAADB\uAADC\uAAE0-\uAAEA\uAAF2\uAB01-\uAB06\uAB09-\uAB0E\uAB11-\uAB16\uAB20-\uAB26\uAB28-\uAB2E\uABC0-\uABE2\uAC00-\uD7A3\uD7B0-\uD7C6\uD7CB-\uD7FB\uF900-\uFA6D\uFA70-\uFAD9\uFB1D\uFB1F-\uFB28\uFB2A-\uFB36\uFB38-\uFB3C\uFB3E\uFB40\uFB41\uFB43\uFB44\uFB46-\uFBB1\uFBD3-\uFD3D\uFD50-\uFD8F\uFD92-\uFDC7\uFDF0-\uFDFB\uFE70-\uFE74\uFE76-\uFEFC\uFF66-\uFF6F\uFF71-\uFF9D\uFFA0-\uFFBE\uFFC2-\uFFC7\uFFCA-\uFFCF\uFFD2-\uFFD7\uFFDA-\uFFDC]|\uD800[\uDC00-\uDC0B\uDC0D-\uDC26\uDC28-\uDC3A\uDC3C\uDC3D\uDC3F-\uDC4D\uDC50-\uDC5D\uDC80-\uDCFA\uDE80-\uDE9C\uDEA0-\uDED0\uDF00-\uDF1E\uDF30-\uDF40\uDF42-\uDF49\uDF80-\uDF9D\uDFA0-\uDFC3\uDFC8-\uDFCF]|\uD801[\uDC50-\uDC9D]|\uD802[\uDC00-\uDC05\uDC08\uDC0A-\uDC35\uDC37\uDC38\uDC3C\uDC3F-\uDC55\uDD00-\uDD15\uDD20-\uDD39\uDD80-\uDDB7\uDDBE\uDDBF\uDE00\uDE10-\uDE13\uDE15-\uDE17\uDE19-\uDE33\uDE60-\uDE7C\uDF00-\uDF35\uDF40-\uDF55\uDF60-\uDF72]|\uD803[\uDC00-\uDC48]|\uD804[\uDC03-\uDC37\uDC83-\uDCAF\uDCD0-\uDCE8\uDD03-\uDD26\uDD83-\uDDB2\uDDC1-\uDDC4]|\uD805[\uDE80-\uDEAA]|\uD808[\uDC00-\uDF6E]|[\uD80C\uD840-\uD868\uD86A-\uD86C][\uDC00-\uDFFF]|\uD80D[\uDC00-\uDC2E]|\uD81A[\uDC00-\uDE38]|\uD81B[\uDF00-\uDF44\uDF50]|\uD82C[\uDC00\uDC01]|\uD83B[\uDE00-\uDE03\uDE05-\uDE1F\uDE21\uDE22\uDE24\uDE27\uDE29-\uDE32\uDE34-\uDE37\uDE39\uDE3B\uDE42\uDE47\uDE49\uDE4B\uDE4D-\uDE4F\uDE51\uDE52\uDE54\uDE57\uDE59\uDE5B\uDE5D\uDE5F\uDE61\uDE62\uDE64\uDE67-\uDE6A\uDE6C-\uDE72\uDE74-\uDE77\uDE79-\uDE7C\uDE7E\uDE80-\uDE89\uDE8B-\uDE9B\uDEA1-\uDEA3\uDEA5-\uDEA9\uDEAB-\uDEBB]|\uD869[\uDC00-\uDED6\uDF00-\uDFFF]|\uD86D[\uDC00-\uDF34\uDF40-\uDFFF]|\uD86E[\uDC00-\uDC1D]|\uD87E[\uDC00-\uDE1D]/
 },{}],139:[function(require,module,exports){
-module.exports=/[A-Z\xC0-\xD6\xD8-\xDE\u0100\u0102\u0104\u0106\u0108\u010A\u010C\u010E\u0110\u0112\u0114\u0116\u0118\u011A\u011C\u011E\u0120\u0122\u0124\u0126\u0128\u012A\u012C\u012E\u0130\u0132\u0134\u0136\u0139\u013B\u013D\u013F\u0141\u0143\u0145\u0147\u014A\u014C\u014E\u0150\u0152\u0154\u0156\u0158\u015A\u015C\u015E\u0160\u0162\u0164\u0166\u0168\u016A\u016C\u016E\u0170\u0172\u0174\u0176\u0178\u0179\u017B\u017D\u0181\u0182\u0184\u0186\u0187\u0189-\u018B\u018E-\u0191\u0193\u0194\u0196-\u0198\u019C\u019D\u019F\u01A0\u01A2\u01A4\u01A6\u01A7\u01A9\u01AC\u01AE\u01AF\u01B1-\u01B3\u01B5\u01B7\u01B8\u01BC\u01C4\u01C7\u01CA\u01CD\u01CF\u01D1\u01D3\u01D5\u01D7\u01D9\u01DB\u01DE\u01E0\u01E2\u01E4\u01E6\u01E8\u01EA\u01EC\u01EE\u01F1\u01F4\u01F6-\u01F8\u01FA\u01FC\u01FE\u0200\u0202\u0204\u0206\u0208\u020A\u020C\u020E\u0210\u0212\u0214\u0216\u0218\u021A\u021C\u021E\u0220\u0222\u0224\u0226\u0228\u022A\u022C\u022E\u0230\u0232\u023A\u023B\u023D\u023E\u0241\u0243-\u0246\u0248\u024A\u024C\u024E\u0370\u0372\u0376\u0386\u0388-\u038A\u038C\u038E\u038F\u0391-\u03A1\u03A3-\u03AB\u03CF\u03D2-\u03D4\u03D8\u03DA\u03DC\u03DE\u03E0\u03E2\u03E4\u03E6\u03E8\u03EA\u03EC\u03EE\u03F4\u03F7\u03F9\u03FA\u03FD-\u042F\u0460\u0462\u0464\u0466\u0468\u046A\u046C\u046E\u0470\u0472\u0474\u0476\u0478\u047A\u047C\u047E\u0480\u048A\u048C\u048E\u0490\u0492\u0494\u0496\u0498\u049A\u049C\u049E\u04A0\u04A2\u04A4\u04A6\u04A8\u04AA\u04AC\u04AE\u04B0\u04B2\u04B4\u04B6\u04B8\u04BA\u04BC\u04BE\u04C0\u04C1\u04C3\u04C5\u04C7\u04C9\u04CB\u04CD\u04D0\u04D2\u04D4\u04D6\u04D8\u04DA\u04DC\u04DE\u04E0\u04E2\u04E4\u04E6\u04E8\u04EA\u04EC\u04EE\u04F0\u04F2\u04F4\u04F6\u04F8\u04FA\u04FC\u04FE\u0500\u0502\u0504\u0506\u0508\u050A\u050C\u050E\u0510\u0512\u0514\u0516\u0518\u051A\u051C\u051E\u0520\u0522\u0524\u0526\u0531-\u0556\u10A0-\u10C5\u10C7\u10CD\u1E00\u1E02\u1E04\u1E06\u1E08\u1E0A\u1E0C\u1E0E\u1E10\u1E12\u1E14\u1E16\u1E18\u1E1A\u1E1C\u1E1E\u1E20\u1E22\u1E24\u1E26\u1E28\u1E2A\u1E2C\u1E2E\u1E30\u1E32\u1E34\u1E36\u1E38\u1E3A\u1E3C\u1E3E\u1E40\u1E42\u1E44\u1E46\u1E48\u1E4A\u1E4C\u1E4E\u1E50\u1E52\u1E54\u1E56\u1E58\u1E5A\u1E5C\u1E5E\u1E60\u1E62\u1E64\u1E66\u1E68\u1E6A\u1E6C\u1E6E\u1E70\u1E72\u1E74\u1E76\u1E78\u1E7A\u1E7C\u1E7E\u1E80\u1E82\u1E84\u1E86\u1E88\u1E8A\u1E8C\u1E8E\u1E90\u1E92\u1E94\u1E9E\u1EA0\u1EA2\u1EA4\u1EA6\u1EA8\u1EAA\u1EAC\u1EAE\u1EB0\u1EB2\u1EB4\u1EB6\u1EB8\u1EBA\u1EBC\u1EBE\u1EC0\u1EC2\u1EC4\u1EC6\u1EC8\u1ECA\u1ECC\u1ECE\u1ED0\u1ED2\u1ED4\u1ED6\u1ED8\u1EDA\u1EDC\u1EDE\u1EE0\u1EE2\u1EE4\u1EE6\u1EE8\u1EEA\u1EEC\u1EEE\u1EF0\u1EF2\u1EF4\u1EF6\u1EF8\u1EFA\u1EFC\u1EFE\u1F08-\u1F0F\u1F18-\u1F1D\u1F28-\u1F2F\u1F38-\u1F3F\u1F48-\u1F4D\u1F59\u1F5B\u1F5D\u1F5F\u1F68-\u1F6F\u1FB8-\u1FBB\u1FC8-\u1FCB\u1FD8-\u1FDB\u1FE8-\u1FEC\u1FF8-\u1FFB\u2102\u2107\u210B-\u210D\u2110-\u2112\u2115\u2119-\u211D\u2124\u2126\u2128\u212A-\u212D\u2130-\u2133\u213E\u213F\u2145\u2183\u2C00-\u2C2E\u2C60\u2C62-\u2C64\u2C67\u2C69\u2C6B\u2C6D-\u2C70\u2C72\u2C75\u2C7E-\u2C80\u2C82\u2C84\u2C86\u2C88\u2C8A\u2C8C\u2C8E\u2C90\u2C92\u2C94\u2C96\u2C98\u2C9A\u2C9C\u2C9E\u2CA0\u2CA2\u2CA4\u2CA6\u2CA8\u2CAA\u2CAC\u2CAE\u2CB0\u2CB2\u2CB4\u2CB6\u2CB8\u2CBA\u2CBC\u2CBE\u2CC0\u2CC2\u2CC4\u2CC6\u2CC8\u2CCA\u2CCC\u2CCE\u2CD0\u2CD2\u2CD4\u2CD6\u2CD8\u2CDA\u2CDC\u2CDE\u2CE0\u2CE2\u2CEB\u2CED\u2CF2\uA640\uA642\uA644\uA646\uA648\uA64A\uA64C\uA64E\uA650\uA652\uA654\uA656\uA658\uA65A\uA65C\uA65E\uA660\uA662\uA664\uA666\uA668\uA66A\uA66C\uA680\uA682\uA684\uA686\uA688\uA68A\uA68C\uA68E\uA690\uA692\uA694\uA696\uA722\uA724\uA726\uA728\uA72A\uA72C\uA72E\uA732\uA734\uA736\uA738\uA73A\uA73C\uA73E\uA740\uA742\uA744\uA746\uA748\uA74A\uA74C\uA74E\uA750\uA752\uA754\uA756\uA758\uA75A\uA75C\uA75E\uA760\uA762\uA764\uA766\uA768\uA76A\uA76C\uA76E\uA779\uA77B\uA77D\uA77E\uA780\uA782\uA784\uA786\uA78B\uA78D\uA790\uA792\uA7A0\uA7A2\uA7A4\uA7A6\uA7A8\uA7AA\uFF21-\uFF3A]|\uD801[\uDC00-\uDC27]|\uD835[\uDC00-\uDC19\uDC34-\uDC4D\uDC68-\uDC81\uDC9C\uDC9E\uDC9F\uDCA2\uDCA5\uDCA6\uDCA9-\uDCAC\uDCAE-\uDCB5\uDCD0-\uDCE9\uDD04\uDD05\uDD07-\uDD0A\uDD0D-\uDD14\uDD16-\uDD1C\uDD38\uDD39\uDD3B-\uDD3E\uDD40-\uDD44\uDD46\uDD4A-\uDD50\uDD6C-\uDD85\uDDA0-\uDDB9\uDDD4-\uDDED\uDE08-\uDE21\uDE3C-\uDE55\uDE70-\uDE89\uDEA8-\uDEC0\uDEE2-\uDEFA\uDF1C-\uDF34\uDF56-\uDF6E\uDF90-\uDFA8\uDFCA]/
+module.exports=/[\u01C5\u01C8\u01CB\u01F2\u1F88-\u1F8F\u1F98-\u1F9F\u1FA8-\u1FAF\u1FBC\u1FCC\u1FFC]/
 },{}],140:[function(require,module,exports){
+module.exports=/[A-Z\xC0-\xD6\xD8-\xDE\u0100\u0102\u0104\u0106\u0108\u010A\u010C\u010E\u0110\u0112\u0114\u0116\u0118\u011A\u011C\u011E\u0120\u0122\u0124\u0126\u0128\u012A\u012C\u012E\u0130\u0132\u0134\u0136\u0139\u013B\u013D\u013F\u0141\u0143\u0145\u0147\u014A\u014C\u014E\u0150\u0152\u0154\u0156\u0158\u015A\u015C\u015E\u0160\u0162\u0164\u0166\u0168\u016A\u016C\u016E\u0170\u0172\u0174\u0176\u0178\u0179\u017B\u017D\u0181\u0182\u0184\u0186\u0187\u0189-\u018B\u018E-\u0191\u0193\u0194\u0196-\u0198\u019C\u019D\u019F\u01A0\u01A2\u01A4\u01A6\u01A7\u01A9\u01AC\u01AE\u01AF\u01B1-\u01B3\u01B5\u01B7\u01B8\u01BC\u01C4\u01C7\u01CA\u01CD\u01CF\u01D1\u01D3\u01D5\u01D7\u01D9\u01DB\u01DE\u01E0\u01E2\u01E4\u01E6\u01E8\u01EA\u01EC\u01EE\u01F1\u01F4\u01F6-\u01F8\u01FA\u01FC\u01FE\u0200\u0202\u0204\u0206\u0208\u020A\u020C\u020E\u0210\u0212\u0214\u0216\u0218\u021A\u021C\u021E\u0220\u0222\u0224\u0226\u0228\u022A\u022C\u022E\u0230\u0232\u023A\u023B\u023D\u023E\u0241\u0243-\u0246\u0248\u024A\u024C\u024E\u0370\u0372\u0376\u0386\u0388-\u038A\u038C\u038E\u038F\u0391-\u03A1\u03A3-\u03AB\u03CF\u03D2-\u03D4\u03D8\u03DA\u03DC\u03DE\u03E0\u03E2\u03E4\u03E6\u03E8\u03EA\u03EC\u03EE\u03F4\u03F7\u03F9\u03FA\u03FD-\u042F\u0460\u0462\u0464\u0466\u0468\u046A\u046C\u046E\u0470\u0472\u0474\u0476\u0478\u047A\u047C\u047E\u0480\u048A\u048C\u048E\u0490\u0492\u0494\u0496\u0498\u049A\u049C\u049E\u04A0\u04A2\u04A4\u04A6\u04A8\u04AA\u04AC\u04AE\u04B0\u04B2\u04B4\u04B6\u04B8\u04BA\u04BC\u04BE\u04C0\u04C1\u04C3\u04C5\u04C7\u04C9\u04CB\u04CD\u04D0\u04D2\u04D4\u04D6\u04D8\u04DA\u04DC\u04DE\u04E0\u04E2\u04E4\u04E6\u04E8\u04EA\u04EC\u04EE\u04F0\u04F2\u04F4\u04F6\u04F8\u04FA\u04FC\u04FE\u0500\u0502\u0504\u0506\u0508\u050A\u050C\u050E\u0510\u0512\u0514\u0516\u0518\u051A\u051C\u051E\u0520\u0522\u0524\u0526\u0531-\u0556\u10A0-\u10C5\u10C7\u10CD\u1E00\u1E02\u1E04\u1E06\u1E08\u1E0A\u1E0C\u1E0E\u1E10\u1E12\u1E14\u1E16\u1E18\u1E1A\u1E1C\u1E1E\u1E20\u1E22\u1E24\u1E26\u1E28\u1E2A\u1E2C\u1E2E\u1E30\u1E32\u1E34\u1E36\u1E38\u1E3A\u1E3C\u1E3E\u1E40\u1E42\u1E44\u1E46\u1E48\u1E4A\u1E4C\u1E4E\u1E50\u1E52\u1E54\u1E56\u1E58\u1E5A\u1E5C\u1E5E\u1E60\u1E62\u1E64\u1E66\u1E68\u1E6A\u1E6C\u1E6E\u1E70\u1E72\u1E74\u1E76\u1E78\u1E7A\u1E7C\u1E7E\u1E80\u1E82\u1E84\u1E86\u1E88\u1E8A\u1E8C\u1E8E\u1E90\u1E92\u1E94\u1E9E\u1EA0\u1EA2\u1EA4\u1EA6\u1EA8\u1EAA\u1EAC\u1EAE\u1EB0\u1EB2\u1EB4\u1EB6\u1EB8\u1EBA\u1EBC\u1EBE\u1EC0\u1EC2\u1EC4\u1EC6\u1EC8\u1ECA\u1ECC\u1ECE\u1ED0\u1ED2\u1ED4\u1ED6\u1ED8\u1EDA\u1EDC\u1EDE\u1EE0\u1EE2\u1EE4\u1EE6\u1EE8\u1EEA\u1EEC\u1EEE\u1EF0\u1EF2\u1EF4\u1EF6\u1EF8\u1EFA\u1EFC\u1EFE\u1F08-\u1F0F\u1F18-\u1F1D\u1F28-\u1F2F\u1F38-\u1F3F\u1F48-\u1F4D\u1F59\u1F5B\u1F5D\u1F5F\u1F68-\u1F6F\u1FB8-\u1FBB\u1FC8-\u1FCB\u1FD8-\u1FDB\u1FE8-\u1FEC\u1FF8-\u1FFB\u2102\u2107\u210B-\u210D\u2110-\u2112\u2115\u2119-\u211D\u2124\u2126\u2128\u212A-\u212D\u2130-\u2133\u213E\u213F\u2145\u2183\u2C00-\u2C2E\u2C60\u2C62-\u2C64\u2C67\u2C69\u2C6B\u2C6D-\u2C70\u2C72\u2C75\u2C7E-\u2C80\u2C82\u2C84\u2C86\u2C88\u2C8A\u2C8C\u2C8E\u2C90\u2C92\u2C94\u2C96\u2C98\u2C9A\u2C9C\u2C9E\u2CA0\u2CA2\u2CA4\u2CA6\u2CA8\u2CAA\u2CAC\u2CAE\u2CB0\u2CB2\u2CB4\u2CB6\u2CB8\u2CBA\u2CBC\u2CBE\u2CC0\u2CC2\u2CC4\u2CC6\u2CC8\u2CCA\u2CCC\u2CCE\u2CD0\u2CD2\u2CD4\u2CD6\u2CD8\u2CDA\u2CDC\u2CDE\u2CE0\u2CE2\u2CEB\u2CED\u2CF2\uA640\uA642\uA644\uA646\uA648\uA64A\uA64C\uA64E\uA650\uA652\uA654\uA656\uA658\uA65A\uA65C\uA65E\uA660\uA662\uA664\uA666\uA668\uA66A\uA66C\uA680\uA682\uA684\uA686\uA688\uA68A\uA68C\uA68E\uA690\uA692\uA694\uA696\uA722\uA724\uA726\uA728\uA72A\uA72C\uA72E\uA732\uA734\uA736\uA738\uA73A\uA73C\uA73E\uA740\uA742\uA744\uA746\uA748\uA74A\uA74C\uA74E\uA750\uA752\uA754\uA756\uA758\uA75A\uA75C\uA75E\uA760\uA762\uA764\uA766\uA768\uA76A\uA76C\uA76E\uA779\uA77B\uA77D\uA77E\uA780\uA782\uA784\uA786\uA78B\uA78D\uA790\uA792\uA7A0\uA7A2\uA7A4\uA7A6\uA7A8\uA7AA\uFF21-\uFF3A]|\uD801[\uDC00-\uDC27]|\uD835[\uDC00-\uDC19\uDC34-\uDC4D\uDC68-\uDC81\uDC9C\uDC9E\uDC9F\uDCA2\uDCA5\uDCA6\uDCA9-\uDCAC\uDCAE-\uDCB5\uDCD0-\uDCE9\uDD04\uDD05\uDD07-\uDD0A\uDD0D-\uDD14\uDD16-\uDD1C\uDD38\uDD39\uDD3B-\uDD3E\uDD40-\uDD44\uDD46\uDD4A-\uDD50\uDD6C-\uDD85\uDDA0-\uDDB9\uDDD4-\uDDED\uDE08-\uDE21\uDE3C-\uDE55\uDE70-\uDE89\uDEA8-\uDEC0\uDEE2-\uDEFA\uDF1C-\uDF34\uDF56-\uDF6E\uDF90-\uDFA8\uDFCA]/
+},{}],141:[function(require,module,exports){
 module.exports={
     "disallowSpacesInNamedFunctionExpression": {
         "beforeOpeningRoundBrace": true
@@ -21756,7 +21838,7 @@ module.exports={
     "validateIndentation": 2
 }
 
-},{}],141:[function(require,module,exports){
+},{}],142:[function(require,module,exports){
 module.exports={
     "requireCurlyBraces": [
         "if",
@@ -21822,7 +21904,7 @@ module.exports={
     "disallowMultipleLineStrings": true
 }
 
-},{}],142:[function(require,module,exports){
+},{}],143:[function(require,module,exports){
 module.exports={
     "requireCurlyBraces": [
         "if",
@@ -21892,7 +21974,7 @@ module.exports={
     "disallowNewlineBeforeBlockStatements": true
 }
 
-},{}],143:[function(require,module,exports){
+},{}],144:[function(require,module,exports){
 module.exports={
   "preset": "google",
   "maximumLineLength": 120,
@@ -21901,7 +21983,7 @@ module.exports={
   "disallowMultipleVarDecl": "exceptUndefined"
 }
 
-},{}],144:[function(require,module,exports){
+},{}],145:[function(require,module,exports){
 module.exports={
     "requireCurlyBraces": [
         "if",
@@ -21985,7 +22067,7 @@ module.exports={
     "disallowMultipleLineBreaks": true
 }
 
-},{}],145:[function(require,module,exports){
+},{}],146:[function(require,module,exports){
 module.exports={
     "requireCurlyBraces": ["while", "do", "try", "catch"],
     "requireSpaceAfterKeywords": ["if", "else", "for", "while", "do", "switch", "return", "try", "catch"],
@@ -22007,8 +22089,8 @@ module.exports={
 
     "requireSpaceAfterPrefixUnaryOperators": ["++", "--"],
     "requireSpaceBeforePostfixUnaryOperators": ["++", "--"],
-    "requireSpaceBeforeBinaryOperators": [ "+", "-", "/", "*", "=", "==", "===", "!=", "!==", ">", ">=", "<", "<=" ],
-    "requireSpaceAfterBinaryOperators": [ "+", "-", "/", "*", "=", "==", "===", "!=", "!==", ">", ">=", "<", "<=" ],
+    "requireSpaceBeforeBinaryOperators": [ "+", "-", "/", "*", "=", "==", "===", "!=", "!==", ">", ">=", "<", "<=", "<<", "<<<" ,">>" , ">>>" ],
+    "requireSpaceAfterBinaryOperators": [ "+", "-", "/", "*", "=", "==", "===", "!=", "!==", ">", ">=", "<", "<=", "<<", "<<<" ,">>" , ">>>"  ],
     "disallowSpaceBeforeBinaryOperators": [","],
     "requireSpacesInConditionalExpression": {
         "afterTest": true,
@@ -22018,7 +22100,7 @@ module.exports={
     }
 }
 
-},{}],146:[function(require,module,exports){
+},{}],147:[function(require,module,exports){
 module.exports={
     "requireCurlyBraces": [
         "if",
@@ -22089,7 +22171,7 @@ module.exports={
     "validateIndentation": "\t"
 }
 
-},{}],147:[function(require,module,exports){
+},{}],148:[function(require,module,exports){
 module.exports={
     "requireCurlyBraces": [
         "if",
@@ -22194,5 +22276,5 @@ module.exports={
     "validateLineBreaks": "LF"
 }
 
-},{}]},{},[105])(105)
+},{}]},{},[106])(106)
 });
