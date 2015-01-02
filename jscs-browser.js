@@ -7297,7 +7297,7 @@ module.exports.prototype = {
             }
             var toRemove = 0;
             var source = file.getSource();
-            while (source[pos + toRemove] === this._indentChar) { toRemove++; }
+            while (source[pos + toRemove] === '\t' || source[pos + toRemove] === ' ') { toRemove++; }
             file.splice(pos, toRemove, str);
         } else {
             file.splice(file.getPosByLineAndColumn(error.line, error.column), 0, '\n');
@@ -7538,7 +7538,7 @@ module.exports.prototype = {
         }
         var toRemove = 0;
         var source = file.getSource();
-        while (source[pos + toRemove] === this._indentChar) { toRemove++; }
+        while (source[pos + toRemove] === '\t' || source[pos + toRemove] === ' ') { toRemove++; }
         var propertyPos = pos;
         var property = file.getNodeByRange(propertyPos);
         while ((!property || property.type !== 'Property') && propertyPos < source.length) {
