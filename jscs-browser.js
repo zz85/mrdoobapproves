@@ -7463,7 +7463,6 @@ module.exports.prototype = {
 
 },{"assert":111}],103:[function(require,module,exports){
 var assert = require('assert');
-var commentHelper = require('../comment-helper');
 
 module.exports = function() {};
 
@@ -7492,7 +7491,7 @@ module.exports.prototype = {
 
     check: function(file, errors) {
 
-        var lines = commentHelper.getLinesWithCommentsRemoved(file, errors);
+        var lines = file.getLines(file, errors);
         var indentChar = this._indentChar;
         var indentSize = this._indentSize;
         function isMultiline(node) {
@@ -7510,7 +7509,6 @@ module.exports.prototype = {
 
         file.iterateNodesByType('ObjectExpression', function(node) {
             var linesInspected = [node.loc.start.line];
-            //console.log(node.loc.start.line);
             var expectedIndentation = getIndentationFromLine(node.loc.start.line) + indentSize;
             if (isMultiline(node) && node.properties.length > 0) {
                 node.properties.forEach(function(property) {
@@ -7541,7 +7539,6 @@ module.exports.prototype = {
         var toRemove = 0;
         var source = file.getSource();
         while (source[pos + toRemove] === this._indentChar) { toRemove++; }
-        //console.log('toRemove ' + error.line + ' :' + toRemove);
         var propertyPos = pos;
         var property = file.getNodeByRange(propertyPos);
         while ((!property || property.type !== 'Property') && propertyPos < source.length) {
@@ -7553,8 +7550,6 @@ module.exports.prototype = {
         var startLine = property.loc.start.line;
         var endLine = property.loc.end.line;
         for (var line = startLine; line <= endLine; line++) {
-            //console.log('line: ' + line + '\ntoRemove: ' + toRemove +
-            //    '\nstrLength: ' + str.length + '\namount: ' + amount);
             pos = file.getPosByLineAndColumn(line, 0);
             file.splice(pos, toRemove, str);
         }
@@ -7563,7 +7558,7 @@ module.exports.prototype = {
 
 };
 
-},{"../comment-helper":1,"assert":111}],104:[function(require,module,exports){
+},{"assert":111}],104:[function(require,module,exports){
 var assert = require('assert');
 
 module.exports = function() {};
@@ -22086,11 +22081,12 @@ module.exports={
     "requireLineFeedAtFileEnd": true,
     "validateLineBreaks": "LF",
     "validateIndentation": "\t",
+    "validateObjectIndentation": "\t",
 
     "requireSpaceAfterPrefixUnaryOperators": ["++", "--"],
     "requireSpaceBeforePostfixUnaryOperators": ["++", "--"],
-    "requireSpaceBeforeBinaryOperators": [ "+", "-", "/", "*", "=", "==", "===", "!=", "!==", ">", ">=", "<", "<=", "<<", "<<<" ,">>" , ">>>" ],
-    "requireSpaceAfterBinaryOperators": [ "+", "-", "/", "*", "=", "==", "===", "!=", "!==", ">", ">=", "<", "<=", "<<", "<<<" ,">>" , ">>>"  ],
+    "requireSpaceBeforeBinaryOperators": true,
+    "requireSpaceAfterBinaryOperators": true,
     "disallowSpaceBeforeBinaryOperators": [","],
     "requireSpacesInConditionalExpression": {
         "afterTest": true,
