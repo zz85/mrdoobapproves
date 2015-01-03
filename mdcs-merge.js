@@ -6,12 +6,18 @@
 // declare global: diff_match_patch, DIFF_INSERT, DIFF_DELETE, DIFF_EQUAL
 
 (function(mod) {
-  if (typeof exports == "object" && typeof module == "object") // CommonJS
-    mod(require("../../lib/codemirror"), require("diff_match_patch"));
-  else if (typeof define == "function" && define.amd) // AMD
-    define(["../../lib/codemirror", "diff_match_patch"], mod);
-  else // Plain browser env
+  if (typeof exports == "object" && typeof module == "object") { // CommonJS
+    mod(require("./node_modules/codemirror/lib/codemirror"), require("./bower_components/google-diff-match-patch-js/diff_match_patch.js"));
+  }
+  else
+  if (typeof define == "function" && define.amd) { // AMD
+    define(["./node_modules/codemirror/lib/codemirror.js",
+      "./bower_components/google-diff-match-patch-js/diff_match_patch.js"], mod);
+  }
+  else {
+    // Plain browser env
     mod(CodeMirror, diff_match_patch);
+  }
 })(function(CodeMirror, diff_match_patch) {
   "use strict";
   var Pos = CodeMirror.Pos;
@@ -481,7 +487,7 @@
 
   // Operations on diffs
 
-  var dmp = new diff_match_patch();
+  var dmp = new window.diff_match_patch();
   function getDiff(a, b) {
     var diff = dmp.diff_main(a, b);
     dmp.diff_cleanupSemantic(diff);

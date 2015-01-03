@@ -127,27 +127,7 @@ function mrdoob() {
 
 	<div id="loading">Loading</div>
 
-	<!--
-	place synchronous scripts here for cheap loading message.
-	TODO: should use some nice proper loader or bundle
-	-->
-	<script src="jscs-browser.js"></script>
-	<link rel="stylesheet" href="bower_components/codemirror/lib/codemirror.css">
-	<link rel="stylesheet" href="bower_components/codemirror/addon/lint/lint.css">
-	<link rel="stylesheet" href="bower_components/codemirror/addon/merge/merge.css">
-
-	<script src="bower_components/codemirror/lib/codemirror.js"></script>
-	<script src="bower_components/codemirror/mode/javascript/javascript.js"></script>
-
-	<script src="bower_components/codemirror/addon/edit/trailingspace.js"></script>
-	<script src="bower_components/codemirror/addon/edit/matchbrackets.js"></script>
-	<script src="bower_components/codemirror/addon/edit/closebrackets.js"></script>
-
-	<script src="bower_components/codemirror/addon/lint/lint.js"></script>
-	<script src="mdcs-lint.js"></script>
-
-	<script src="bower_components/google-diff-match-patch-js/diff_match_patch.js"></script>
-	<script src="mdcs-merge.js"></script>
+	<script src="bundle.js"></script>
 
 	<button onclick="check()">Check</button>
 	Auto-check <input type="checkbox" id="autocheck" checked />
@@ -164,12 +144,9 @@ function mrdoob() {
 
 	<pre>Protip 2: To learn more about Mr.doob's Code Style™, check out the <a href="https://github.com/mrdoob/three.js/wiki/Mr.doob's-Code-Style%E2%84%A2">wiki</a>, <a href="https://github.com/mrdoob/three.js/issues/4802">discussion</a> and <a href="https://twitter.com/mrdoob/status/463709502853103617">history</a>.</pre>
 
-
-
 	<pre>About: another random idea started by <a href="https://twitter.com/blurspline">@blurspline</a> with great contributions by <a href="https://github.com/gero3">gero3</a>. check out the code and development on <a href="https://github.com/zz85/mrdoobapproves">github</a></pre>
 
 	<script>
-
 		var textarea = document.getElementById('code');
 		var answer = document.getElementById('answer');
 		var hints = document.getElementById('hints');
@@ -195,7 +172,8 @@ function mrdoob() {
 					deferredValidator = validator;
 
 					if (autocheck.checked) validator(text);
-		        }
+		        },
+		        jscsChecker: jscsCheck
 		    },
 		    // merge plugin - for our case "orginal" means our  "formatted" version.
 		    origRight: '',
@@ -302,7 +280,7 @@ function mrdoob() {
 			return errors;
 
 		}
-		
+
 		function gotoError() {
 			if (visibleError) {
 
@@ -323,11 +301,11 @@ function mrdoob() {
 
 			}
 		}
-		
+
 		/*
 		 * Support Auto-correcting
 		 */
-		
+
 		function format() {
 			mergeMode();
 			var code = codeEditor.getValue();
@@ -430,7 +408,6 @@ function mrdoob() {
 			);
 			input.dispatchEvent(e);
 		}
-
 
 	</script>
 

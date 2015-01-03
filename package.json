@@ -1,0 +1,41 @@
+{
+  "name": "mrdoobapproves",
+  "version": "1.0.0",
+  "description": "Mrdoob Javascript Code Style Editor, Checker and Formatter",
+  "main": "index.html",
+  "scripts": {
+    "test": "TODO test",
+    "setup": "npm install -g webpack && npm install",
+    "bundle": "webpack -p",
+    "watch": "webpack --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zz85/mrdoobapproves.git"
+  },
+  "keywords": [
+    "mrdoob",
+    "code",
+    "style",
+    "lint",
+    "hint",
+    "codemirror",
+    "jscs",
+    "esprima",
+    "auto-format"
+  ],
+  "author": "Joshua Koo",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zz85/mrdoobapproves/issues"
+  },
+  "homepage": "https://github.com/zz85/mrdoobapproves",
+  "devDependencies": {
+    "codemirror": "^4.10.0",
+    "css-loader": "^0.9.0",
+    "diff_match_patch": "^0.1.1",
+    "jscs": "git+ssh://git@github.com:gero3/node-jscs.git#formatter",
+    "json-loader": "^0.5.1",
+    "style-loader": "^0.8.2"
+  }
+}
