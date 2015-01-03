@@ -1,3 +1,6 @@
+var CodeMirror = require('./bower_components/codemirror/lib/codemirror');
+var JscsStringChecker = require('./node_modules/jscs/lib/string-checker.js');
+
 var textarea = document.getElementById('code');
 var answer = document.getElementById('answer');
 var hints = document.getElementById('hints');

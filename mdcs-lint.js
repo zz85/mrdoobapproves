@@ -1,5 +1,13 @@
 // code mirror plugin for node-jscs
 
+(function(mod) {
+  if (typeof exports == "object" && typeof module == "object") // CommonJS
+    mod(require("./bower_components/codemirror/lib/codemirror"));
+  else if (typeof define == "function" && define.amd) // AMD
+    define(["./bower_components/codemirror/lib/codemirror"], mod);
+  else // Plain browser env
+    mod(CodeMirror);
+})
 (function(CodeMirror) {
 	"use strict";
 
@@ -38,4 +46,4 @@
 		});
 	}
 
-})(CodeMirror);
+});
