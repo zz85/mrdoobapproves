@@ -5,7 +5,7 @@
   "main": "index.html",
   "scripts": {
     "test": "TODO test",
-    "setup": "npm install -g webpack && npm install"
+    "setup": "npm install -g webpack && npm install",
     "bundle": "webpack && webpack -p --output-file bundle.min.js",
     "watch": "webpack --watch"
   },

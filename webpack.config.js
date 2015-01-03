@@ -1,6 +1,6 @@
 // webpack.config.js
 
-var CODEMIRROR_BASE = './bower_components/codemirror';
+var CODEMIRROR_BASE = './node_modules/codemirror';
 
 var codemirror = [
 

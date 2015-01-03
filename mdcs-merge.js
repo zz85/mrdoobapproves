@@ -7,7 +7,7 @@
 
 (function(mod) {
   if (typeof exports == "object" && typeof module == "object") { // CommonJS
-    mod(require("./bower_components/codemirror/lib/codemirror"), require("./bower_components/google-diff-match-patch-js/diff_match_patch.js"));
+    mod(require("./node_modules/codemirror/lib/codemirror"), require("./bower_components/google-diff-match-patch-js/diff_match_patch.js"));
   }
   else
   if (typeof define == "function" && define.amd) { // AMD
