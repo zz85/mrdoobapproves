@@ -11,7 +11,7 @@
   }
   else
   if (typeof define == "function" && define.amd) { // AMD
-    define(["./bower_components/codemirror/lib/codemirror.js",
+    define(["./node_modules/codemirror/lib/codemirror.js",
       "./bower_components/google-diff-match-patch-js/diff_match_patch.js"], mod);
   }
   else {
