@@ -4,7 +4,10 @@
   "description": "Mrdoob Javascript Code Style Editor, Checker and Formatter",
   "main": "index.html",
   "scripts": {
-    "test": "TODO test"
+    "test": "TODO test",
+    "setup": "npm install -g webpack && npm install"
+    "bundle": "webpack && webpack -p --output-file bundle.min.js",
+    "watch": "webpack --watch"
   },
   "repository": {
     "type": "git",

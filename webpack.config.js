@@ -39,6 +39,8 @@ module.exports = {
 		]
 	},
 
+	// devtool: "source-map",
+
 	entry: entries,
 
 	output: {
