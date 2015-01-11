@@ -1,22 +1,49 @@
-does mrdoob approve?
+Does MrDoob Approve?
 ==============
 
-Browser-based [Mr.doob's Code Style™](https://github.com/mrdoob/three.js/wiki/Mr.doob's-Code-Style%E2%84%A2) checker/validator/formatter/editor.
+"MrDoob Approves" is a browser-based Javascript code style checker/validator/formatter/editor/tool initially created for [Mr.doob's Code Style™](https://github.com/mrdoob/three.js/wiki/Mr.doob's-Code-Style%E2%84%A2). It is built on top of a [modified version](https://github.com/gero3/node-jscs/tree/formatter) of [node-jscs](https://github.com/jscs-dev/node-jscs) and [code-mirror](https://github.com/codemirror/codemirror).
 
-## [See in action](http://zz85.github.io/mrdoobapproves/)
+## [Run the editor here](http://zz85.github.io/mrdoobapproves/)
 
 ## About
 
-"Does mrdoob approve" is a tongue-in-cheek, and can often be used to describe sitations when there are badly formatted code in three.js pull requests.
+This tool helps to check if your code is in Mr.doob's Code Style™ and can help you auto-format it. This is useful if you are making a pull-request to mrdoob's javascript projects like [three.js](https://github.com/mrdoob/three.js)
+
+## Releases
+
+### 1.0 - 12 Jan 2015
+- Mr.doob's Code Style™ validator
+- Check as you type
+- Gutter hinting
+- JS syntax highlighting using code mirror
+- Auto-formatting with diff editor
+- Jump to error
+- Trailing spaces hinting
+- Open file
 
 ## Development
 
-TDDD style - [TODO Driven Development](http://www.secretgeek.net/TODO_driv_dev).
+This project uses some of these philosophy
 
-Open open-source model - Significant contributors gets commit access to github repo
+- TDDD style - [TODO Driven Development](http://www.secretgeek.net/TODO_driv_dev).
+- Open open-source model - Significant contributors gets commit access to github repo
+- Release early, release often - main branch is gh-pages
 
-Release early, release often - main branch is gh-pages
+## Instructions for this project's workflow
 
-## Copyright
+You need npm, git, webpack to be able to create a compressed bundle.
+Clean install:
+
+```sh
+npm run install
+```
+
+will install webpack with `npm install -g webpack` and run `npm install` to update dependencies.
+
+use `webpack -p` or `npm run bundle` to create bundles for release. 
+
+use `webpack --watch` or `npm run watch` if you are testing bundles locally. 
+
+## Disclaimer
 
 p.s. This project, its name or code was neither approved or endorsed by mrdoob.
