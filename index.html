@@ -101,7 +101,7 @@
 	</style>
 
 
-	<h1>Is your code style approved by <a href="https://twitter.com/mrdoob">mrdoob</a>? <span id="answer" /></h1>
+	<h1>Is your <a href="https://github.com/mrdoob/three.js/wiki/Mr.doob's-Code-Style%E2%84%A2">code style</a> approved by <a href="https://twitter.com/mrdoob">mrdoob</a>? <span id="answer" /></h1>
 
 
 	<div id="merge" class="code">
@@ -140,19 +140,23 @@ function mrdoob() {
 	<br />
 	<button onclick="openFile()">Open File</button>
 
-	<pre>Protip 1: Open a file by dragging into the editor or <a href="#" onclick="openFile(); return false;">selecting</a> one</pre>
+	<pre>Protip 1: Open a file by dragging into the editor or <a href="#" onclick="openFile(); return false;">browse for one</a></pre>
 
 	<pre>Protip 2: To learn more about Mr.doob's Code Style™, check out the <a href="https://github.com/mrdoob/three.js/wiki/Mr.doob's-Code-Style%E2%84%A2">wiki</a>, <a href="https://github.com/mrdoob/three.js/issues/4802">discussion</a> and <a href="https://twitter.com/mrdoob/status/463709502853103617">history</a>.</pre>
 
-	<pre>About: another random idea started by <a href="https://twitter.com/blurspline">@blurspline</a> with great contributions by <a href="https://github.com/gero3">gero3</a>. check out the code and development on <a href="https://github.com/zz85/mrdoobapproves">github</a></pre>
+	<pre>About: this is a javascript codestyle editor/validator/formatter/tool built on top of <a href="https://github.com/jscs-dev/node-jscs">node-jscs</a> and <a href="https://github.com/codemirror/codemirror">codemirror</a> by <a href="https://twitter.com/blurspline">@blurspline</a> and <a href="https://github.com/gero3">gero3</a>.</pre>
+
+	<pre>Check out the code and development on <a href="https://github.com/zz85/mrdoobapproves">github</a></pre>
+
+	<pre>Disclaimer: the name of this tool is also used without the permission of mrdoob.</pre>
 
 	<script>
-		var textarea = document.getElementById('code');
-		var answer = document.getElementById('answer');
-		var hints = document.getElementById('hints');
-		var autocheck = document.getElementById('autocheck');
-		var merge = document.getElementById('merge');
-		var mergeButtons = document.getElementById('mergeButtons');
+		var textarea = document.getElementById( 'code' );
+		var answer = document.getElementById( 'answer' );
+		var hints = document.getElementById( 'hints' );
+		var autocheck = document.getElementById( 'autocheck' );
+		var merge = document.getElementById( 'merge' );
+		var mergeButtons = document.getElementById( 'mergeButtons' );
 
 		var deferredValidator;
 		var cmOptions = {
@@ -168,15 +172,17 @@ function mrdoob() {
 			lint: {
 				async: true,
 				getAnnotations: CodeMirror.jscsAsyncValidator,
-		        requestValidation: function(text, validator) {
+				requestValidation: function( text, validator ) {
+
 					deferredValidator = validator;
 
-					if (autocheck.checked) validator(text);
-		        },
-		        jscsChecker: jscsCheck
-		    },
-		    // merge plugin - for our case "orginal" means our  "formatted" version.
-		    origRight: '',
+					if ( autocheck.checked ) validator( text );
+
+				},
+				jscsChecker: jscsCheck
+			},
+			// merge plugin - for our case "orginal" means our  "formatted" version.
+			origRight: '',
 			// connect: 'align',
 			collapseIdentical: true,
 			allowEditingOriginals: false,
@@ -186,7 +192,7 @@ function mrdoob() {
 
 		var checker, codeEditor, visibleError;
 
-		var loading = document.getElementById('loading');
+		var loading = document.getElementById( 'loading' );
 		loading.style.display = 'none';
 
 		function init() {
@@ -198,79 +204,94 @@ function mrdoob() {
 			checker = new JscsStringChecker();
 
 			checker.registerDefaultRules();
-			checker.configure({
+			checker.configure( {
 				preset: 'mdcs'
-			});
+			} );
 
 			/*
 			 * Init Code CodeMirror
 			 */
 			// codeEditor = CodeMirror.fromTextArea( textarea, cmOptions );
-			
+
 			textarea.className = 'hide';
-			mergeView = CodeMirror.MergeView(merge, cmOptions);
+			mergeView = CodeMirror.MergeView( merge, cmOptions );
 			codeEditor = mergeView.editor();
 			formatEditor = mergeView.rightOriginal();
-			editMode(true);
+			editMode( true );
 
 		}
 
 		init();
 
 		function hideAnswer() {
+
 			answer.style.opacity = 0;
+
 		}
 
-		function setAnswer(comment, style) {
+		function setAnswer( comment, style ) {
+
 			answer.style.opacity = 1;
 			answer.textContent = comment;
 			answer.className = style;
 
-			setTimeout(hideAnswer, 3000);
+			setTimeout( hideAnswer, 3000 );
+
 		}
 
 		function check() {
+
 			var code = codeEditor.getValue();
-			if (deferredValidator) deferredValidator(code);
+			if ( deferredValidator ) deferredValidator( code );
+
 		}
 
 		function jscsCheck( code ) {
 
 			// console.info('checking ' + code + '...');
 
-			if (code.trim().length === 0) {
-				setAnswer('Maybe... :)', 'maybe');
+			if ( code.trim().length === 0 ) {
+
+				setAnswer( 'Maybe... :)', 'maybe' );
 				return;
+
 			}
 
 			var errors;
 			try {
-				console.time('jscs check');
-				errors = checker.checkString(code);
-				console.timeEnd('jscs check');
-			} catch (e) {
-				
-				// jscs now catches parse error into errorlist, so this shouldn't happen
-				setAnswer('oops... something went wrong...', 'no');
-				throw(e);
-			}
+
+				console.time( 'jscs check' );
+				errors = checker.checkString( code );
+				console.timeEnd( 'jscs check' );
+
+		} catch ( e ) {
+
+			// jscs now catches parse error into errorlist, so this shouldn't happen
+			setAnswer( 'oops... something went wrong...', 'no' );
+			throw( e );
+
+		}
 
 			var errorList = errors.getErrorList();
 
 			console.log( 'checking done. ' + errorList.length + ' errors' );
 
-			if (errorList.length === 0) {
-				setAnswer('Possibly \\o/*\\o', 'yes');
+			if ( errorList.length === 0 ) {
+
+				setAnswer( 'Possibly \\o/*\\o', 'yes' );
+
 			} else {
-				setAnswer('No!!! :(', 'no');
+
+				setAnswer( 'No!!! :(', 'no' );
+
 			}
 
 			visibleError = errorList[ 0 ];
 
-			if (visibleError) {
+			if ( visibleError ) {
 
 				hints.textContent = visibleError.line + ':' + visibleError.column + '\t' + visibleError.message + ' (Rule: ' + visibleError.rule + ')';
-				
+
 			} else {
 
 				hints.textContent = '';
@@ -282,24 +303,26 @@ function mrdoob() {
 		}
 
 		function gotoError() {
-			if (visibleError) {
+
+			if ( visibleError ) {
 
 				var line = visibleError.line - 1;
 
 				var scrollInfo = codeEditor.getScrollInfo();
-				var coords = codeEditor.charCoords({line: line, ch: visibleError.column}, "local");
+				var coords = codeEditor.charCoords( { line: line, ch: visibleError.column }, "local" );
 
-				codeEditor.setCursor(line, visibleError.column, { scroll:false } );
+				codeEditor.setCursor( line, visibleError.column, { scroll: false } );
 
-				if (scrollInfo.top > coords.bottom || scrollInfo.top + scrollInfo.clientHeight < coords.top) {
+				if ( scrollInfo.top > coords.bottom || scrollInfo.top + scrollInfo.clientHeight < coords.top ) {
 					// out of view
-					codeEditor.scrollTo(null, coords.bottom - scrollInfo.clientHeight / 2);
+					codeEditor.scrollTo( null, coords.bottom - scrollInfo.clientHeight / 2 );
 
 				}
 
 				codeEditor.focus();
 
 			}
+
 		}
 
 		/*
@@ -307,54 +330,72 @@ function mrdoob() {
 		 */
 
 		function format() {
+
 			mergeMode();
 			var code = codeEditor.getValue();
 
 			try {
-				console.time('jscs format');
-				formatEditor.setValue( checker.formatString(code) );
+
+				console.time( 'jscs format' );
+				formatEditor.setValue( checker.formatString( code ) );
 
 				/*
 				// Reverse approach
 				codeEditor.setValue( checker.formatString(code) );
 				formatEditor.setValue( code );
 				*/
-				
-			} catch (e) {
-				alert('oops, i cant format that right now...')
-				throw(e);
+
+			} catch ( e ) {
+
+				alert( 'oops, i cant format that right now...' )
+				throw( e );
+
 			} finally {
-				console.timeEnd('jscs format');
+
+				console.timeEnd( 'jscs format' );
+
 			}
+
 		}
 
-		function editMode(init) {
+		function editMode( init ) {
+
 			mergeView.wrapRight.style.display = 'none';
 			mergeView.right.gap.style.display = 'none';
 			mergeView.wrapEdit.style.width = '100%';
-			if (init) {
-				setTimeout(function() {
+
+			if ( init ) {
+
+				setTimeout( function() {
+
 					mergeView.wrapEdit.style.transition = 'width 0.35s ease-out';
-				});
+
+				} );
+
 			}
 
-			mergeView.setShowDifferences(false);
+			mergeView.setShowDifferences( false );
 			mergeButtons.style.display = 'none';
+
 		}
 
 		function mergeMode() {
+
 			mergeView.wrapEdit.style.width = ''; // 47%
 			mergeView.wrapRight.style.display = '';
 			mergeView.right.gap.style.display = '';
 			mergeButtons.style.display = '';
 
 			// mergeView.wrapEdit.style.transition = 'width 0.2s ease-out';
-			mergeView.setShowDifferences(true);
+			mergeView.setShowDifferences( true );
+
 		}
 
 		function mergeAll() {
+
 			codeEditor.setValue( formatEditor.getValue() );
 			editMode();
+
 		}
 
 		/*
@@ -364,50 +405,63 @@ function mrdoob() {
 		var input, openCallback;
 
 		function openFile() {
-			openAs(function(text) {
+
+			openAs( function( text ) {
+
 				codeEditor.setValue( text );
-			}, document.body);
+
+			}, document.body );
+
 		}
 
-		function handleFileSelect(evt) {
+		function handleFileSelect( evt ) {
+
 			var files = evt.target.files; // FileList object
 
-			var f = files[0];
-			if (!f) return;
+			var f = files[ 0 ];
+			if ( !f ) return;
 
 			var reader = new FileReader();
 
 			// Closure to capture the file information.
-			reader.onload = function(e) {
+			reader.onload = function( e ) {
+
 				var data = e.target.result;
-				openCallback(data);
+				openCallback( data );
+
 			};
 
-			reader.readAsText(f);
+			reader.readAsText( f );
 
 			input.value = '';
+
 		}
 
-		function openAs(callback, target) {
-			console.log('openfile...');
+		function openAs( callback, target ) {
+
+			console.log( 'openfile...' );
 			openCallback = callback;
 
-			if (!input) {
-				input = document.createElement('input');
+			if ( !input ) {
+
+				input = document.createElement( 'input' );
 				input.style.display = 'none';
 				input.type = 'file';
-				input.addEventListener('change', handleFileSelect);
+				input.addEventListener( 'change', handleFileSelect );
 				target = target || document.body;
-				target.appendChild(input);
+				target.appendChild( input );
+
 			}
 
-			var e = document.createEvent("MouseEvents");
+			var e = document.createEvent( "MouseEvents" );
 			e.initMouseEvent(
 				'click', true, false, window, 0, 0, 0, 0, 0,
 				false, false, false, false, 0, null
 			);
-			input.dispatchEvent(e);
+			input.dispatchEvent( e );
+
 		}
+
 
 	</script>
 
