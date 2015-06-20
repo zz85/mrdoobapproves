@@ -337,7 +337,7 @@ function mrdoob() {
 			try {
 
 				console.time( 'jscs format' );
-				formatEditor.setValue( checker.formatString( code ) );
+				formatEditor.setValue( checker.fixString( code ).output );
 
 				/*
 				// Reverse approach

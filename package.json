@@ -34,7 +34,7 @@
     "codemirror": "^4.10.0",
     "css-loader": "^0.9.0",
     "diff_match_patch": "^0.1.1",
-    "jscs": "git+ssh://git@github.com:gero3/node-jscs.git#formatter",
+    "jscs": "git+ssh://git@github.com:zz85/node-jscs.git#update_mdcs",
     "json-loader": "^0.5.1",
     "style-loader": "^0.8.2"
   }
