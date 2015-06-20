@@ -3,7 +3,7 @@
 
 	<head>
 
-		<meta charset="utf-8"> 
+		<meta charset="utf-8">
 		<title>Does MrDoob Approves?</title>
 
 	</head>
@@ -76,11 +76,11 @@
 		.maybe {
 			color: orange;
 		}
-		
+
 		.show {
 			display: block;
 		}
-		
+
 		.hide {
 			display: none;
 		}
@@ -131,7 +131,7 @@ function mrdoob() {
 
 	<button onclick="check()">Check</button>
 	Auto-check <input type="checkbox" id="autocheck" checked />
- 
+
 	<a id="hints" href="#" class="no" onclick="gotoError(); return false;"></a>
 
 	<br />
@@ -334,10 +334,15 @@ function mrdoob() {
 			mergeMode();
 			var code = codeEditor.getValue();
 
+			var errors = false;
 			try {
 
 				console.time( 'jscs format' );
-				formatEditor.setValue( checker.fixString( code ).output );
+				var fixes = checker.fixString( code );
+
+				formatEditor.setValue( fixes.output );
+
+				// console.log('errors', fixes.errors.getErrorList());
 
 				/*
 				// Reverse approach
@@ -347,13 +352,18 @@ function mrdoob() {
 
 			} catch ( e ) {
 
-				alert( 'oops, i cant format that right now...' )
-				throw( e );
+				console.log( e );
+				errors = e;
 
 			} finally {
 
-				console.timeEnd( 'jscs format' );
+				if (errors || fixes.errors.getErrorList().length > 0) {
 
+					console.log( 'oops, there is something that is not fixed...' )
+
+				}
+
+				console.timeEnd( 'jscs format' );
 			}
 
 		}
