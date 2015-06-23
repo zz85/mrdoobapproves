@@ -139,6 +139,7 @@ function mrdoob() {
 
 	<br />
 	<button onclick="openFile()">Open File</button>
+	<button onclick="saveFile()">Save File</button>
 
 	<pre>Protip 1: Open a file by dragging into the editor or <a href="#" onclick="openFile(); return false;">browse for one</a></pre>
 
@@ -413,6 +414,7 @@ function mrdoob() {
 			}, document.body );
 
 		}
+		
 
 		function handleFileSelect( evt ) {
 
@@ -459,6 +461,28 @@ function mrdoob() {
 				false, false, false, false, 0, null
 			);
 			input.dispatchEvent( e );
+
+		}
+		
+		function saveFile() {
+
+			var text = codeEditor.getValue();
+
+			
+			var blob = new Blob( [ text ], { type: 'text/plain' } );
+			var objectURL = URL.createObjectURL( blob );
+	
+			var link = document.createElement( 'a' );
+			link.href = objectURL;
+			link.download = 'mdcs.js';
+			link.target = '_blank';
+			
+			var event = document.createEvent("MouseEvents");
+			event.initMouseEvent(
+				"click", true, false, window, 0, 0, 0, 0, 0
+				, false, false, false, false, 0, null
+			);
+			link.dispatchEvent(event);
 
 		}
 
