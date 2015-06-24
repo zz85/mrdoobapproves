@@ -3,7 +3,7 @@
 
 	<head>
 
-		<meta charset="utf-8"> 
+		<meta charset="utf-8">
 		<title>Does MrDoob Approves?</title>
 
 	</head>
@@ -76,11 +76,11 @@
 		.maybe {
 			color: orange;
 		}
-		
+
 		.show {
 			display: block;
 		}
-		
+
 		.hide {
 			display: none;
 		}
@@ -131,7 +131,7 @@ function mrdoob() {
 
 	<button onclick="check()">Check</button>
 	Auto-check <input type="checkbox" id="autocheck" checked />
- 
+
 	<a id="hints" href="#" class="no" onclick="gotoError(); return false;"></a>
 
 	<br />
@@ -414,7 +414,7 @@ function mrdoob() {
 			}, document.body );
 
 		}
-		
+
 
 		function handleFileSelect( evt ) {
 
@@ -463,20 +463,23 @@ function mrdoob() {
 			input.dispatchEvent( e );
 
 		}
-		
+
 		function saveFile() {
 
 			var text = codeEditor.getValue();
 
-			
+			var filename = 'mdcs.js'
+			filename = prompt('Save as filename', filename);
+			if (!filename) return;
+
 			var blob = new Blob( [ text ], { type: 'text/plain' } );
 			var objectURL = URL.createObjectURL( blob );
-	
+
 			var link = document.createElement( 'a' );
 			link.href = objectURL;
-			link.download = 'mdcs.js';
+			link.download = filename;
 			link.target = '_blank';
-			
+
 			var event = document.createEvent("MouseEvents");
 			event.initMouseEvent(
 				"click", true, false, window, 0, 0, 0, 0, 0
