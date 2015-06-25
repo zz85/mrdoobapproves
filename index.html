@@ -455,7 +455,7 @@ function mrdoob() {
 
 			}
 
-			var e = document.createEvent( "MouseEvents" );
+			var e = document.createEvent( 'MouseEvents' );
 			e.initMouseEvent(
 				'click', true, false, window, 0, 0, 0, 0, 0,
 				false, false, false, false, 0, null
@@ -467,10 +467,17 @@ function mrdoob() {
 		function saveFile() {
 
 			var text = codeEditor.getValue();
+			if ( !! navigator.userAgent.match( /Version\/[\d\.]+.*Safari/ ) ) {
+
+				// safari exception
+				return window.open( 'data:attachment/js;charset=utf-8,' + encodeURIComponent( text ) );
+				;
+
+			}
 
 			var filename = 'mdcs.js'
-			filename = prompt('Save as filename', filename);
-			if (!filename) return;
+			filename = prompt( 'Save as filename', filename );
+			if ( ! filename ) return;
 
 			var blob = new Blob( [ text ], { type: 'text/plain' } );
 			var objectURL = URL.createObjectURL( blob );
@@ -480,14 +487,15 @@ function mrdoob() {
 			link.download = filename;
 			link.target = '_blank';
 
-			var event = document.createEvent("MouseEvents");
+			var event = document.createEvent( 'MouseEvents' );
 			event.initMouseEvent(
-				"click", true, false, window, 0, 0, 0, 0, 0
+				'click', true, false, window, 0, 0, 0, 0, 0
 				, false, false, false, false, 0, null
 			);
-			link.dispatchEvent(event);
+			link.dispatchEvent( event );
 
 		}
+
 
 
 	</script>
