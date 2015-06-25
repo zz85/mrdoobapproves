@@ -3,7 +3,7 @@
 
 	<head>
 
-		<meta charset="utf-8"> 
+		<meta charset="utf-8">
 		<title>Does MrDoob Approves?</title>
 
 	</head>
@@ -76,11 +76,11 @@
 		.maybe {
 			color: orange;
 		}
-		
+
 		.show {
 			display: block;
 		}
-		
+
 		.hide {
 			display: none;
 		}
@@ -131,7 +131,7 @@ function mrdoob() {
 
 	<button onclick="check()">Check</button>
 	Auto-check <input type="checkbox" id="autocheck" checked />
- 
+
 	<a id="hints" href="#" class="no" onclick="gotoError(); return false;"></a>
 
 	<br />
@@ -139,6 +139,7 @@ function mrdoob() {
 
 	<br />
 	<button onclick="openFile()">Open File</button>
+	<button onclick="saveFile()">Save File</button>
 
 	<pre>Protip 1: Open a file by dragging into the editor or <a href="#" onclick="openFile(); return false;">browse for one</a></pre>
 
@@ -414,6 +415,7 @@ function mrdoob() {
 
 		}
 
+
 		function handleFileSelect( evt ) {
 
 			var files = evt.target.files; // FileList object
@@ -453,7 +455,7 @@ function mrdoob() {
 
 			}
 
-			var e = document.createEvent( "MouseEvents" );
+			var e = document.createEvent( 'MouseEvents' );
 			e.initMouseEvent(
 				'click', true, false, window, 0, 0, 0, 0, 0,
 				false, false, false, false, 0, null
@@ -461,6 +463,39 @@ function mrdoob() {
 			input.dispatchEvent( e );
 
 		}
+
+		function saveFile() {
+
+			var text = codeEditor.getValue();
+			if ( !! navigator.userAgent.match( /Version\/[\d\.]+.*Safari/ ) ) {
+
+				// safari exception
+				return window.open( 'data:attachment/js;charset=utf-8,' + encodeURIComponent( text ) );
+				;
+
+			}
+
+			var filename = 'mdcs.js'
+			filename = prompt( 'Save as filename', filename );
+			if ( ! filename ) return;
+
+			var blob = new Blob( [ text ], { type: 'text/plain' } );
+			var objectURL = URL.createObjectURL( blob );
+
+			var link = document.createElement( 'a' );
+			link.href = objectURL;
+			link.download = filename;
+			link.target = '_blank';
+
+			var event = document.createEvent( 'MouseEvents' );
+			event.initMouseEvent(
+				'click', true, false, window, 0, 0, 0, 0, 0
+				, false, false, false, false, 0, null
+			);
+			link.dispatchEvent( event );
+
+		}
+
 
 
 	</script>
