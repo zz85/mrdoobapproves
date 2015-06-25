@@ -98,10 +98,37 @@
 
 		}
 
+		.preset {
+			font-size: 1em;
+			padding: 0.2em;
+			background: transparent;
+			width: 300px;
+			border-radius: 0;
+			/*border: 0;
+			border-bottom: 1px solid #333;*/
+			-webkit-outline: 0;
+		}
+
 	</style>
 
 
-	<h1>Is your <a href="https://github.com/mrdoob/three.js/wiki/Mr.doob's-Code-Style%E2%84%A2">code style</a> approved by <a href="https://twitter.com/mrdoob">mrdoob</a>? <span id="answer" /></h1>
+	<h1>Does <select class="preset" onchange="setPreset(this.value)">
+		<option value="mdcs">mrdoob</option>
+		<option>airbnb</option>
+		<option>crockford</option>
+		<option>google</option>
+		<option>grunt</option>
+		<option>jquery</option>
+		<option>mdcs</option>
+		<option>node-style-guide</option>
+		<option>wikimedia</option>
+		<option>wordpress</option>
+		<option>yandex</option>
+	</select> approves your code style? <span id="answer" />
+
+	</h1>
+
+	</div>
 
 
 	<div id="merge" class="code">
@@ -149,7 +176,7 @@ function mrdoob() {
 
 	<pre>Check out the code and development on <a href="https://github.com/zz85/mrdoobapproves">github</a></pre>
 
-	<pre>Disclaimer: the name of this tool is also used without the permission of mrdoob.</pre>
+	<pre>Disclaimer: the name of this tool is also used without the permission of <a href="https://twitter.com/mrdoob">mrdoob</a>.</pre>
 
 	<script>
 		var textarea = document.getElementById( 'code' );
@@ -201,13 +228,7 @@ function mrdoob() {
 			/*
 			 * Init JSCS Checker
 			 */
-
-			checker = new JscsStringChecker();
-
-			checker.registerDefaultRules();
-			checker.configure( {
-				preset: 'mdcs'
-			} );
+			setJscsPreset();
 
 			/*
 			 * Init Code CodeMirror
@@ -223,6 +244,26 @@ function mrdoob() {
 		}
 
 		init();
+
+		function setPreset( preset ) {
+
+			setJscsPreset( preset );
+			check();
+
+		}
+
+		function setJscsPreset( preset ) {
+
+			// unfortunately JSCS configuration doesn't allow resetting
+			// so we create a new checker
+			checker = new JscsStringChecker();
+
+			checker.registerDefaultRules();
+			checker.configure( {
+				preset: preset || 'mdcs'
+			} );
+
+		}
 
 		function hideAnswer() {
 
@@ -265,13 +306,13 @@ function mrdoob() {
 				errors = checker.checkString( code );
 				console.timeEnd( 'jscs check' );
 
-		} catch ( e ) {
+			} catch ( e ) {
 
-			// jscs now catches parse error into errorlist, so this shouldn't happen
-			setAnswer( 'oops... something went wrong...', 'no' );
-			throw( e );
+				// jscs now catches parse error into errorlist, so this shouldn't happen
+				setAnswer( 'oops... something went wrong...', 'no' );
+				throw( e );
 
-		}
+			}
 
 			var errorList = errors.getErrorList();
 
@@ -335,10 +376,15 @@ function mrdoob() {
 			mergeMode();
 			var code = codeEditor.getValue();
 
+			var errors = false;
 			try {
 
 				console.time( 'jscs format' );
-				formatEditor.setValue( checker.fixString( code ).output );
+				var fixes = checker.fixString( code );
+
+				formatEditor.setValue( fixes.output );
+
+				// console.log('errors', fixes.errors.getErrorList());
 
 				/*
 				// Reverse approach
@@ -348,13 +394,18 @@ function mrdoob() {
 
 			} catch ( e ) {
 
-				alert( 'oops, i cant format that right now...' )
-				throw( e );
+				console.log( e );
+				errors = e;
 
 			} finally {
 
-				console.timeEnd( 'jscs format' );
+				if (errors || fixes.errors.getErrorList().length > 0) {
 
+					console.log( 'oops, there is something that is not fixed...' )
+
+				}
+
+				console.timeEnd( 'jscs format' );
 			}
 
 		}

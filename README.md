@@ -1,7 +1,7 @@
 Does MrDoob Approve?
 ==============
 
-"MrDoob Approves" is a browser-based Javascript code style checker/validator/formatter/editor/tool initially created for [Mr.doob's Code Style™](https://github.com/mrdoob/three.js/wiki/Mr.doob's-Code-Style%E2%84%A2). It is built on top of a [modified version](https://github.com/gero3/node-jscs/tree/formatter) of [node-jscs](https://github.com/jscs-dev/node-jscs) and [code-mirror](https://github.com/codemirror/codemirror).
+"MrDoob Approves" is a browser-based Javascript code style checker/validator/formatter/editor/tool. Initially created for [Mr.doob's Code Style™](https://github.com/mrdoob/three.js/wiki/Mr.doob's-Code-Style%E2%84%A2), it is assembled with [code-mirror](https://github.com/codemirror/codemirror and [node-jscs](https://github.com/jscs-dev/node-jscs). Previously, a [modified version](https://github.com/gero3/node-jscs/tree/formatter) of jscs by gero3 was used before the jscs library shipped with auto-fixing.
 
 ![](https://cloud.githubusercontent.com/assets/314997/5714636/c6db41b2-9b06-11e4-8d25-05142c37a479.png)
 ## [Run the editor here](http://zz85.github.io/mrdoobapproves/)
@@ -12,6 +12,11 @@ Does MrDoob Approve?
 This tool helps to check if your code is in Mr.doob's Code Style™ and can help you auto-format it. This is useful if you are making a pull-request to mrdoob's javascript projects like [three.js](https://github.com/mrdoob/three.js). More about this in this [blog post](http://www.lab4games.net/zz85/blog/2015/01/25/mrdoob-approves-a-javascript-codestyle-editor-validator-formatter-project/)
 
 ## Releases
+
+### 2.0 - SOON
+- Offical JSCS library
+- Better spacing checks
+- Ability to chose other presets
 
 ### 1.0 - 12 Jan 2015
 - Mr.doob's Code Style™ validator
@@ -42,9 +47,9 @@ npm run install
 
 will install webpack with `npm install -g webpack` and run `npm install` to update dependencies.
 
-use `webpack -p` or `npm run bundle` to create bundles for release. 
+use `webpack -p` or `npm run bundle` to create bundles for release.
 
-use `webpack --watch` or `npm run watch` if you are testing bundles locally. 
+use `webpack --watch` or `npm run watch` if you are testing bundles locally.
 
 ## Disclaimer
 
