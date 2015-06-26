@@ -308,6 +308,8 @@ function mrdoob() {
 
 			// console.info('checking ' + code + '...');
 
+			var wrapper = { code: code };
+
 			if ( code.trim().length === 0 ) {
 
 				setAnswer( 'Maybe... :)', 'maybe' );
@@ -319,7 +321,9 @@ function mrdoob() {
 			try {
 
 				console.time( 'jscs check' );
-				errors = checker.checkString( code );
+				preprocess( wrapper );
+
+				errors = checker.checkString( wrapper.code );
 				console.timeEnd( 'jscs check' );
 
 			} catch ( e ) {
@@ -343,6 +347,13 @@ function mrdoob() {
 				setAnswer( 'No!!! :(', 'no' );
 
 			}
+
+			errorList = errorList.map( function( error ) {
+
+				error.column += wrapper.indentation.length
+				return error;
+
+			} )
 
 			visibleError = errorList[ 0 ];
 
@@ -396,6 +407,62 @@ function mrdoob() {
 
 		}
 
+		function preprocess( codeWrapper ) {
+
+			var code = codeWrapper.code;
+
+			// TODO refactor into more generic rule engine
+			// TODO make it work with checking too
+
+			// pass - leading indentation
+			var lead = /(\s*)\S/.exec( code );
+
+			if ( ! lead ) return code;
+
+			var leads = lead[ 1 ].split( '\n' );
+			var indentation = leads.pop();
+			console.log( 'indentation', JSON.stringify( indentation ), leads.length );
+
+			codeWrapper.code = code
+				.split( '\n' )
+				.map( removeIfPrefixed.bind( indentation ) )
+				.join( '\n' );
+
+			codeWrapper.leadingLines = leads.length;
+			codeWrapper.indentation = indentation;
+
+		}
+
+		function removeIfPrefixed( string ) {
+
+			if ( string.indexOf( this ) !== 0 ) return string;
+
+			return string.substring( this.length );
+
+		}
+
+		function postprocess( wrapper ) {
+
+			var code = wrapper.code;
+
+			// pass restore leading indentation
+			var lines = code.split( '\n' );
+
+			lines = lines.map( function( line ) {
+
+				return wrapper.indentation + line;
+
+			} )
+
+			// fix trailing spaces
+			wrapper.code = lines.map( function( x ) {
+
+				return x.replace( /\s*$/, '' )
+
+			} ).join( '\n' );
+
+		}
+
 		/*
 		 * Support Auto-correcting
 		 */
@@ -403,15 +470,24 @@ function mrdoob() {
 		function format() {
 
 			var code = codeEditor.getValue();
+			var codeWrapper = {
+				code: code
+			};
+
+			preprocess( codeWrapper );
 
 			var errors = false;
 			try {
 
 				console.time( 'jscs format' );
-				var fixes = checker.fixString( code );
+				var fixes = checker.fixString( codeWrapper.code );
+
+				codeWrapper.code = fixes.output;
+
+				postprocess( codeWrapper )
 
 				var target = open ? formatEditor : codeEditor;
-				target.setValue( fixes.output );
+				target.setValue( codeWrapper.code );
 
 				console.log( 'errors', fixes.errors.getErrorList() );
 
@@ -586,6 +662,7 @@ function mrdoob() {
 			link.dispatchEvent( event );
 
 		}
+
 
 	</script>
 
