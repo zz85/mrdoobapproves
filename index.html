@@ -156,23 +156,32 @@ function mrdoob() {
 
 	<script src="bundle.js"></script>
 
-	<button onclick="check()">Check</button>
-	Auto-check <input type="checkbox" id="autocheck" checked />
+	<br />
 
+	<button onclick="fix()">Format the Code!</button>
+
+	<br />
 	<a id="hints" href="#" class="no" onclick="gotoError(); return false;"></a>
 
 	<br />
-	<button onclick="format()">Auto-Format</button> <span id="mergeButtons"><button onclick="mergeAll()">Merge All</button> <button onclick="editMode()">Close Merge</button></span>
+
+	Auto <input type="checkbox" id="autocheck" checked onclick="checkbutton.disabled = this.checked" />
+	<button id="checkbutton" onclick="check()" disabled="true">Check</button>
+
+	<button onclick="toggleMergePanels()">Toggle Diff Pane</button>
+
+
 
 	<br />
 	<button onclick="openFile()">Open File</button>
 	<button onclick="saveFile()">Save File</button>
 
+	<pre>About: this is a javascript codestyle editor/validator/formatter/tool built on top of <a href="https://github.com/jscs-dev/node-jscs">node-jscs</a> and <a href="https://github.com/codemirror/codemirror">codemirror</a> by <a href="https://twitter.com/blurspline">@blurspline</a> and <a href="https://github.com/gero3">gero3</a>.</pre>
+
 	<pre>Protip 1: Open a file by dragging into the editor or <a href="#" onclick="openFile(); return false;">browse for one</a></pre>
 
 	<pre>Protip 2: To learn more about Mr.doob's Code Style™, check out the <a href="https://github.com/mrdoob/three.js/wiki/Mr.doob's-Code-Style%E2%84%A2">wiki</a>, <a href="https://github.com/mrdoob/three.js/issues/4802">discussion</a> and <a href="https://twitter.com/mrdoob/status/463709502853103617">history</a>.</pre>
 
-	<pre>About: this is a javascript codestyle editor/validator/formatter/tool built on top of <a href="https://github.com/jscs-dev/node-jscs">node-jscs</a> and <a href="https://github.com/codemirror/codemirror">codemirror</a> by <a href="https://twitter.com/blurspline">@blurspline</a> and <a href="https://github.com/gero3">gero3</a>.</pre>
 
 	<pre>Check out the code and development on <a href="https://github.com/zz85/mrdoobapproves">github</a></pre>
 
@@ -184,7 +193,6 @@ function mrdoob() {
 		var hints = document.getElementById( 'hints' );
 		var autocheck = document.getElementById( 'autocheck' );
 		var merge = document.getElementById( 'merge' );
-		var mergeButtons = document.getElementById( 'mergeButtons' );
 
 		var deferredValidator;
 		var cmOptions = {
@@ -219,8 +227,9 @@ function mrdoob() {
 		};
 
 		var checker, codeEditor, visibleError;
-
 		var loading = document.getElementById( 'loading' );
+		var pannelsOpened = false;
+
 		loading.style.display = 'none';
 
 		function init() {
@@ -239,7 +248,7 @@ function mrdoob() {
 			mergeView = CodeMirror.MergeView( merge, cmOptions );
 			codeEditor = mergeView.editor();
 			formatEditor = mergeView.rightOriginal();
-			editMode( true );
+			closeMergePanels( true );
 
 		}
 
@@ -281,10 +290,17 @@ function mrdoob() {
 
 		}
 
+		// checking code - check + lint errors..
+		//     if split spane open, auto-format that
+
+		// auto-formating coding - fix up style
+		//      if split pane open, close autofix panel
+
 		function check() {
 
 			var code = codeEditor.getValue();
 			if ( deferredValidator ) deferredValidator( code );
+			if ( open ) format();
 
 		}
 
@@ -356,6 +372,7 @@ function mrdoob() {
 				codeEditor.setCursor( line, visibleError.column, { scroll: false } );
 
 				if ( scrollInfo.top > coords.bottom || scrollInfo.top + scrollInfo.clientHeight < coords.top ) {
+
 					// out of view
 					codeEditor.scrollTo( null, coords.bottom - scrollInfo.clientHeight / 2 );
 
@@ -367,13 +384,24 @@ function mrdoob() {
 
 		}
 
+		function fix() {
+
+			format();
+
+			if ( open ) {
+
+				mergeAll();
+
+			}
+
+		}
+
 		/*
 		 * Support Auto-correcting
 		 */
 
 		function format() {
 
-			mergeMode();
 			var code = codeEditor.getValue();
 
 			var errors = false;
@@ -382,15 +410,10 @@ function mrdoob() {
 				console.time( 'jscs format' );
 				var fixes = checker.fixString( code );
 
-				formatEditor.setValue( fixes.output );
+				var target = open ? formatEditor : codeEditor;
+				target.setValue( fixes.output );
 
-				// console.log('errors', fixes.errors.getErrorList());
-
-				/*
-				// Reverse approach
-				codeEditor.setValue( checker.formatString(code) );
-				formatEditor.setValue( code );
-				*/
+				console.log( 'errors', fixes.errors.getErrorList() );
 
 			} catch ( e ) {
 
@@ -399,18 +422,31 @@ function mrdoob() {
 
 			} finally {
 
-				if (errors || fixes.errors.getErrorList().length > 0) {
+				if ( errors || fixes.errors.getErrorList().length > 0 ) {
 
 					console.log( 'oops, there is something that is not fixed...' )
 
 				}
 
 				console.timeEnd( 'jscs format' );
+
 			}
 
 		}
 
-		function editMode( init ) {
+		function openMergePanels() {
+
+			mergeView.wrapEdit.style.width = ''; // 47%
+			mergeView.wrapRight.style.display = '';
+			mergeView.right.gap.style.display = '';
+
+			// mergeView.wrapEdit.style.transition = 'width 0.2s ease-out';
+			mergeView.setShowDifferences( true );
+			pannelsOpened = true;
+
+		}
+
+		function closeMergePanels( init ) {
 
 			mergeView.wrapRight.style.display = 'none';
 			mergeView.right.gap.style.display = 'none';
@@ -427,26 +463,30 @@ function mrdoob() {
 			}
 
 			mergeView.setShowDifferences( false );
-			mergeButtons.style.display = 'none';
+			pannelsOpened = false;
 
 		}
 
-		function mergeMode() {
 
-			mergeView.wrapEdit.style.width = ''; // 47%
-			mergeView.wrapRight.style.display = '';
-			mergeView.right.gap.style.display = '';
-			mergeButtons.style.display = '';
+		function toggleMergePanels() {
 
-			// mergeView.wrapEdit.style.transition = 'width 0.2s ease-out';
-			mergeView.setShowDifferences( true );
+			if ( ! pannelsOpened ) {
+
+				openMergePanels();
+				format();
+
+			} else {
+
+				closeMergePanels();
+
+			}
 
 		}
 
 		function mergeAll() {
 
 			codeEditor.setValue( formatEditor.getValue() );
-			editMode();
+			closeMergePanels();
 
 		}
 
@@ -472,7 +512,7 @@ function mrdoob() {
 			var files = evt.target.files; // FileList object
 
 			var f = files[ 0 ];
-			if ( !f ) return;
+			if ( ! f ) return;
 
 			var reader = new FileReader();
 
@@ -495,7 +535,7 @@ function mrdoob() {
 			console.log( 'openfile...' );
 			openCallback = callback;
 
-			if ( !input ) {
+			if ( ! input ) {
 
 				input = document.createElement( 'input' );
 				input.style.display = 'none';
@@ -546,8 +586,6 @@ function mrdoob() {
 			link.dispatchEvent( event );
 
 		}
-
-
 
 	</script>
 
