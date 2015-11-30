@@ -257,6 +257,12 @@ function mrdoob() {
 			"requireSpaceBeforeBinaryOperators": true,
 			"requireSpaceAfterBinaryOperators": true,
 			"disallowSpaceBeforeBinaryOperators": [","],
+			"disallowSpacesInFunctionDeclaration": {
+				"beforeOpeningRoundBrace": true
+			},
+			"disallowSpacesInFunctionExpression": {
+				"beforeOpeningRoundBrace": true
+			},
 			"requireSpacesInConditionalExpression": {
 				"afterTest": true,
 				"beforeConsequent": true,
@@ -301,18 +307,13 @@ function mrdoob() {
 			// unfortunately JSCS configuration doesn't allow resetting
 			// so we create a new checker
 			checker = new JscsStringChecker();
-
 			checker.registerDefaultRules();
-			// checker.configure( {
-			// 	preset: preset || 'mdcs'
-			// } );
+
 
 			var configuration = checker.getConfiguration();
-			// var presets = configuration.getRegisteredPresets();
-			// console.log('mdcs pre', configuration._presets.mdcs);
-
-			console.log('mdcs', mdcs);
-			configuration._processConfig(mdcs);
+			var presets = configuration.getRegisteredPresets();
+			configuration.registerPreset( 'mdcs', mdcs );
+			checker.configure( { preset: preset || 'mdcs' } );
 
 
 		}
