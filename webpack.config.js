@@ -45,6 +45,13 @@ module.exports = {
 
 	output: {
 		filename: 'bundle.js'
-	}
+	},
 
+	node: {
+		fs: "empty",
+		net: 'empty',
+		tls: 'empty',
+		dns: 'empty',
+		module: 'empty'
+	}
 };
