@@ -232,6 +232,47 @@ function mrdoob() {
 
 		loading.style.display = 'none';
 
+		var mdcs = {
+			"requireCurlyBraces": ["while", "do", "try", "catch"],
+			"requireSpaceAfterKeywords": ["if", "else", "for", "while", "do", "switch", "return", "try", "catch"],
+			"requireSpacesInFunctionExpression": {
+				"beforeOpeningCurlyBrace": true
+			},
+			"requirePaddingNewlinesInBlocks": true,
+			"requireSpacesInsideParentheses": "all",
+			"requireSpacesInsideObjectBrackets": "all",
+			"requireSpacesInsideBrackets": {
+				"allExcept": [ "[", "]" ]
+			},
+			"requireSpaceBeforeBlockStatements": true,
+			"requireSpacesInForStatement": true,
+			"requireSpaceBeforeObjectValues":true,
+			"requireSpaceBetweenArguments": true,
+			"disallowKeywords": [ "with" ],
+			"requireLineFeedAtFileEnd": true,
+			"validateLineBreaks": "LF",
+			"validateIndentation": "\t",
+			"requireSpaceAfterPrefixUnaryOperators": true,
+			"requireSpaceBeforePostfixUnaryOperators": ["++", "--"],
+			"requireSpaceBeforeBinaryOperators": true,
+			"requireSpaceAfterBinaryOperators": true,
+			"disallowSpaceBeforeBinaryOperators": [","],
+			"disallowSpacesInFunctionDeclaration": {
+				"beforeOpeningRoundBrace": true
+			},
+			"disallowSpacesInFunctionExpression": {
+				"beforeOpeningRoundBrace": true
+			},
+			"requireSpacesInConditionalExpression": {
+				"afterTest": true,
+				"beforeConsequent": true,
+				"afterConsequent": true,
+				"beforeAlternate": true
+			},
+			"disallowTrailingWhitespace": true
+		};
+
+
 		function init() {
 
 			/*
@@ -266,11 +307,14 @@ function mrdoob() {
 			// unfortunately JSCS configuration doesn't allow resetting
 			// so we create a new checker
 			checker = new JscsStringChecker();
-
 			checker.registerDefaultRules();
-			checker.configure( {
-				preset: preset || 'mdcs'
-			} );
+
+
+			var configuration = checker.getConfiguration();
+			var presets = configuration.getRegisteredPresets();
+			configuration.registerPreset( 'mdcs', mdcs );
+			checker.configure( { preset: preset || 'mdcs' } );
+
 
 		}
 
