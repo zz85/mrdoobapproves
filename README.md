@@ -13,8 +13,13 @@ This tool helps to check if your code is in Mr.doob's Code Style™ and can help
 
 ## Releases
 
+### Planned features for version 3
+- Minimalistic linting engine
+- JSCS Rule Editing
+- JSCS library 2 (supporting ES6 with babel)
+
 ### 2.0 - 1 Dec 2015
-- Offical JSCS library 2
+- JSCS library with autofix (v1.13.1, last offical version without Babel)
 - Updated MDCS rules - space checks
 - Ability to chose other presets
 - Simplier Autofix Button
@@ -28,10 +33,6 @@ This tool helps to check if your code is in Mr.doob's Code Style™ and can help
 - Jump to error
 - Trailing spaces hinting
 - Open file
-
-### Planned features for version 3
-- Minimalistic linting engine
-- JSCS Rule Editing
 
 ## Development
 
