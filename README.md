@@ -19,10 +19,10 @@ This tool helps to check if your code is in Mr.doob's Code Style™ and can help
 - JSCS library 2 (supporting ES6 with babel)
 
 ### 2.0 - 1 Dec 2015
-- JSCS library with autofix (v1.13.1, last offical version without Babel)
+- JSCS library with Autofix (v1.13.1, last official version without Babel)
 - Updated MDCS rules - space checks
-- Ability to chose other presets
-- Simplier Autofix Button
+- Ability to chose other JSCS presets (crockford, google, jquery, wikimedia etc)
+- Simpler Autofix Button
 
 ### 1.0 - 12 Jan 2015
 - Mr.doob's Code Style™ validator
