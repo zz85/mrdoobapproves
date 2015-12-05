@@ -1,7 +1,7 @@
 Does MrDoob Approve?
 ==============
 
-"MrDoob Approves" is a browser-based Javascript code style checker/validator/formatter/editor/tool. Initially created for [Mr.doob's Code Style™](https://github.com/mrdoob/three.js/wiki/Mr.doob's-Code-Style%E2%84%A2), it is assembled with [code-mirror](https://github.com/codemirror/codemirror and [node-jscs](https://github.com/jscs-dev/node-jscs). Previously, a [modified version](https://github.com/gero3/node-jscs/tree/formatter) of jscs by gero3 was used before the jscs library shipped with auto-fixing.
+"MrDoob Approves" is a browser-based Javascript code style checker/validator/formatter/editor/tool. Initially created for [Mr.doob's Code Style™](https://github.com/mrdoob/three.js/wiki/Mr.doob's-Code-Style%E2%84%A2), it is assembled with [code-mirror](https://github.com/codemirror/codemirror) and [node-jscs](https://github.com/jscs-dev/node-jscs). Previously, a [modified version](https://github.com/gero3/node-jscs/tree/formatter) of jscs by gero3 was used before the jscs library shipped with auto-fixing.
 
 ![](https://cloud.githubusercontent.com/assets/314997/5714636/c6db41b2-9b06-11e4-8d25-05142c37a479.png)
 ## [Run the editor here](http://zz85.github.io/mrdoobapproves/)
@@ -13,10 +13,16 @@ This tool helps to check if your code is in Mr.doob's Code Style™ and can help
 
 ## Releases
 
-### 2.0 - SOON
-- Offical JSCS library
-- Better spacing checks
+### Planned features for version 3
+- Minimalistic linting engine
+- JSCS Rule Editing
+- JSCS library 2 (supporting ES6 with babel)
+
+### 2.0 - 1 Dec 2015
+- JSCS library with autofix (v1.13.1, last offical version without Babel)
+- Updated MDCS rules - space checks
 - Ability to chose other presets
+- Simplier Autofix Button
 
 ### 1.0 - 12 Jan 2015
 - Mr.doob's Code Style™ validator
