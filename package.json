@@ -1,6 +1,6 @@
 {
   "name": "mrdoobapproves",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Mrdoob Javascript Code Style Editor, Checker and Formatter",
   "main": "index.html",
   "scripts": {
