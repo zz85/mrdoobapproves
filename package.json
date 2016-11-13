@@ -37,5 +37,8 @@
     "jscs": "1.13.1",
     "json-loader": "^0.5.1",
     "style-loader": "^0.8.2"
+  },
+  "dependencies": {
+    "eslint": "^3.10.0"
   }
 }

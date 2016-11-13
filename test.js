@@ -9,6 +9,8 @@ const presets = configuration.getRegisteredPresets();
 configuration.registerPreset( 'mdcs', mdcs );
 checker.configure( { preset: 'mdcs' } );
 
+const linter = require('eslint').linter;
+
 // Also see https://github.com/jscs-dev/node-jscs/blob/master/test/data/options/preset/mdcs.js
 
 /**
@@ -119,7 +121,7 @@ if ( i < l ) {
 
 	function test( object, geometry ) {
 
-		return ;
+		return;
 
 	}
 
@@ -270,3 +272,41 @@ Object.keys(ShouldFail).forEach((k) => {
 
     console.assert(pass, k);
 });
+
+
+config = require('./eslint');
+
+// var messages = linter.verify(ShouldPass.Approves, {
+//     rules: {
+//         semi: 2
+//     }
+// }, { filename: "foo.js" });
+
+// var messages = linter.verify(ShouldPass.Approves, config);
+
+
+Object.keys(ShouldPass).forEach((k) => {
+	const code = ShouldPass[k];
+	const list = linter.verify(code, config);
+	const pass = list.length === 0;
+
+	if (!pass) {
+		console.log('Should pass', k, list);
+	}
+
+    console.assert(pass, k);
+});
+
+Object.keys(ShouldFail).forEach((k) => {
+	const code = ShouldFail[k];
+	const list = linter.verify(code, config);
+	const pass = list.length > 0;
+
+	if (!pass) {
+		console.log('Should fail', k, list);
+	}
+
+    console.assert(pass, k);
+});
+
+// console.log(messages);
