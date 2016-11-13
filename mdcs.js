@@ -16,6 +16,7 @@ var mdcs = {
     "requireSpaceBeforeObjectValues":true,
     "requireSpaceBetweenArguments": true,
     "disallowKeywords": [ "with" ],
+    "disallowSpacesInCallExpression": true,
     "requireLineFeedAtFileEnd": true,
     "validateLineBreaks": "LF",
     "validateIndentation": "\t",

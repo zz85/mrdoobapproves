@@ -12,7 +12,7 @@ checker.configure( { preset: 'mdcs' } );
 // Also see https://github.com/jscs-dev/node-jscs/blob/master/test/data/options/preset/mdcs.js
 
 /**
- * Code style that pass
+ * Code style that passes mrdoob
  */
 const ShouldPass = {
 
@@ -26,6 +26,16 @@ function mrdoob() {
 	}
 
 }
+`,
+
+NoSpacePriorToTheLeftParentheses:`
+var geometry = new THREE.ConvexGeometry( vertices );
+
+var material = new THREE.MeshPhongMaterial( { shading: THREE.FlatShading } );
+
+var mesh = new THREE.Mesh( geometry, material );
+
+scene.add( mesh );
 `,
 
 AnonymousFunction: `
@@ -151,6 +161,9 @@ var j = k ? l : m;
 
 };
 
+/**
+ * Code style that fails mrdoob
+ */
 const ShouldFail = {
 ShouldHaveSpaces: `
 for (var j=0;j<100;j++) {
@@ -162,21 +175,40 @@ if(moo) {
 }else{
 	nah
 }
+`,
+SpacesPriorToTheLeftParentheses:`
+var geometry = new THREE.ConvexGeometry ( vertices );
+
+var material = new THREE.MeshPhongMaterial ( { shading: THREE.FlatShading } );
+
+var mesh = new THREE.Mesh ( geometry, material );
+
+scene.add ( mesh );
 `
 };
 
 
 Object.keys(ShouldPass).forEach((k) => {
-    let errors = checker.checkString( ShouldPass[k] );
-    let list = errors.getErrorList()
-    // console.log('Should pass', k, list);
-    console.assert(list.length === 0, k);
+    const errors = checker.checkString( ShouldPass[k] );
+    const list = errors.getErrorList()
+	const pass = list.length === 0;
+
+	if (!pass) {
+		console.log('Should pass', k, list);
+	}
+
+    console.assert(pass, k);
 });
 
 
 Object.keys(ShouldFail).forEach((k) => {
-    let errors = checker.checkString( ShouldFail[k] );
-    let list = errors.getErrorList()
-    // console.log('Should fail', k, list);
-    console.assert(list.length > 0, k);
+    const errors = checker.checkString( ShouldFail[k] );
+    const list = errors.getErrorList()
+	const pass = list.length > 0;
+
+	if (!pass) {
+		console.log('Should fail', k, list);
+	}
+
+    console.assert(pass, k);
 });
