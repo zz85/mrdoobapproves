@@ -3,9 +3,11 @@ Does MrDoob Approve?
 
 "MrDoob Approves" is a browser-based Javascript code style checker/validator/formatter/editor/tool. Initially created for [Mr.doob's Code Style™](https://github.com/mrdoob/three.js/wiki/Mr.doob's-Code-Style%E2%84%A2), it is assembled with [code-mirror](https://github.com/codemirror/codemirror) and [node-jscs](https://github.com/jscs-dev/node-jscs). Previously, a [modified version](https://github.com/gero3/node-jscs/tree/formatter) of jscs by gero3 was used before the jscs library shipped with auto-fixing.
 
-![](https://cloud.githubusercontent.com/assets/314997/5714636/c6db41b2-9b06-11e4-8d25-05142c37a479.png)
+![Build Status](https://travis-ci.org/zz85/mrdoobapproves.svg?branch=gh-pages)
+
 ## [Run the editor here](http://zz85.github.io/mrdoobapproves/)
 
+![](https://cloud.githubusercontent.com/assets/314997/5714636/c6db41b2-9b06-11e4-8d25-05142c37a479.png)
 
 ## About
 
