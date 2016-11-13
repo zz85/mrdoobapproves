@@ -183,7 +183,15 @@ var b = [[ 1, 2 ], [ 3, 4 ], [ 5, 6 ]];
 var c = ( ( d + e - f / g * h ) == i );
 var j = k ? l : m;
 //"requireLineFeedAtFileEnd": true,
-`
+`,
+
+ForLoop: `
+for ( a = 0; a < 23; a ++ ) {
+
+	hello = 'world';
+
+}
+`,
 
 };
 
@@ -202,6 +210,7 @@ if(moo) {
 	nah
 }
 `,
+
 SpacesPriorToTheLeftParentheses:`
 var geometry = new THREE.ConvexGeometry ( vertices );
 
@@ -210,7 +219,30 @@ var material = new THREE.MeshPhongMaterial ( { shading: THREE.FlatShading } );
 var mesh = new THREE.Mesh ( geometry, material );
 
 scene.add ( mesh );
-`
+`,
+
+Invalids: `
+for ( a = 0; a < 23; a ++ ) {
+	hello = 'world';
+}
+
+for ( a=0; a<23; a ++ ) {
+
+	hello = 'world';
+
+}
+
+for (a = 0; a < 23; a ++) {
+
+	hello = 'world';
+
+}
+
+for ( a = 0;a < 23; a ++ ) {
+
+	hello = 'world';
+}
+`,
 };
 
 
