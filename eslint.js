@@ -1,22 +1,52 @@
+/* MrDoob Code Style ESLint */
+/*
+
+See http://eslint.org/docs/rules/
+
+"off" or 0 - turn the rule off
+"warn" or 1 - turn the rule on as a warning (doesn’t affect exit code)
+"error" or 2 - turn the rule on as an error (exit code is 1 when triggered)
+
+*/
+
 module.exports = {
   "env": {
     "browser": true,
   },
   "rules": {
-    "semi-spacing": ["error", {"before": false, "after": true}],
+    /* Stylistic Issues */
+    "block-spacing": ["error", "always"],
+    "brace-style": [ "error", "1tbs", { "allowSingleLine": true } ],  // Require k&r style braces
 
+    "indent": ["error", "tab", { "SwitchCase": 1 }],
+
+    "func-call-spacing": ["error", "never"],
+
+    "no-trailing-spaces": ["error", { "skipBlankLines": false }],
+
+    "padded-blocks": ["error", {
+      "blocks": "always",
+      "switches": "always",
+      "classes": "always"
+    }],
+
+    "semi-spacing": ["error", {"before": false, "after": true}],
+    "space-before-blocks": ["error",  { "functions": "always", "keywords": "always", "classes": "always" }],
     "space-before-function-paren": ["error", {
         "anonymous": "always",
         "named": "never",
         "asyncArrow": "ignore"
     }],
+    "space-in-parens": [ 'error', "always" ],
 
-    "func-call-spacing": ["error", "never"],
+    "keyword-spacing": ["error", { "before": true, "after": true }],
 
-    // Rules that should be turned on but are off until the code is updated
-    // (change the 0 to a 2 and move them down to the next section)
+    // "object-curly-newline": ["error", {
+    //     "ObjectExpression": "always",
+    //     "ObjectPattern": { "multiline": true }
+    // }],
 
-    // "brace-style": [ 0, "1tbs", { "allowSingleLine": true } ],  // Require k&r style braces
+
     // "camelcase": 0,                          // Disallow names_with_underscore
     // "comma-spacing": 0,                      // Require space after comma
     // "eqeqeq": 0,                             // Require === and !==
@@ -33,7 +63,7 @@ module.exports = {
     // "semi": 0,                               // Disallow missing semicolons
     // "space-after-keywords": [ 0, "always" ], // Require space after keywords
     // "space-in-brackets": [ 0, "always" ],    // Require space in parens
-    // "space-in-parens": [ 'error', "always" ],      // Require space in parens
+    //
     // "space-infix-ops": 0,                    // Require space around operators "a + b" = ok, "a+b" = bad
     // "strict": 0,                             // Require "use strict"
     // "three-no-new-array": 0,                 // Disallow "new Array"

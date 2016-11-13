@@ -195,6 +195,18 @@ for ( a = 0; a < 23; a ++ ) {
 }
 `,
 
+IfBlock: `
+if ( moo ) {
+
+	moo();
+
+} else {
+
+	cow();
+
+}
+`,
+
 };
 
 /**
@@ -210,6 +222,36 @@ if(moo) {
   ho();
 }else{
 	nah
+}
+`,
+
+IfSpace: `
+if(moo) {}
+`,
+
+IfSpace2: `
+if ( moo) {}
+`,
+
+IfSpace3: `
+if (moo ) {}
+`,
+
+IfSpace4: `
+if ( moo ) {
+	moo();	
+}
+`,
+
+SomeTrailingSpaceInBlock: `
+if ( moo ) {
+
+	moo();
+	
+} else {
+
+	cow();
+
 }
 `,
 
@@ -276,15 +318,6 @@ Object.keys(ShouldFail).forEach((k) => {
 
 config = require('./eslint');
 
-// var messages = linter.verify(ShouldPass.Approves, {
-//     rules: {
-//         semi: 2
-//     }
-// }, { filename: "foo.js" });
-
-// var messages = linter.verify(ShouldPass.Approves, config);
-
-
 Object.keys(ShouldPass).forEach((k) => {
 	const code = ShouldPass[k];
 	const list = linter.verify(code, config);
@@ -294,7 +327,7 @@ Object.keys(ShouldPass).forEach((k) => {
 		console.log('Should pass', k, list);
 	}
 
-    console.assert(pass, k);
+    console.assert(pass, k + ' should pass');
 });
 
 Object.keys(ShouldFail).forEach((k) => {
@@ -306,7 +339,5 @@ Object.keys(ShouldFail).forEach((k) => {
 		console.log('Should fail', k, list);
 	}
 
-    console.assert(pass, k);
+    console.assert(pass, k + ' should fail');
 });
-
-// console.log(messages);
