@@ -28,7 +28,7 @@ function mrdoob() {
 }
 `,
 
-NoSpacePriorToTheLeftParentheses:`
+NoSpacePriorToTheLeftParentheses: `
 var geometry = new THREE.ConvexGeometry( vertices );
 
 var material = new THREE.MeshPhongMaterial( { shading: THREE.FlatShading } );
@@ -36,6 +36,32 @@ var material = new THREE.MeshPhongMaterial( { shading: THREE.FlatShading } );
 var mesh = new THREE.Mesh( geometry, material );
 
 scene.add( mesh );
+`,
+
+SwitchStatementStyle1: `
+switch ( event ) {
+
+	case THREE.ConstantA:
+
+		foo();
+		break;
+
+	case THREE.ConstantB:
+
+		bar();
+		break;
+
+}
+`,
+
+SwitchStatementStyle2: `
+switch ( event ) {
+
+	case 1: foo(); break;
+
+	case 2: bar(); break;
+
+}
 `,
 
 AnonymousFunction: `
