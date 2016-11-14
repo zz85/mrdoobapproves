@@ -9,7 +9,8 @@ See http://eslint.org/docs/rules/
 
 */
 
-module.exports = {
+
+const mdcs_eslint = {
   "env": {
     "browser": true,
     "node": true,
@@ -30,7 +31,7 @@ module.exports = {
     "eol-last": ["error", "always"],
     "func-call-spacing": ["error", "never"],
     "indent": ["error", "tab", { "SwitchCase": 1 }],
-    // "key-spacing": ["error", { "beforeColon": false }],
+    "key-spacing": ["error", { "beforeColon": false }],
 
     "new-parens": ["error"],
     "no-trailing-spaces": ["error", { "skipBlankLines": false }],
@@ -98,4 +99,8 @@ module.exports = {
     "THREE": false,        // Don't allow overriding THREE
     "console": true,       // Define console and allow it to be overridden
   }
+}
+
+if ( typeof(module) !== 'undefined' ) {
+    module.exports = mdcs_eslint;
 }

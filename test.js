@@ -163,7 +163,7 @@ Operators: `
 //"requireSpacesInsideObjectBrackets": "all",
 //"requireSpacesInsideBrackets": "allButNested",
 //"disallowSpaceBeforeBinaryOperators": [","]
-var a = { test : { test2 : true }, test3 : { test4 : true } };
+var a = { test: { test2: true }, test3: { test4: true } };
 var b = [[ 1, 2 ], [ 3, 4 ], [ 5, 6 ]];
 
 //"requireSpaceBeforeBinaryOperators": [ "+", "-", "/", "*", "=", "==", "===", "!=", "!==", ">", ">=", "<", "<=" ]
@@ -278,6 +278,10 @@ for ( a = 0;a < 23; a ++ ) {
 }
 `,
 
+KeySpacing: `
+var x = { test : { test2 : true }, test3 : { test4 : true } };
+`,
+
 SemiColons: `
 hello_world()
 `
@@ -307,7 +311,7 @@ Object.keys(ShouldPass).forEach((k) => {
 		console.log('Should pass', k, list);
 	}
 
-    console.assert(pass, k);
+    console.assert(pass, 'JSCS: ' + k + ' should pass');
 });
 
 
@@ -320,7 +324,7 @@ Object.keys(ShouldFail).forEach((k) => {
 		console.log('Should fail', k, list);
 	}
 
-    console.assert(pass, k + ' Should fail');
+    console.assert(pass, 'JSCS: ' + k + ' Should fail');
 });
 
 /**
@@ -340,7 +344,7 @@ Object.keys(ShouldPass).forEach((k) => {
 		console.log('Should pass', k, list);
 	}
 
-    console.assert(pass, k + ' should pass');
+    console.assert(pass, 'Eslint: ' + k + ' should pass');
 });
 
 Object.keys(ShouldFail).forEach((k) => {
@@ -352,5 +356,5 @@ Object.keys(ShouldFail).forEach((k) => {
 		console.log('Should fail', k, list);
 	}
 
-    console.assert(pass, k + ' should fail');
+    console.assert(pass, 'Eslint: ' + k + ' should fail');
 });

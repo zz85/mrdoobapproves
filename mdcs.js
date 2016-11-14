@@ -28,6 +28,7 @@ var mdcs = {
     "disallowSpacesInFunctionDeclaration": {
         "beforeOpeningRoundBrace": true
     },
+    "disallowSpaceAfterObjectKeys": true,
     "requireSpacesInAnonymousFunctionExpression": {
         "beforeOpeningRoundBrace": true
     },
