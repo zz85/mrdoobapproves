@@ -1,16 +1,3 @@
-const JscsStringChecker = require('jscs/lib/string-checker');
-const mdcs = require('./mdcs');
-
-const checker = new JscsStringChecker();
-checker.registerDefaultRules();
-
-const configuration = checker.getConfiguration();
-const presets = configuration.getRegisteredPresets();
-configuration.registerPreset( 'mdcs', mdcs );
-checker.configure( { preset: 'mdcs' } );
-
-const linter = require('eslint').linter;
-
 // Also see https://github.com/jscs-dev/node-jscs/blob/master/test/data/options/preset/mdcs.js
 
 /**
@@ -208,7 +195,7 @@ if ( moo ) {
 `,
 SemiColons: `
 hello_world();
-`
+`,
 
 };
 
@@ -296,6 +283,20 @@ hello_world()
 `
 };
 
+/**
+ * JSCS Code Style Testing
+ */
+
+const JscsStringChecker = require('jscs/lib/string-checker');
+const mdcs = require('./mdcs');
+
+const checker = new JscsStringChecker();
+checker.registerDefaultRules();
+
+const configuration = checker.getConfiguration();
+const presets = configuration.getRegisteredPresets();
+configuration.registerPreset( 'mdcs', mdcs );
+checker.configure( { preset: 'mdcs' } );
 
 Object.keys(ShouldPass).forEach((k) => {
     const errors = checker.checkString( ShouldPass[k] );
@@ -322,12 +323,17 @@ Object.keys(ShouldFail).forEach((k) => {
     console.assert(pass, k + ' Should fail');
 });
 
+/**
+ * ESLint Code Style Checking
+ */
 
+// See Node API http://eslint.org/docs/developer-guide/nodejs-api.html
+const linter = require('eslint').linter;
 config = require('./eslint');
 
 Object.keys(ShouldPass).forEach((k) => {
 	const code = ShouldPass[k];
-	const list = linter.verify(code, config);
+	const list = linter.verify(code, config).filter(v => v.severity === 2);
 	const pass = list.length === 0;
 
 	if (!pass) {
@@ -339,7 +345,7 @@ Object.keys(ShouldPass).forEach((k) => {
 
 Object.keys(ShouldFail).forEach((k) => {
 	const code = ShouldFail[k];
-	const list = linter.verify(code, config);
+	const list = linter.verify(code, config).filter(v => v.severity === 2);
 	const pass = list.length > 0;
 
 	if (!pass) {
