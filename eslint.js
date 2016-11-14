@@ -30,6 +30,7 @@ module.exports = {
       "classes": "always"
     }],
 
+    "semi": ["error", "always", { "omitLastInOneLineBlock": true }],
     "semi-spacing": ["error", {"before": false, "after": true}],
     "space-before-blocks": ["error",  { "functions": "always", "keywords": "always", "classes": "always" }],
     "space-before-function-paren": ["error", {
@@ -60,7 +61,6 @@ module.exports = {
     // "no-space-before-semi": 0,               // Require no space before semicolon
     // "no-trailing-spaces": 0,                 // Disallow trailing spaces
     // "no-unused-vars": 0,                     // Disallow unused variables.
-    // "semi": 0,                               // Disallow missing semicolons
     // "space-after-keywords": [ 0, "always" ], // Require space after keywords
     // "space-in-brackets": [ 0, "always" ],    // Require space in parens
     //

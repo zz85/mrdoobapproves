@@ -67,7 +67,7 @@ switch ( event ) {
 `,
 
 AnonymousFunction: `
-Moo = function () {}
+Moo = function () {};
 `,
 
 NamedFunction: `
@@ -88,7 +88,7 @@ while ( i < l ) {
 
 	} catch ( e ) {
 
-		throw "this is a test"
+		throw "this is a test";
 
 	}
 
@@ -206,6 +206,9 @@ if ( moo ) {
 
 }
 `,
+SemiColons: `
+hello_world();
+`
 
 };
 
@@ -287,6 +290,10 @@ for ( a = 0;a < 23; a ++ ) {
 	hello = 'world';
 }
 `,
+
+SemiColons: `
+hello_world()
+`
 };
 
 
@@ -312,7 +319,7 @@ Object.keys(ShouldFail).forEach((k) => {
 		console.log('Should fail', k, list);
 	}
 
-    console.assert(pass, k);
+    console.assert(pass, k + ' Should fail');
 });
 
 

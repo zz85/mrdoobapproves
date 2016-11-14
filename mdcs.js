@@ -37,6 +37,7 @@ var mdcs = {
         "afterConsequent": true,
         "beforeAlternate": true
     },
+    "requireSemicolons": true,
     "disallowTrailingWhitespace": true,
     "disallowMultipleSpaces": true
 };
