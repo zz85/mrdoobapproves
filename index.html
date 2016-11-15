@@ -13,6 +13,9 @@
 		body {
 			font-family: "Helvetica Neue", Helvetica, sans-serif;
 			padding: 0.5em;
+			background: #111;
+			color: #ccc;
+			transition: 1s;
 		}
 
 		.code {
@@ -50,6 +53,7 @@
 			padding: 0.5em;
 			margin-top: 0.5em;
 			font-size: 1em;
+			background: #bbb;
 		}
 
 		pre {
@@ -107,6 +111,7 @@
 			/*border: 0;
 			border-bottom: 1px solid #333;*/
 			-webkit-outline: 0;
+			color: #fff;
 		}
 
 	</style>
@@ -169,15 +174,14 @@ function mrdoob() {
 
 	<button onclick="fix()">Format the Code!</button>
 
+	<label style="padding-left: 20px">Auto</label> <input type="checkbox" id="autocheck" checked onclick="checkbutton.disabled = this.checked" />
+	<button id="checkbutton" onclick="check()" disabled="true">Check</button>
+	<button onclick="toggleMergePanels()">Toggle Diff Pane</button>
+
 	<br />
 	<a id="hints" href="#" class="no" onclick="gotoError(); return false;"></a>
 
 	<br />
-
-	Auto <input type="checkbox" id="autocheck" checked onclick="checkbutton.disabled = this.checked" />
-	<button id="checkbutton" onclick="check()" disabled="true">Check</button>
-
-	<button onclick="toggleMergePanels()">Toggle Diff Pane</button>
 
 	<br />
 	<button onclick="openFile()">Open File</button>
@@ -316,6 +320,7 @@ function mrdoob() {
 			answer.style.opacity = 1;
 			answer.textContent = comment;
 			answer.className = style;
+			// document.body.style.background = style === 'no' ? 'rgba(255, 0, 0, 0.7)' : 'rgba(0, 255, 0, 0.7)';
 
 			setTimeout( hideAnswer, 3000 );
 
@@ -337,7 +342,7 @@ function mrdoob() {
 
 		function jscsCheck( code ) {
 
-			// console.info('checking ' + code + '...');
+			// TODO clean this up
 
 			var wrapper = { code: code };
 
