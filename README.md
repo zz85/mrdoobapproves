@@ -16,6 +16,20 @@ It is now powered by eslint and [code-mirror](https://github.com/codemirror/code
 
 ![](https://cloud.githubusercontent.com/assets/314997/5714636/c6db41b2-9b06-11e4-8d25-05142c37a479.png)
 
+## For ESLint Users
+
+```
+npm install --save-dev eslint-config-mdcs
+```
+
+Add this to `.eslintrc`.
+
+```
+{
+  "extends": "mdcs"
+}
+```
+
 ## About
 
 This tool helps to check if your code is in Mr.doob's Code Style™ and can help you auto-format it. This is useful if you are making a pull-request to mrdoob's javascript projects like [three.js](https://github.com/mrdoob/three.js). More about this in this [blog post](http://www.lab4games.net/zz85/blog/2015/01/25/mrdoob-approves-a-javascript-codestyle-editor-validator-formatter-project/)
