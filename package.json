@@ -1,8 +1,8 @@
 {
-  "name": "mrdoobapproves",
+  "name": "eslint-config-mdcs",
   "version": "4.1.0",
   "description": "Mrdoob Javascript Code Style Editor, Checker and Formatter",
-  "main": "index.html",
+  "main": "mdcs_eslint.js",
   "scripts": {
     "test": "node test",
     "setup": "npm install -g webpack && npm install",
