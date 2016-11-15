@@ -16,6 +16,7 @@
 			background: #111;
 			color: #ccc;
 			transition: 1s;
+			text-shadow: #111 0px 1px;
 		}
 
 		.code {
@@ -30,7 +31,6 @@
 			font-family: monospace;
 			font-size: 20px;
 		}
-
 
 		.CodeMirror {
 			border: 1px solid #bbb;
@@ -47,6 +47,10 @@
 			font-weight: 300;
 			font-size: 4em;
 			margin: 0.1em;
+		}
+
+		h2 {
+			display: block;
 		}
 
 		button {
@@ -75,6 +79,11 @@
 
 		.no {
 			color: red;
+		}
+
+		.hints {
+			color: #ddd;
+			text-shadow: #333 1px 1px;
 		}
 
 		.maybe {
@@ -129,8 +138,7 @@
 		<option>wikimedia</option>
 		<option>wordpress</option>
 		<option>yandex</option>-->
-	</select> approve your code style? <span id="answer" />
-
+	</select> approve your code style?
 	</h1>
 
 	</div>
@@ -170,28 +178,29 @@ function mrdoob() {
 	<script src="mdcs.js"></script>
 	<script src="mdcs_eslint.js"></script>
 	<script src="build/eslint.js"></script>
+
+	<br/>
+	<span id="hints"></span>
 	<br />
 
-	<button onclick="fix()">Format the Code!</button>
+	<button style="margin-right: 20px" onclick="fix()">Auto Format All The Code!</button>
 
-	<label style="padding-left: 20px">Auto</label> <input type="checkbox" id="autocheck" checked onclick="checkbutton.disabled = this.checked" />
+	<span style="display:none;">
+	<label>Auto</label> <input type="checkbox" id="autocheck" checked onclick="checkbutton.disabled = this.checked" />
 	<button id="checkbutton" onclick="check()" disabled="true">Check</button>
+	</span>
 	<button onclick="toggleMergePanels()">Toggle Diff Pane</button>
-
-	<br />
-	<a id="hints" href="#" class="no" onclick="gotoError(); return false;"></a>
-
-	<br />
-
-	<br />
 	<button onclick="openFile()">Open File</button>
 	<button onclick="saveFile()">Save File</button>
 
+	<h2><span id="answer" /></h2>
+
 	<p>
 		Here is a editor that validates + formats javascript codestyle primarily to mrdoob's liking.
+		If you're looking for the older version of this editor, <a href="jscs.html">go here</a>.
 	</p>
 	<i>Disclaimer: the name of this tool is also used without the permission of <a href="https://twitter.com/mrdoob">mrdoob</a>.</i>
-	
+
 	<script>
 		var textarea = document.getElementById( 'code' );
 		var answer = document.getElementById( 'answer' );
@@ -260,9 +269,18 @@ function mrdoob() {
 
 		function processESLintRules(text) {
 			const messages = mrdoobEsLint(text);
-			// console.log(messages);
+			const errors = messages.filter( m => m.severity === 2);
 
-			if ( messages.filter( m => m.severity === 2).length === 0 ) {
+			setError(errors[0]);
+
+			if ( text.trim().length === 0 ) {
+
+				setAnswer( 'Maybe... :)', 'maybe' );
+				return;
+
+			}
+
+			if ( errors.length === 0 ) {
 
 				setAnswer( 'Possibly \\o/*\\o', 'yes' );
 
@@ -340,70 +358,44 @@ function mrdoob() {
 
 		}
 
-		function jscsCheck( code ) {
+		function setError( error ) {
 
-			// TODO clean this up
-
-			var wrapper = { code: code };
-
-			if ( code.trim().length === 0 ) {
-
-				setAnswer( 'Maybe... :)', 'maybe' );
-				return;
-
-			}
-
-			var errors;
-			try {
-
-				console.time( 'jscs check' );
-				preprocess( wrapper );
-
-				errors = checker.checkString( wrapper.code );
-				console.timeEnd( 'jscs check' );
-
-			} catch ( e ) {
-
-				// jscs now catches parse error into errorlist, so this shouldn't happen
-				setAnswer( 'oops... something went wrong...', 'no' );
-				throw( e );
-
-			}
-
-			var errorList = errors.getErrorList();
-
-			console.log( 'checking done. ' + errorList.length + ' errors' );
-
-			if ( errorList.length === 0 ) {
-
-				setAnswer( 'Possibly \\o/*\\o', 'yes' );
-
-			} else {
-
-				setAnswer( 'No!!! :(', 'no' );
-
-			}
-
-			errorList = errorList.map( function( error ) {
-
-				error.column += wrapper.indentation.length
-				return error;
-
-			} )
-
-			visibleError = errorList[ 0 ];
+			visibleError = error;
 
 			if ( visibleError ) {
 
-				hints.textContent = visibleError.line + ':' + visibleError.column + '\t' + visibleError.message + ' (Rule: ' + visibleError.rule + ')';
+				hints.innerHTML = `
+				<a href="#" class="hints" onclick="return autofix();">Fix!</a>
+				<a href="#" class="hints" onclick="return gotoError();" >[${visibleError.line}:${visibleError.column}]</a>
+ 				\t
+				 Error:
+				<i>${visibleError.message}</i>
+				`;
+				//
 
 			} else {
 
 				hints.textContent = '';
 
 			}
+		}
 
-			return errors;
+		function autofix() {
+			console.log('autofix');
+
+			if ( visibleError ) {
+
+				console.log(visibleError);
+
+				let text = codeEditor.getValue();
+				const v = visibleError.fix;
+				text = text.substring(0, v.range[0]) + v.text + text.substring(v.range[1]);
+
+				var target = pannelsOpened ? formatEditor : codeEditor;
+				console.log('text', text, open);
+				target.setValue( text );
+
+			}
 
 		}
 
@@ -432,10 +424,11 @@ function mrdoob() {
 		}
 
 		function fix() {
+			console.log('fixx')
 
 			format();
 
-			if ( open ) {
+			if ( pannelsOpened ) {
 
 				mergeAll();
 
@@ -535,7 +528,7 @@ function mrdoob() {
 				codeWrapper.code = fixed;
 				postprocess( codeWrapper )
 
-				var target = open ? formatEditor : codeEditor;
+				var target = pannelsOpened ? formatEditor : codeEditor;
 				target.setValue( codeWrapper.code );
 
 				console.log( 'errors', fixes );
