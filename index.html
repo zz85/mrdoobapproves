@@ -270,6 +270,16 @@ function mrdoob() {
 			const messages = mrdoobEsLint(text);
 			// console.log(messages);
 
+			if ( messages.filter( m => m.severity === 2).length === 0 ) {
+
+				setAnswer( 'Possibly \\o/*\\o', 'yes' );
+
+			} else {
+
+				setAnswer( 'No!!! :(', 'no' );
+
+			}
+
 			const lints = messages.map(m => {
 				return {
 					message: m.message,
