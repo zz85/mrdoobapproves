@@ -208,6 +208,11 @@ function mrdoob() {
 		var autocheck = document.getElementById( 'autocheck' );
 		var merge = document.getElementById( 'merge' );
 
+		var presets = document.querySelector('.preset');
+		Object.keys(eslint_configs).forEach(k => {
+			presets.options[presets.options.length] = new Option(k);
+		});
+
 		var deferredValidator;
 		var cmOptions = {
 			value: textarea.value,
@@ -264,14 +269,14 @@ function mrdoob() {
 		}
 
 		function mrdoobEsLint(text) {
-			return eslint.verify(text, mdcs_eslint);
+			return eslint.verify(text, eslint_configs[presets.value] || mdcs_eslint);
 		}
 
 		function processESLintRules(text) {
 			const messages = mrdoobEsLint(text);
 			const errors = messages.filter( m => m.severity === 2);
 
-			setError(errors[0]);
+			setError(messages.filter(m => m.fix)[0]);
 
 			if ( text.trim().length === 0 ) {
 
@@ -354,7 +359,7 @@ function mrdoob() {
 
 			var code = codeEditor.getValue();
 			if ( deferredValidator ) deferredValidator( code );
-			if ( open ) format();
+			if ( pannelsOpened ) format();
 
 		}
 
@@ -381,18 +386,13 @@ function mrdoob() {
 		}
 
 		function autofix() {
-			console.log('autofix');
 
 			if ( visibleError ) {
-
-				console.log(visibleError);
-
 				let text = codeEditor.getValue();
 				const v = visibleError.fix;
 				text = text.substring(0, v.range[0]) + v.text + text.substring(v.range[1]);
 
 				var target = pannelsOpened ? formatEditor : codeEditor;
-				console.log('text', text, open);
 				target.setValue( text );
 
 			}
@@ -424,7 +424,6 @@ function mrdoob() {
 		}
 
 		function fix() {
-			console.log('fixx')
 
 			format();
 
@@ -450,7 +449,8 @@ function mrdoob() {
 
 			var leads = lead[ 1 ].split( '\n' );
 			var indentation = leads.pop();
-			console.log( 'indentation', JSON.stringify( indentation ), leads.length );
+			
+			// console.log( 'indentation', JSON.stringify( indentation ), leads.length );
 
 			codeWrapper.code = code
 				.split( '\n' )
