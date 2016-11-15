@@ -13,10 +13,6 @@
 		body {
 			font-family: "Helvetica Neue", Helvetica, sans-serif;
 			padding: 0.5em;
-			background: #111;
-			color: #ccc;
-			transition: 1s;
-			text-shadow: #111 0px 1px;
 		}
 
 		.code {
@@ -31,6 +27,7 @@
 			font-family: monospace;
 			font-size: 20px;
 		}
+
 
 		.CodeMirror {
 			border: 1px solid #bbb;
@@ -49,15 +46,10 @@
 			margin: 0.1em;
 		}
 
-		h2 {
-			display: block;
-		}
-
 		button {
 			padding: 0.5em;
 			margin-top: 0.5em;
 			font-size: 1em;
-			background: #bbb;
 		}
 
 		pre {
@@ -79,11 +71,6 @@
 
 		.no {
 			color: red;
-		}
-
-		.hints {
-			color: #ddd;
-			text-shadow: #333 1px 1px;
 		}
 
 		.maybe {
@@ -120,7 +107,6 @@
 			/*border: 0;
 			border-bottom: 1px solid #333;*/
 			-webkit-outline: 0;
-			color: #fff;
 		}
 
 	</style>
@@ -128,7 +114,7 @@
 
 	<h1>Does <select class="preset" onchange="setPreset(this.value)">
 		<option value="mdcs">mrdoob</option>
-		<!--<option>airbnb</option>
+		<option>airbnb</option>
 		<option>crockford</option>
 		<option>google</option>
 		<option>grunt</option>
@@ -137,8 +123,9 @@
 		<option>node-style-guide</option>
 		<option>wikimedia</option>
 		<option>wordpress</option>
-		<option>yandex</option>-->
-	</select> approve your code style?
+		<option>yandex</option>
+	</select> approve your code style? <span id="answer" />
+
 	</h1>
 
 	</div>
@@ -174,44 +161,44 @@ function mrdoob() {
 
 	<div id="loading">Loading</div>
 
-	<script src="build/mdcs_bundle.js"></script>
+	<script src="build/bundle.js"></script>
 	<script src="mdcs.js"></script>
-	<script src="mdcs_eslint.js"></script>
-	<script src="build/eslint.js"></script>
-
-	<br/>
-	<span id="hints"></span>
 	<br />
 
-	<button style="margin-right: 20px" onclick="fix()">Auto Format All The Code!</button>
+	<button onclick="fix()">Format the Code!</button>
 
-	<span style="display:none;">
-	<label>Auto</label> <input type="checkbox" id="autocheck" checked onclick="checkbutton.disabled = this.checked" />
+	<br />
+	<a id="hints" href="#" class="no" onclick="gotoError(); return false;"></a>
+
+	<br />
+
+	Auto <input type="checkbox" id="autocheck" checked onclick="checkbutton.disabled = this.checked" />
 	<button id="checkbutton" onclick="check()" disabled="true">Check</button>
-	</span>
+
 	<button onclick="toggleMergePanels()">Toggle Diff Pane</button>
+
+	<br />
 	<button onclick="openFile()">Open File</button>
 	<button onclick="saveFile()">Save File</button>
 
-	<h2><span id="answer" /></h2>
+	<pre>About: this is a javascript codestyle editor/validator/formatter/tool built on top of <a href="https://github.com/jscs-dev/node-jscs">node-jscs</a> and <a href="https://github.com/codemirror/codemirror">codemirror</a> by <a href="https://twitter.com/blurspline">@blurspline</a> and <a href="https://github.com/gero3">gero3</a>.</pre>
 
-	<p>
-		Here is a editor that validates + formats javascript codestyle primarily to mrdoob's liking.
-		If you're looking for the older version of this editor, <a href="jscs.html">go here</a>.
-	</p>
-	<i>Disclaimer: the name of this tool is also used without the permission of <a href="https://twitter.com/mrdoob">mrdoob</a>.</i>
+	<pre>Protip 1: Open a file by dragging into the editor or <a href="#" onclick="openFile(); return false;">browse for one</a></pre>
+
+	<pre>Protip 2: To learn more about Mr.doob's Code Style™, check out the <a href="https://github.com/mrdoob/three.js/wiki/Mr.doob's-Code-Style%E2%84%A2">wiki</a>, <a href="https://github.com/mrdoob/three.js/issues/4802">discussion</a> and <a href="https://twitter.com/mrdoob/status/463709502853103617">history</a>.</pre>
+
+
+	<pre>Check out the code and development on <a href="https://github.com/zz85/mrdoobapproves">github</a></pre>
+
+	<pre>Disclaimer: the name of this tool is also used without the permission of <a href="https://twitter.com/mrdoob">mrdoob</a>.</pre>
 
 	<script>
+		let ESLINT_MODE = false;
 		var textarea = document.getElementById( 'code' );
 		var answer = document.getElementById( 'answer' );
 		var hints = document.getElementById( 'hints' );
 		var autocheck = document.getElementById( 'autocheck' );
 		var merge = document.getElementById( 'merge' );
-
-		var presets = document.querySelector('.preset');
-		Object.keys(eslint_configs).forEach(k => {
-			presets.options[presets.options.length] = new Option(k);
-		});
 
 		var deferredValidator;
 		var cmOptions = {
@@ -235,8 +222,13 @@ function mrdoob() {
 
 				},
 				checker: function(text) {
-					// ESLint Hook
-					return processESLintRules(text);
+					if (ESLINT_MODE) {
+						// ESLint Hook
+						return processESLintRules(text);
+					}
+
+					// JSCS Hook
+					return CodeMirror.processJscsChecks(jscsCheck, text);
 				}
 			},
 			// merge plugin - for our case "orginal" means our  "formatted" version.
@@ -269,23 +261,14 @@ function mrdoob() {
 		}
 
 		function mrdoobEsLint(text) {
-			return eslint.verify(text, eslint_configs[presets.value] || mdcs_eslint);
+			return eslint.verify(text, mdcs_eslint);
 		}
 
 		function processESLintRules(text) {
 			const messages = mrdoobEsLint(text);
-			const errors = messages.filter( m => m.severity === 2);
+			// console.log(messages);
 
-			setError(messages.filter(m => m.fix)[0]);
-
-			if ( text.trim().length === 0 ) {
-
-				setAnswer( 'Maybe... :)', 'maybe' );
-				return;
-
-			}
-
-			if ( errors.length === 0 ) {
+			if ( messages.filter( m => m.severity === 2).length === 0 ) {
 
 				setAnswer( 'Possibly \\o/*\\o', 'yes' );
 
@@ -312,8 +295,14 @@ function mrdoob() {
 		function init() {
 
 			/*
+			 * Init JSCS Checker
+			 */
+			setJscsPreset();
+
+			/*
 			 * Init Code CodeMirror
 			 */
+			// codeEditor = CodeMirror.fromTextArea( textarea, cmOptions );
 
 			textarea.className = 'hide';
 			mergeView = CodeMirror.MergeView( merge, cmOptions );
@@ -327,10 +316,26 @@ function mrdoob() {
 
 		function setPreset( preset ) {
 
+			setJscsPreset( preset );
 			check();
 
 		}
 
+		function setJscsPreset( preset ) {
+
+			// unfortunately JSCS configuration doesn't allow resetting
+			// so we create a new checker
+			checker = new JscsStringChecker();
+			checker.registerDefaultRules();
+
+
+			var configuration = checker.getConfiguration();
+			var presets = configuration.getRegisteredPresets();
+			configuration.registerPreset( 'mdcs', mdcs );
+			checker.configure( { preset: preset || 'mdcs' } );
+
+
+		}
 
 		function hideAnswer() {
 
@@ -343,7 +348,6 @@ function mrdoob() {
 			answer.style.opacity = 1;
 			answer.textContent = comment;
 			answer.className = style;
-			document.body.style.background = style === 'no' ? 'rgba(150, 0, 0, 0.7)' : 'rgba(0, 150, 0, 0.7)';
 
 			setTimeout( hideAnswer, 3000 );
 
@@ -359,43 +363,74 @@ function mrdoob() {
 
 			var code = codeEditor.getValue();
 			if ( deferredValidator ) deferredValidator( code );
-			if ( pannelsOpened ) format();
+			if ( open ) format();
 
 		}
 
-		function setError( error ) {
+		function jscsCheck( code ) {
 
-			visibleError = error;
+			// console.info('checking ' + code + '...');
+
+			var wrapper = { code: code };
+
+			if ( code.trim().length === 0 ) {
+
+				setAnswer( 'Maybe... :)', 'maybe' );
+				return;
+
+			}
+
+			var errors;
+			try {
+
+				console.time( 'jscs check' );
+				preprocess( wrapper );
+
+				errors = checker.checkString( wrapper.code );
+				console.timeEnd( 'jscs check' );
+
+			} catch ( e ) {
+
+				// jscs now catches parse error into errorlist, so this shouldn't happen
+				setAnswer( 'oops... something went wrong...', 'no' );
+				throw( e );
+
+			}
+
+			var errorList = errors.getErrorList();
+
+			console.log( 'checking done. ' + errorList.length + ' errors' );
+
+			if ( errorList.length === 0 ) {
+
+				setAnswer( 'Possibly \\o/*\\o', 'yes' );
+
+			} else {
+
+				setAnswer( 'No!!! :(', 'no' );
+
+			}
+
+			errorList = errorList.map( function( error ) {
+
+				error.column += wrapper.indentation.length
+				return error;
+
+			} )
+
+			visibleError = errorList[ 0 ];
 
 			if ( visibleError ) {
 
-				hints.innerHTML = `
-				<a href="#" class="hints" onclick="return autofix();">Fix!</a>
-				<a href="#" class="hints" onclick="return gotoError();" >[${visibleError.line}:${visibleError.column}]</a>
- 				\t
-				 Error:
-				<i>${visibleError.message}</i>
-				`;
-				//
+				hints.textContent = visibleError.line + ':' + visibleError.column + '\t' + visibleError.message + ' (Rule: ' + visibleError.rule + ')';
 
 			} else {
 
 				hints.textContent = '';
 
 			}
-		}
 
-		function autofix() {
-
-			if ( visibleError ) {
-				let text = codeEditor.getValue();
-				const v = visibleError.fix;
-				text = text.substring(0, v.range[0]) + v.text + text.substring(v.range[1]);
-
-				var target = pannelsOpened ? formatEditor : codeEditor;
-				target.setValue( text );
-
-			}
+			return errors;
 
 		}
 
@@ -427,7 +462,7 @@ function mrdoob() {
 
 			format();
 
-			if ( pannelsOpened ) {
+			if ( open ) {
 
 				mergeAll();
 
@@ -449,8 +484,7 @@ function mrdoob() {
 
 			var leads = lead[ 1 ].split( '\n' );
 			var indentation = leads.pop();
-			
-			// console.log( 'indentation', JSON.stringify( indentation ), leads.length );
+			console.log( 'indentation', JSON.stringify( indentation ), leads.length );
 
 			codeWrapper.code = code
 				.split( '\n' )
@@ -505,33 +539,37 @@ function mrdoob() {
 
 			preprocess( codeWrapper );
 
-			let errors = false;
-			let fixes;
-
+			var errors = false;
 			try {
 
-				console.time( 'formating' );
+				console.time( 'jscs format' );
 
-				var fixed = codeWrapper.code;
-				const messages = mrdoobEsLint( fixed );
+				if (ESLINT_MODE) {
+					var fixed = codeWrapper.code;
+					const messages = mrdoobEsLint( fixed );
+					messages
+						.map(e => e.fix)
+						.filter(e => !!e)
+						.sort( (a, b) => { return b.range[0] - a.range[0] } )
+						.forEach( v => {
+							fixed = fixed.substring(0, v.range[0]) + v.text + fixed.substring(v.range[1]);
+						})
 
-				fixes = messages
-					.map(e => e.fix)
-					.filter(e => !!e)
-					.sort( (a, b) => { return b.range[0] - a.range[0] } );
+					codeWrapper.code = fixed;
 
-				fixes
-					.forEach( v => {
-						fixed = fixed.substring(0, v.range[0]) + v.text + fixed.substring(v.range[1]);
-					})
+				} else {
+					var fixes = checker.fixString( codeWrapper.code );
+					codeWrapper.code = fixes.output;
+				}
 
-				codeWrapper.code = fixed;
+
+
 				postprocess( codeWrapper )
 
-				var target = pannelsOpened ? formatEditor : codeEditor;
+				var target = open ? formatEditor : codeEditor;
 				target.setValue( codeWrapper.code );
 
-				console.log( 'errors', fixes );
+				console.log( 'errors', fixes.errors.getErrorList() );
 
 			} catch ( e ) {
 
@@ -540,13 +578,13 @@ function mrdoob() {
 
 			} finally {
 
-				if ( errors ) {
+				if ( errors || fixes.errors.getErrorList().length > 0 ) {
 
 					console.log( 'oops, there is something that is not fixed...' )
 
 				}
 
-				console.timeEnd( 'formating' );
+				console.timeEnd( 'jscs format' );
 
 			}
 
@@ -720,11 +758,7 @@ function mrdoob() {
 		})();
 	</script>
 
-	<!--<a href="https://github.com/zz85/mrdoobapproves" class="github-corner" aria-label="View source on Github"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; left: 0; transform: scale(-1, 1);" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style></a>-->
-
-	<a href="https://github.com/zz85/mrdoobapproves" class="github-corner" aria-label="View source on Github"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
-
-	<!--<style>#forkongithub a{background:#000;color:#fff;text-decoration:none;font-family:arial,sans-serif;text-align:center;font-weight:bold;padding:5px 40px;font-size:1rem;line-height:2rem;position:relative;transition:0.5s;}#forkongithub a:hover{background:#c11;color:#fff;}#forkongithub a::before,#forkongithub a::after{content:"";width:100%;display:block;position:absolute;top:1px;left:0;height:1px;background:#fff;}#forkongithub a::after{bottom:1px;top:auto;}@media screen and (min-width:800px){#forkongithub{position:fixed;display:block;top:0;right:0;width:200px;overflow:hidden;height:200px;z-index:9999;}#forkongithub a{width:200px;position:absolute;top:60px;right:-60px;transform:rotate(45deg);-webkit-transform:rotate(45deg);-ms-transform:rotate(45deg);-moz-transform:rotate(45deg);-o-transform:rotate(45deg);box-shadow:4px 4px 10px rgba(0,0,0,0.8);}}</style><span id="forkongithub"><a href="https://github.com/zz85/mrdoobapproves">Fork me on GitHub</a></span>-->
+	<style>#forkongithub a{background:#000;color:#fff;text-decoration:none;font-family:arial,sans-serif;text-align:center;font-weight:bold;padding:5px 40px;font-size:1rem;line-height:2rem;position:relative;transition:0.5s;}#forkongithub a:hover{background:#c11;color:#fff;}#forkongithub a::before,#forkongithub a::after{content:"";width:100%;display:block;position:absolute;top:1px;left:0;height:1px;background:#fff;}#forkongithub a::after{bottom:1px;top:auto;}@media screen and (min-width:800px){#forkongithub{position:fixed;display:block;top:0;right:0;width:200px;overflow:hidden;height:200px;z-index:9999;}#forkongithub a{width:200px;position:absolute;top:60px;right:-60px;transform:rotate(45deg);-webkit-transform:rotate(45deg);-ms-transform:rotate(45deg);-moz-transform:rotate(45deg);-o-transform:rotate(45deg);box-shadow:4px 4px 10px rgba(0,0,0,0.8);}}</style><span id="forkongithub"><a href="https://github.com/zz85/mrdoobapproves">Fork me on GitHub</a></span>
 
 </body>
 </html>

@@ -1,6 +1,6 @@
 {
   "name": "mrdoobapproves",
-  "version": "4.0.0",
+  "version": "4.1.0",
   "description": "Mrdoob Javascript Code Style Editor, Checker and Formatter",
   "main": "index.html",
   "scripts": {
@@ -34,11 +34,19 @@
     "codemirror": "^4.10.0",
     "css-loader": "^0.9.0",
     "diff_match_patch": "^0.1.1",
+    "eslint": "^3.10.0",
+    "eslint-config-airbnb-base": "^10.0.1",
+    "eslint-config-google": "^0.7.0",
+    "eslint-config-grunt": "^2.0.1",
+    "eslint-config-idiomatic": "^2.1.0",
+    "eslint-config-jquery": "^1.0.0",
+    "eslint-config-node-style-guide": "^3.0.0",
+    "eslint-config-standard": "^6.2.1",
+    "eslint-config-wikimedia": "^0.2.0",
+    "eslint-config-wordpress": "^1.0.0",
+    "googlediff": "^0.1.0",
     "jscs": "1.13.1",
     "json-loader": "^0.5.1",
     "style-loader": "^0.8.2"
-  },
-  "dependencies": {
-    "eslint": "^3.10.0"
   }
 }

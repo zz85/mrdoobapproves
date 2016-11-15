@@ -44,7 +44,7 @@ module.exports = {
 	entry: entries,
 
 	output: {
-		filename: 'build/bundle.js'
+		filename: 'build/mdcs_bundle.js'
 	},
 
 	node: {

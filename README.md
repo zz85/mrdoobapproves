@@ -1,11 +1,18 @@
-Does MrDoob Approve?
+MrDoob Approves?
 ==============
 
-"MrDoob Approves" is a browser-based Javascript code style checker/validator/formatter/editor/tool. Initially created for [Mr.doob's Code Style™](https://github.com/mrdoob/three.js/wiki/Mr.doob's-Code-Style%E2%84%A2), it is assembled with [code-mirror](https://github.com/codemirror/codemirror) and [node-jscs](https://github.com/jscs-dev/node-jscs). Previously, a [modified version](https://github.com/gero3/node-jscs/tree/formatter) of jscs by gero3 was used before the jscs library shipped with auto-fixing.
+This is a browser-based tool to check, validate, formatter, lint javascript code.
 
-![Build Status](https://travis-ci.org/zz85/mrdoobapproves.svg?branch=gh-pages)
+Initially created for [Mr.doob's Code Style™](https://github.com/mrdoob/three.js/wiki/Mr.doob's-Code-Style%E2%84%A2), it can now support multiple code styles.
+
+It has evolved from a [modified jscs](https://github.com/gero3/node-jscs/tree/formatter) of jscs by gero3 (for auto-fixing) before the offical [node-jscs](https://github.com/jscs-dev/node-jscs).
+It is now powered by eslint and [code-mirror](https://github.com/codemirror/codemirror).
+
+[![Build Status](https://travis-ci.org/zz85/mrdoobapproves.svg?branch=gh-pages)](https://travis-ci.org/zz85/mrdoobapproves)
+
 
 ## [Run the editor here](http://zz85.github.io/mrdoobapproves/)
+### [Old editor (JSCS)](http://zz85.github.io/mrdoobapproves/jscs.html)
 
 ![](https://cloud.githubusercontent.com/assets/314997/5714636/c6db41b2-9b06-11e4-8d25-05142c37a479.png)
 
@@ -15,7 +22,14 @@ This tool helps to check if your code is in Mr.doob's Code Style™ and can help
 
 ## Releases
 
-### Planned features for version 3
+### 4.0 - 15 Nov 2016
+- Powered by ESLint
+- ES6 code support!
+- Updated Linting rules
+- Slight interface tweaks
+- Some cleanup
+
+~~### Planned features for version 3~~
 - Minimalistic linting engine
 - JSCS Rule Editing
 - JSCS library 2 (supporting ES6 with babel)
