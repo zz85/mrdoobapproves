@@ -284,7 +284,19 @@ var x = { test : { test2 : true }, test3 : { test4 : true } };
 
 SemiColons: `
 hello_world()
-`
+`,
+
+BadSwitchBlock: `
+switch(event){
+case THREE.ConstantA:
+foo();
+break;
+case THREE.ConstantB:
+bar();
+break;
+}
+`,
+
 };
 
 /**
