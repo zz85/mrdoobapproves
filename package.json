@@ -34,11 +34,10 @@
     "codemirror": "^4.10.0",
     "css-loader": "^0.9.0",
     "diff_match_patch": "^0.1.1",
+    "eslint": "^3.10.0",
+    "googlediff": "^0.1.0",
     "jscs": "1.13.1",
     "json-loader": "^0.5.1",
     "style-loader": "^0.8.2"
-  },
-  "dependencies": {
-    "eslint": "^3.10.0"
   }
 }
