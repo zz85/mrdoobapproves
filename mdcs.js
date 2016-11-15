@@ -28,6 +28,7 @@ var mdcs = {
     "disallowSpacesInFunctionDeclaration": {
         "beforeOpeningRoundBrace": true
     },
+    "disallowSpaceAfterObjectKeys": true,
     "requireSpacesInAnonymousFunctionExpression": {
         "beforeOpeningRoundBrace": true
     },
@@ -37,6 +38,7 @@ var mdcs = {
         "afterConsequent": true,
         "beforeAlternate": true
     },
+    "requireSemicolons": true,
     "disallowTrailingWhitespace": true,
     "disallowMultipleSpaces": true
 };

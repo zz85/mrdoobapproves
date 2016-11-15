@@ -1,14 +1,3 @@
-const JscsStringChecker = require('jscs/lib/string-checker');
-const mdcs = require('./mdcs');
-
-const checker = new JscsStringChecker();
-checker.registerDefaultRules();
-
-const configuration = checker.getConfiguration();
-const presets = configuration.getRegisteredPresets();
-configuration.registerPreset( 'mdcs', mdcs );
-checker.configure( { preset: 'mdcs' } );
-
 // Also see https://github.com/jscs-dev/node-jscs/blob/master/test/data/options/preset/mdcs.js
 
 /**
@@ -65,7 +54,7 @@ switch ( event ) {
 `,
 
 AnonymousFunction: `
-Moo = function () {}
+Moo = function () {};
 `,
 
 NamedFunction: `
@@ -86,7 +75,7 @@ while ( i < l ) {
 
 	} catch ( e ) {
 
-		throw "this is a test"
+		throw "this is a test";
 
 	}
 
@@ -119,7 +108,7 @@ if ( i < l ) {
 
 	function test( object, geometry ) {
 
-		return ;
+		return;
 
 	}
 
@@ -174,7 +163,7 @@ Operators: `
 //"requireSpacesInsideObjectBrackets": "all",
 //"requireSpacesInsideBrackets": "allButNested",
 //"disallowSpaceBeforeBinaryOperators": [","]
-var a = { test : { test2 : true }, test3 : { test4 : true } };
+var a = { test: { test2: true }, test3: { test4: true } };
 var b = [[ 1, 2 ], [ 3, 4 ], [ 5, 6 ]];
 
 //"requireSpaceBeforeBinaryOperators": [ "+", "-", "/", "*", "=", "==", "===", "!=", "!==", ">", ">=", "<", "<=" ]
@@ -183,7 +172,30 @@ var b = [[ 1, 2 ], [ 3, 4 ], [ 5, 6 ]];
 var c = ( ( d + e - f / g * h ) == i );
 var j = k ? l : m;
 //"requireLineFeedAtFileEnd": true,
-`
+`,
+
+ForLoop: `
+for ( a = 0; a < 23; a ++ ) {
+
+	hello = 'world';
+
+}
+`,
+
+IfBlock: `
+if ( moo ) {
+
+	moo();
+
+} else {
+
+	cow();
+
+}
+`,
+SemiColons: `
+hello_world();
+`,
 
 };
 
@@ -202,6 +214,37 @@ if(moo) {
 	nah
 }
 `,
+
+IfSpace: `
+if(moo) {}
+`,
+
+IfSpace2: `
+if ( moo) {}
+`,
+
+IfSpace3: `
+if (moo ) {}
+`,
+
+IfSpace4: `
+if ( moo ) {
+	moo();	
+}
+`,
+
+SomeTrailingSpaceInBlock: `
+if ( moo ) {
+
+	moo();
+	
+} else {
+
+	cow();
+
+}
+`,
+
 SpacesPriorToTheLeftParentheses:`
 var geometry = new THREE.ConvexGeometry ( vertices );
 
@@ -210,9 +253,66 @@ var material = new THREE.MeshPhongMaterial ( { shading: THREE.FlatShading } );
 var mesh = new THREE.Mesh ( geometry, material );
 
 scene.add ( mesh );
-`
+`,
+
+Invalids: `
+for ( a = 0; a < 23; a ++ ) {
+	hello = 'world';
+}
+
+for ( a=0; a<23; a ++ ) {
+
+	hello = 'world';
+
+}
+
+for (a = 0; a < 23; a ++) {
+
+	hello = 'world';
+
+}
+
+for ( a = 0;a < 23; a ++ ) {
+
+	hello = 'world';
+}
+`,
+
+KeySpacing: `
+var x = { test : { test2 : true }, test3 : { test4 : true } };
+`,
+
+SemiColons: `
+hello_world()
+`,
+
+BadSwitchBlock: `
+switch(event){
+case THREE.ConstantA:
+foo();
+break;
+case THREE.ConstantB:
+bar();
+break;
+}
+`,
+
 };
 
+/**
+ * JSCS Code Style Testing
+ */
+
+const JscsStringChecker = require('jscs/lib/string-checker');
+const mdcs = require('./mdcs');
+
+const checker = new JscsStringChecker();
+checker.registerDefaultRules();
+
+const configuration = checker.getConfiguration();
+const presets = configuration.getRegisteredPresets();
+configuration.registerPreset( 'mdcs', mdcs );
+checker.configure( { preset: 'mdcs' } );
 
 Object.keys(ShouldPass).forEach((k) => {
     const errors = checker.checkString( ShouldPass[k] );
@@ -223,7 +323,7 @@ Object.keys(ShouldPass).forEach((k) => {
 		console.log('Should pass', k, list);
 	}
 
-    console.assert(pass, k);
+    console.assert(pass, 'JSCS: ' + k + ' should pass');
 });
 
 
@@ -236,5 +336,37 @@ Object.keys(ShouldFail).forEach((k) => {
 		console.log('Should fail', k, list);
 	}
 
-    console.assert(pass, k);
+    console.assert(pass, 'JSCS: ' + k + ' Should fail');
+});
+
+/**
+ * ESLint Code Style Checking
+ */
+
+// See Node API http://eslint.org/docs/developer-guide/nodejs-api.html
+const linter = require('eslint').linter;
+config = require('./mdcs_eslint');
+
+Object.keys(ShouldPass).forEach((k) => {
+	const code = ShouldPass[k];
+	const list = linter.verify(code, config).filter(v => v.severity === 2);
+	const pass = list.length === 0;
+
+	if (!pass) {
+		console.log('Should pass', k, list);
+	}
+
+    console.assert(pass, 'Eslint: ' + k + ' should pass');
+});
+
+Object.keys(ShouldFail).forEach((k) => {
+	const code = ShouldFail[k];
+	const list = linter.verify(code, config).filter(v => v.severity === 2);
+	const pass = list.length > 0;
+
+	if (!pass) {
+		console.log('Should fail', k, list);
+	}
+
+    console.assert(pass, 'Eslint: ' + k + ' should fail');
 });

@@ -44,7 +44,7 @@ module.exports = {
 	entry: entries,
 
 	output: {
-		filename: 'bundle.js'
+		filename: 'build/bundle.js'
 	},
 
 	node: {

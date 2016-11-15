@@ -1,4 +1,4 @@
-// code mirror plugin for node-jscs
+// code mirror plugin for jscs / ESLint
 
 (function(mod) {
   if (typeof exports == "object" && typeof module == "object") // CommonJS
@@ -12,8 +12,11 @@
 	"use strict";
 
 	function validator(text, options) {
+		return options.checker(text, options);
+	}
 
-		var jscsErrors = options.jscsChecker( text );
+	CodeMirror.processJscsChecks = function(linter, text) {
+		var jscsErrors = linter( text );
 
 		if (!jscsErrors) return [];
 
@@ -39,7 +42,7 @@
 
 	CodeMirror.registerHelper("lint", "javascript", validator);
 
-	CodeMirror.jscsAsyncValidator = function(text, updateLinting, options, cm) {
+	CodeMirror.asyncValidator = function(text, updateLinting, options, cm) {
 		options.requestValidation(text, function(text) {
 			var lints = validator(text, options)
 			updateLinting(cm, lints)
