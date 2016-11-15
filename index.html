@@ -161,9 +161,10 @@ function mrdoob() {
 
 	<div id="loading">Loading</div>
 
-	<script src="bundle.js"></script>
+	<script src="build/bundle.js"></script>
 	<script src="mdcs.js"></script>
-
+	<script src="mdcs_eslint.js"></script>
+	<script src="build/eslint.js"></script>
 	<br />
 
 	<button onclick="fix()">Format the Code!</button>
@@ -194,6 +195,7 @@ function mrdoob() {
 	<pre>Disclaimer: the name of this tool is also used without the permission of <a href="https://twitter.com/mrdoob">mrdoob</a>.</pre>
 
 	<script>
+		let ESLINT_MODE = location.hash === '#eslint';
 		var textarea = document.getElementById( 'code' );
 		var answer = document.getElementById( 'answer' );
 		var hints = document.getElementById( 'hints' );
@@ -213,7 +215,7 @@ function mrdoob() {
 			gutters: [ 'CodeMirror-lint-markers' ],
 			lint: {
 				async: true,
-				getAnnotations: CodeMirror.jscsAsyncValidator,
+				getAnnotations: CodeMirror.asyncValidator,
 				requestValidation: function( text, validator ) {
 
 					deferredValidator = validator;
@@ -221,7 +223,15 @@ function mrdoob() {
 					if ( autocheck.checked ) validator( text );
 
 				},
-				jscsChecker: jscsCheck
+				checker: function(text) {
+					if (ESLINT_MODE) {
+						// ESLint Hook
+						return processESLintRules(text);
+					}
+
+					// JSCS Hook
+					return CodeMirror.processJscsChecks(jscsCheck, text);
+				}
 			},
 			// merge plugin - for our case "orginal" means our  "formatted" version.
 			origRight: '',
@@ -237,6 +247,40 @@ function mrdoob() {
 		var pannelsOpened = false;
 
 		loading.style.display = 'none';
+
+		const severity_map = {
+			1: 'warning',
+			2: 'error'
+		};
+
+		function getPos(error, from) {
+			var line = error.line-1, ch = from ? error.column : error.column+1;
+			if (error.node && error.node.loc) {
+				line = from ? error.node.loc.start.line -1 : error.node.loc.end.line -1;
+				ch = from ? error.node.loc.start.column : error.node.loc.end.column;
+			}
+			return CodeMirror.Pos(line, ch);
+		}
+
+		function mrdoobEsLint(text) {
+			return eslint.verify(text, mdcs_eslint);
+		}
+
+		function processESLintRules(text) {
+			const messages = mrdoobEsLint(text);
+			// console.log(messages);
+
+			const lints = messages.map(m => {
+				return {
+					message: m.message,
+					severity: severity_map[m.severity] || 'error',
+					from: getPos(m, true),
+					to: getPos(m, false)
+				}
+			});
+			// console.log(lints);
+			return lints;
+		}
 
 		//
 
@@ -491,9 +535,26 @@ function mrdoob() {
 			try {
 
 				console.time( 'jscs format' );
-				var fixes = checker.fixString( codeWrapper.code );
 
-				codeWrapper.code = fixes.output;
+				if (ESLINT_MODE) {
+					var fixed = codeWrapper.code;
+					const messages = mrdoobEsLint( fixed );
+					messages
+						.map(e => e.fix)
+						.filter(e => !!e)
+						.sort( (a, b) => { return b.range[0] - a.range[0] } )
+						.forEach( v => {
+							fixed = fixed.substring(0, v.range[0]) + v.text + fixed.substring(v.range[1]);
+						})
+
+					codeWrapper.code = fixed;
+
+				} else {
+					var fixes = checker.fixString( codeWrapper.code );
+					codeWrapper.code = fixes.output;
+				}
+
+
 
 				postprocess( codeWrapper )
 

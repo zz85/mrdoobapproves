@@ -333,7 +333,7 @@ Object.keys(ShouldFail).forEach((k) => {
 
 // See Node API http://eslint.org/docs/developer-guide/nodejs-api.html
 const linter = require('eslint').linter;
-config = require('./eslint');
+config = require('./mdcs_eslint');
 
 Object.keys(ShouldPass).forEach((k) => {
 	const code = ShouldPass[k];
