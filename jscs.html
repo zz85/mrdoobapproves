@@ -163,8 +163,6 @@ function mrdoob() {
 
 	<script src="build/bundle.js"></script>
 	<script src="mdcs.js"></script>
-	<script src="mdcs_eslint.js"></script>
-	<script src="build/eslint.js"></script>
 	<br />
 
 	<button onclick="fix()">Format the Code!</button>
@@ -195,7 +193,7 @@ function mrdoob() {
 	<pre>Disclaimer: the name of this tool is also used without the permission of <a href="https://twitter.com/mrdoob">mrdoob</a>.</pre>
 
 	<script>
-		let ESLINT_MODE = location.hash === '#eslint';
+		let ESLINT_MODE = false;
 		var textarea = document.getElementById( 'code' );
 		var answer = document.getElementById( 'answer' );
 		var hints = document.getElementById( 'hints' );
