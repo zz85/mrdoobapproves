@@ -1,6 +1,6 @@
 {
   "name": "eslint-config-mdcs",
-  "version": "4.2.0",
+  "version": "4.2.1",
   "description": "Mrdoob Javascript Code Style Editor, Checker and Formatter",
   "main": "index.js",
   "scripts": {
