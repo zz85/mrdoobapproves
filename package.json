@@ -1,6 +1,6 @@
 {
   "name": "eslint-config-mdcs",
-  "version": "4.2.1",
+  "version": "4.2.3",
   "description": "Mrdoob Javascript Code Style Editor, Checker and Formatter",
   "main": "index.js",
   "scripts": {
@@ -34,7 +34,7 @@
     "codemirror": "^4.10.0",
     "css-loader": "^0.9.0",
     "diff_match_patch": "^0.1.1",
-    "eslint": "^3.10.0",
+    "eslint": "^4.14.0",
     "eslint-config-airbnb-base": "^10.0.1",
     "eslint-config-google": "^0.7.0",
     "eslint-config-grunt": "^2.0.1",
