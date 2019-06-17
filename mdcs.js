@@ -38,6 +38,7 @@ var mdcs = {
         "afterConsequent": true,
         "beforeAlternate": true
     },
+    "requirePaddingNewLinesAfterBlocks": true,
     "requireSemicolons": true,
     "disallowTrailingWhitespace": true,
     "disallowMultipleSpaces": true

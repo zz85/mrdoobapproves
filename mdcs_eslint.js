@@ -66,6 +66,10 @@ const mdcs_eslint = {
     }],
 
     "keyword-spacing": ["error", { "before": true, "after": true }],
+    "padding-line-between-statements": [
+      "error",
+      { "blankLine": "always", "prev": "block-like", "next": "*" }
+    ],
 
     /* Best Practices */
     // "eqeqeq": 0,                             // Require === and !==
