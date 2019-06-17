@@ -297,6 +297,15 @@ break;
 }
 `,
 
+NewLineAfterBlock: `
+if ( foo ) {
+
+	bar = 1;
+
+} // blank line missing
+bah = 2;
+`,
+
 };
 
 /**
@@ -315,28 +324,28 @@ configuration.registerPreset( 'mdcs', mdcs );
 checker.configure( { preset: 'mdcs' } );
 
 Object.keys(ShouldPass).forEach((k) => {
-    const errors = checker.checkString( ShouldPass[k] );
-    const list = errors.getErrorList()
+	const errors = checker.checkString( ShouldPass[k] );
+	const list = errors.getErrorList()
 	const pass = list.length === 0;
 
 	if (!pass) {
 		console.log('Should pass', k, list);
 	}
 
-    console.assert(pass, 'JSCS: ' + k + ' should pass');
+	console.assert(pass, 'JSCS: ' + k + ' should pass');
 });
 
 
 Object.keys(ShouldFail).forEach((k) => {
-    const errors = checker.checkString( ShouldFail[k] );
-    const list = errors.getErrorList()
+	const errors = checker.checkString( ShouldFail[k] );
+	const list = errors.getErrorList()
 	const pass = list.length > 0;
 
 	if (!pass) {
 		console.log('Should fail', k, list);
 	}
 
-    console.assert(pass, 'JSCS: ' + k + ' Should fail');
+	console.assert(pass, 'JSCS: ' + k + ' Should fail');
 });
 
 /**
@@ -356,7 +365,7 @@ Object.keys(ShouldPass).forEach((k) => {
 		console.log('Should pass', k, list);
 	}
 
-    console.assert(pass, 'Eslint: ' + k + ' should pass');
+	console.assert(pass, 'Eslint: ' + k + ' should pass');
 });
 
 Object.keys(ShouldFail).forEach((k) => {
@@ -368,5 +377,5 @@ Object.keys(ShouldFail).forEach((k) => {
 		console.log('Should fail', k, list);
 	}
 
-    console.assert(pass, 'Eslint: ' + k + ' should fail');
+	console.assert(pass, 'Eslint: ' + k + ' should fail');
 });
