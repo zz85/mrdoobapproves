@@ -5,7 +5,7 @@ This is a browser-based tool to check, validate, formatter, lint javascript code
 
 Initially created for [Mr.doob's Code Style™](https://github.com/mrdoob/three.js/wiki/Mr.doob's-Code-Style%E2%84%A2), it can now support multiple code styles.
 
-It has evolved from a [modified jscs](https://github.com/gero3/node-jscs/tree/formatter) of jscs by gero3 (for auto-fixing) before the offical [node-jscs](https://github.com/jscs-dev/node-jscs).
+It has evolved from a [modified jscs](https://github.com/gero3/node-jscs/tree/formatter) of jscs by gero3 (for auto-fixing) before the official [node-jscs](https://github.com/jscs-dev/node-jscs).
 It is now powered by eslint and [code-mirror](https://github.com/codemirror/codemirror).
 
 [![Build Status](https://travis-ci.org/zz85/mrdoobapproves.svg?branch=gh-pages)](https://travis-ci.org/zz85/mrdoobapproves)
