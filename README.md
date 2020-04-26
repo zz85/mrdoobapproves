@@ -36,6 +36,11 @@ This tool helps to check if your code is in Mr.doob's Code Style™ and can help
 
 ## Releases
 
+### 5.0 - 26 Apr 2020
+- Update ESLint to version 6/7
+- Update ES configuration to ES2020 (includes async syntax)
+- Remove legacy JSCS support
+
 ### 4.0 - 15 Nov 2016
 - Powered by ESLint
 - ES6 code support!
