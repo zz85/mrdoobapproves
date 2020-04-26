@@ -1,6 +1,4 @@
 window.CodeMirror = require('./node_modules/codemirror/lib/codemirror');
-// window.JscsStringChecker = require('./node_modules/jscs/lib/string-checker.js');
-
 
 window.eslint_configs = {
     // TODO have a proper ESLINT config loader!!!

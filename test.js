@@ -309,46 +309,6 @@ bah = 2;
 };
 
 /**
- * JSCS Code Style Testing
- */
-
-const JscsStringChecker = require('jscs/lib/string-checker');
-const mdcs = require('./mdcs');
-
-const checker = new JscsStringChecker();
-checker.registerDefaultRules();
-
-const configuration = checker.getConfiguration();
-const presets = configuration.getRegisteredPresets();
-configuration.registerPreset( 'mdcs', mdcs );
-checker.configure( { preset: 'mdcs' } );
-
-Object.keys(ShouldPass).forEach((k) => {
-	const errors = checker.checkString( ShouldPass[k] );
-	const list = errors.getErrorList()
-	const pass = list.length === 0;
-
-	if (!pass) {
-		console.log('Should pass', k, list);
-	}
-
-	console.assert(pass, 'JSCS: ' + k + ' should pass');
-});
-
-
-Object.keys(ShouldFail).forEach((k) => {
-	const errors = checker.checkString( ShouldFail[k] );
-	const list = errors.getErrorList()
-	const pass = list.length > 0;
-
-	if (!pass) {
-		console.log('Should fail', k, list);
-	}
-
-	console.assert(pass, 'JSCS: ' + k + ' Should fail');
-});
-
-/**
  * ESLint Code Style Checking
  */
 
