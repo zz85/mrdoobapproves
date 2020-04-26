@@ -196,6 +196,10 @@ if ( moo ) {
 SemiColons: `
 hello_world();
 `,
+Async: `
+async function hello() {
+}
+`
 
 };
 
