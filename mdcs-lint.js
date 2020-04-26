@@ -15,31 +15,6 @@
 		return options.checker(text, options);
 	}
 
-	CodeMirror.processJscsChecks = function(linter, text) {
-		var jscsErrors = linter( text );
-
-		if (!jscsErrors) return [];
-
-		var errorList = jscsErrors.getErrorList();
-
-  		var hintErrors;
-
-  		// convert to Code mirror lint errors format
-		hintErrors = errorList.map(function(error) {
-
-			// error.message
-			return {
-				message: jscsErrors.explainError(error)
-				 + ' \n\n(Rule: ' + error.rule + ')\n ',
-				// severity: 'warning',
-				from: CodeMirror.Pos(error.line - 1, error.column),
-			}
-
-		});
-
-		return hintErrors;
-	}
-
 	CodeMirror.registerHelper("lint", "javascript", validator);
 
 	CodeMirror.asyncValidator = function(text, updateLinting, options, cm) {

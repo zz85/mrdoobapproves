@@ -14,7 +14,7 @@ const mdcs_eslint = {
   "env": {
     "browser": true,
     "node": true,
-    "es6": true
+    "es2020": true,
   },
   "parserOptions": {
     "sourceType": "module"
