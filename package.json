@@ -33,7 +33,7 @@
   "homepage": "https://github.com/zz85/mrdoobapproves",
   "devDependencies": {
     "codemirror": "^4.10.0",
-    "css-loader": "^0.9.0",
+    "css-loader": "^0.28.11",
     "diff_match_patch": "^0.1.1",
     "eslint": "6.8.0",
     "eslint-config-airbnb-base": "14.1.0",
