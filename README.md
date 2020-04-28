@@ -12,7 +12,6 @@ It is now powered by eslint and [code-mirror](https://github.com/codemirror/code
 
 
 ## [Run the editor here](http://zz85.github.io/mrdoobapproves/)
-### [Old editor (JSCS)](http://zz85.github.io/mrdoobapproves/jscs.html)
 
 ![](https://cloud.githubusercontent.com/assets/314997/5714636/c6db41b2-9b06-11e4-8d25-05142c37a479.png)
 
