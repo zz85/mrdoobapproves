@@ -33,20 +33,20 @@
   "homepage": "https://github.com/zz85/mrdoobapproves",
   "devDependencies": {
     "codemirror": "^5.53.2",
-    "css-loader": "^0.9.0",
+    "css-loader": "^0.28.11",
     "diff_match_patch": "^0.1.1",
     "eslint": "6.8.0",
     "eslint-config-airbnb-base": "14.1.0",
     "eslint-config-google": "0.14.0",
     "eslint-config-grunt": "^2.0.1",
     "eslint-config-idiomatic": "^4.0.0",
-    "eslint-config-jquery": "^1.0.0",
+    "eslint-config-jquery": "^2.0.0",
     "eslint-config-node-style-guide": "^3.0.0",
     "eslint-config-standard": "^6.2.1",
-    "eslint-config-wikimedia": "^0.2.0",
-    "eslint-config-wordpress": "^1.0.0",
+    "eslint-config-wikimedia": "^0.15.3",
+    "eslint-config-wordpress": "^2.0.0",
     "googlediff": "^0.1.0",
     "json-loader": "^0.5.1",
-    "style-loader": "^0.8.2"
+    "style-loader": "^0.23.1"
   }
 }
