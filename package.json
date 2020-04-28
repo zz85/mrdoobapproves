@@ -47,6 +47,6 @@
     "eslint-config-wordpress": "^2.0.0",
     "googlediff": "^0.1.0",
     "json-loader": "^0.5.1",
-    "style-loader": "^0.8.2"
+    "style-loader": "^0.23.1"
   }
 }
