@@ -43,7 +43,7 @@
     "eslint-config-jquery": "^3.0.0",
     "eslint-config-node-style-guide": "^3.0.0",
     "eslint-config-standard": "^6.2.1",
-    "eslint-config-wikimedia": "^0.15.3",
+    "eslint-config-wikimedia": "^0.16.2",
     "eslint-config-wordpress": "^2.0.0",
     "googlediff": "^0.1.0",
     "json-loader": "^0.5.1",
